@@ -19,9 +19,10 @@ public:
 private:
 	bool LoadFromFile(const std::string& filepath);
 
-	void InitBmp(const wxImage& image, bool scale);
+	void LoadFromImageFile(const std::string& filepath);
+	void LoadFromImage(const wxImage& image, bool scale);
 
-	static void LoadWXImage(const std::string& filepath, wxImage& image);
+	static bool CanLoadFromWX(const std::string& filepath);
 
 private:
 	std::unique_ptr<wxBitmap> m_bmp_large = nullptr;

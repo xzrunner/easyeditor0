@@ -11,6 +11,8 @@
 #include <s2loader/SymbolFile.h>
 #include <gum/Config.h>
 
+#include <wx/image.h>
+
 namespace ee0
 {
 
@@ -21,26 +23,72 @@ static const float SCALE = 0.5f;
 
 WxBitmap::WxBitmap(const std::string& filepath)
 {
+	static bool inited = false;
+	if (!inited)
+	{
+		wxInitAllImageHandlers();
+		inited = true;
+	}
+
 	LoadFromFile(filepath);
 }
 
 bool WxBitmap::LoadFromFile(const std::string& filepath)
 {
-	bool ret = false;
-
+	bool ret = true;
 	int type = s2loader::SymbolFile::Instance()->Type(filepath.c_str());
-	if (type == s2::SYM_IMAGE)
+	switch (type)
 	{
-		wxImage image;
-		LoadWXImage(filepath, image);
-		InitBmp(image, true);
-		ret = true;
+	case s2::SYM_IMAGE:
+		LoadFromImageFile(filepath);
+		break;
+	default:
+		ret = false;
 	}
-
 	return ret;
 }
 
-void WxBitmap::InitBmp(const wxImage& image, bool need_scale)
+void WxBitmap::LoadFromImageFile(const std::string& filepath)
+{
+	wxImage image;
+
+	int width, height, format;
+	uint8_t* pixels = gimg_import(filepath.c_str(), &width, &height, &format);
+	if (format == GPF_RGBA8 && gum::Config::Instance()->GetPreMulAlpha()) {
+		gimg_pre_mul_alpha(pixels, width, height);
+	}
+	if (format != GPF_RGBA8) {
+		image.LoadFile(filepath.c_str());
+		return;
+	}
+
+	if (CanLoadFromWX(filepath))
+	{
+		wxImage wx_img;
+		bool succ = wx_img.LoadFile(filepath.c_str());
+
+		pimg::Condense cd(pixels, width, height);
+		pimg::Rect r = cd.GetRegion();
+
+		wxRect wx_rect;
+		int h = height;
+		wx_rect.SetLeft(r.xmin);
+		wx_rect.SetRight(r.xmax - 1);
+		wx_rect.SetTop(h - r.ymax);
+		wx_rect.SetBottom(h - r.ymin - 1);
+
+		image = wx_img.GetSubImage(wx_rect);
+	}
+	else
+	{
+		uint8_t* rgb = gimg_rgba2rgb(pixels, width, height);
+		image.Create(wxSize(width, height), rgb);
+	}
+
+	LoadFromImage(image, true);
+}
+
+void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 {
 	{
 		float w = image.GetWidth(),
@@ -63,39 +111,17 @@ void WxBitmap::InitBmp(const wxImage& image, bool need_scale)
 	}
 }
 
-void WxBitmap::LoadWXImage(const std::string& filepath, wxImage& dst_img)
+bool WxBitmap::CanLoadFromWX(const std::string& filepath)
 {
-	static bool inited = false;
-	if (!inited)
+	const wxList& list = wxImage::GetHandlers();
+	for (wxList::compatibility_iterator node = list.GetFirst(); node; node = node->GetNext())
 	{
-		wxInitAllImageHandlers();
-		inited = true;
+		auto handler = (wxImageHandler*)node->GetData();
+		if (handler->CanRead(filepath)) {
+			return true;
+		}
 	}
-
-	int width, height, format;
-	uint8_t* pixels = gimg_import(filepath.c_str(), &width, &height, &format);
-	if (format == GPF_RGBA8 && gum::Config::Instance()->GetPreMulAlpha()) {
-		gimg_pre_mul_alpha(pixels, width, height);
-	}
-	if (format != GPF_RGBA8) {
-		dst_img.LoadFile(filepath.c_str());
-		return;
-	}
-
-	pimg::Condense cd(pixels, width, height);
-	pimg::Rect r = cd.GetRegion();
-
-	wxImage wx_img;
-	wx_img.LoadFile(filepath.c_str());
-
-	wxRect wx_rect;
-	int h = height;
-	wx_rect.SetLeft(r.xmin);
-	wx_rect.SetRight(r.xmax - 1);
-	wx_rect.SetTop(h - r.ymax);
-	wx_rect.SetBottom(h - r.ymin - 1);
-
-	dst_img = wx_img.GetSubImage(wx_rect);
+	return false;
 }
 
 }
