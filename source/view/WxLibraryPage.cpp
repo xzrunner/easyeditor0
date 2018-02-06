@@ -1,5 +1,6 @@
 #include "ee0/WxLibraryPage.h"
 #include "ee0/WxLibraryList.h"
+#include "ee0/WxLibraryItem.h"
 
 namespace ee0
 {
@@ -22,7 +23,16 @@ std::shared_ptr<WxLibraryItem> WxLibraryPage::GetItem(int idx) const
 
 void WxLibraryPage::OnAddPress(wxCommandEvent& event)
 {
-
+	wxFileDialog dlg(this, wxT("Choose file"), wxEmptyString, wxEmptyString, 
+		wxFileSelectorDefaultWildcardStr, wxFD_OPEN | wxFD_MULTIPLE);
+	if (dlg.ShowModal() == wxID_OK)
+	{
+		wxArrayString filenames;
+		dlg.GetPaths(filenames);
+		for (auto& filename : filenames) {
+			m_list->Insert(std::make_shared<WxLibraryItem>(filename.ToStdString()));
+		}
+	}
 }
 
 void WxLibraryPage::OnDelPress(wxCommandEvent& event)
