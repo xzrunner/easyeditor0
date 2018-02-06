@@ -10,6 +10,7 @@
 #include <sprite2/Symbol.h>
 #include <s2loader/SymbolFile.h>
 #include <gum/Config.h>
+#include <gum/SymbolPool.h>
 
 #include <wx/image.h>
 
@@ -35,20 +36,17 @@ WxBitmap::WxBitmap(const std::string& filepath)
 
 bool WxBitmap::LoadFromFile(const std::string& filepath)
 {
-	bool ret = true;
 	int type = s2loader::SymbolFile::Instance()->Type(filepath.c_str());
-	switch (type)
-	{
-	case s2::SYM_IMAGE:
-		LoadFromImageFile(filepath);
-		break;
-	default:
-		ret = false;
+	if (type == s2::SYM_INVALID || type == s2::SYM_UNKNOWN) {
+		return false;
+	} else if (type == s2::SYM_IMAGE) {
+		return LoadFromImageFile(filepath);
+	} else {
+		return LoadFromSymbol(filepath, type);
 	}
-	return ret;
 }
 
-void WxBitmap::LoadFromImageFile(const std::string& filepath)
+bool WxBitmap::LoadFromImageFile(const std::string& filepath)
 {
 	wxImage image;
 
@@ -59,7 +57,7 @@ void WxBitmap::LoadFromImageFile(const std::string& filepath)
 	}
 	if (format != GPF_RGBA8) {
 		image.LoadFile(filepath.c_str());
-		return;
+		return true;
 	}
 
 	if (CanLoadFromWX(filepath))
@@ -78,14 +76,21 @@ void WxBitmap::LoadFromImageFile(const std::string& filepath)
 		wx_rect.SetBottom(h - r.ymin - 1);
 
 		image = wx_img.GetSubImage(wx_rect);
+		LoadFromImage(image, true);
+
+		return true;
 	}
 	else
 	{
 		uint8_t* rgb = gimg_rgba2rgb(pixels, width, height);
-		image.Create(wxSize(width, height), rgb);
+		bool succ = image.Create(wxSize(width, height), rgb);
+		if (succ) {
+			LoadFromImage(image, true);
+			return true;
+		} else {
+			return false;
+		}
 	}
-
-	LoadFromImage(image, true);
 }
 
 void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
@@ -109,6 +114,44 @@ void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 		h = std::max(1.0f, h * scale);
 		m_bmp_small = std::make_unique<wxBitmap>(image.Scale(w, h));
 	}
+}
+
+bool WxBitmap::LoadFromSymbol(const std::string& filepath, int type)
+{
+	auto sym = gum::SymbolPool::Instance()->Fetch(filepath.c_str(), type);
+	if (!sym) {
+		return false;
+	}
+	
+	sm::rect rect = sym->GetBounding();
+	if (!rect.IsValid()) {
+		return false;
+	}
+
+	float w = std::max(1.0f, rect.Size().x),
+		  h = std::max(1.0f, rect.Size().y);
+	float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE; 
+	w *= scale;
+	h *= scale;
+	w = std::max(1.0f, w);
+	h = std::max(1.0f, h);
+
+ 	s2::DrawRT rt;
+ 	rt.Draw(*sym, true, scale);
+ 	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
+ 	if (!rgba) {
+ 		return false;
+ 	}
+ 
+ 	uint8_t* rgb = gimg_rgba2rgb(rgba, w, h);
+ 
+ 	wxImage image(w, h, rgb, true);
+	LoadFromImage(image, false);
+ 
+ 	free(rgb);
+ 	delete[] rgba;
+
+	return true;
 }
 
 bool WxBitmap::CanLoadFromWX(const std::string& filepath)

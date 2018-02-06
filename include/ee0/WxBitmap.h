@@ -19,8 +19,10 @@ public:
 private:
 	bool LoadFromFile(const std::string& filepath);
 
-	void LoadFromImageFile(const std::string& filepath);
+	bool LoadFromImageFile(const std::string& filepath);
 	void LoadFromImage(const wxImage& image, bool scale);
+
+	bool LoadFromSymbol(const std::string& filepath, int type);
 
 	static bool CanLoadFromWX(const std::string& filepath);
 
