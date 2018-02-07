@@ -15,6 +15,8 @@ public:
 	
 	virtual CompSymEditor* Clone() const;
 
+	virtual size_t GetSize() const { return sizeof(CompSymEditor); }
+
 	const std::string& GetFilepath() const { return m_filepath; }
 
 private:
