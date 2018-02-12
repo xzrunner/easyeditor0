@@ -21,6 +21,7 @@
     <ClInclude Include="..\..\..\include\ee0\EditPanelImpl.h" />
     <ClInclude Include="..\..\..\include\ee0\KeysState.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropData.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropTarget.h" />
     <ClInclude Include="..\..\..\include\ee0\WxEditPanel.h" />
@@ -52,6 +53,7 @@
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\NodeSelectOP.cpp" />
+    <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp" />
     <ClCompile Include="..\..\..\source\msg\Subject.cpp" />
     <ClCompile Include="..\..\..\source\msg\SubjectMgr.cpp" />
     <ClCompile Include="..\..\..\source\tools\CameraHelper.cpp" />

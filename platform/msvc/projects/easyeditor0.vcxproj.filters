@@ -46,6 +46,9 @@
     <Filter Include="view\utility\drop">
       <UniqueIdentifier>{1c860714-9b90-4e9e-8c23-64ddf24c5af9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gui">
+      <UniqueIdentifier>{527cd7d7-f6ab-466b-bef4-418e16c5c19f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -145,6 +148,9 @@
     <ClInclude Include="..\..\..\include\ee0\WxCompPanel.h">
       <Filter>view\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -218,6 +224,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxCompPanel.cpp">
       <Filter>view\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp">
+      <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
