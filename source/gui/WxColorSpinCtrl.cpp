@@ -1,4 +1,5 @@
 #include "ee0/WxColorSpinCtrl.h"
+#include "ee0/SubjectMgr.h"
 
 #include <painting2/Color.h>
 
@@ -10,9 +11,10 @@ namespace ee0
 {
 
 WxColorSpinCtrl::WxColorSpinCtrl(wxWindow* parent, pt2::Color& col,
-	                             const std::string& title)
+	                             const std::string& title, SubjectMgr& sub_mgr)
 	: wxPanel(parent, wxID_ANY)
 	, m_col(col)
+	, m_sub_mgr(sub_mgr)
 {
 	InitLayout(title);
 }
@@ -84,6 +86,8 @@ void WxColorSpinCtrl::SetColor(int id)
 	} else if (id == m_a->GetId()) {
 		m_col.a = m_a->GetValue();
 	}
+
+	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
 }
