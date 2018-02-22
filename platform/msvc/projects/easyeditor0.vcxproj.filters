@@ -151,6 +151,9 @@
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxCompNodeEditorPanel.h">
+      <Filter>view\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -227,6 +230,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp">
       <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\WxCompNodeEditorPanel.cpp">
+      <Filter>view\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
