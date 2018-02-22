@@ -8,6 +8,8 @@ namespace ee0
 const char* const CompNodeEditor::TYPE_NAME = "editor";
 
 CompNodeEditor::CompNodeEditor()
+	: m_visible(true)
+	, m_editable(true)
 {
 	static size_t COUNT = 0;
 	m_name = "node" + std::to_string(COUNT++);
