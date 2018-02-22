@@ -2,7 +2,7 @@
 #include "ee0/EditPanelImpl.h"
 
 #include <unirender/RenderContext.h>
-#include <sprite2/RenderCtxStack.h>
+#include <painting2/RenderCtxStack.h>
 #include <sprite2/SprTimer.h>
 #include <node3/RenderCtxStack.h>
 #include <gum/Sprite2.h>
@@ -65,7 +65,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	if (m_flag & USE_CONTEXT_STACK)
 	{
 		if (m_flag & HAS_2D) {
-			m_ctx_idx_2d = s2::RenderCtxStack::Instance()->Push(s2::RenderContext());
+			m_ctx_idx_2d = pt2::RenderCtxStack::Instance()->Push(pt2::RenderContext());
 		}
 		if (m_flag & HAS_3D) {
 			m_ctx_idx_3d = n3::RenderCtxStack::Instance()->Push(n3::RenderContext());
@@ -181,7 +181,7 @@ void WxStageCanvas::SetCurrentCanvas()
 	SetCurrent(*m_gl_ctx);
 
 	if (m_flag & HAS_2D) {
-		s2::RenderCtxStack::Instance()->Bind(m_ctx_idx_2d);
+		pt2::RenderCtxStack::Instance()->Bind(m_ctx_idx_2d);
 	}
 	if (m_flag & HAS_3D) {
 		n3::RenderCtxStack::Instance()->Bind(m_ctx_idx_3d);
