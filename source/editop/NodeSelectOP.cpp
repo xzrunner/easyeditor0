@@ -10,6 +10,7 @@ namespace ee0
 NodeSelectOP::NodeSelectOP(WxStagePage& stage)
 	: m_stage(stage)
 {
+	m_last_pos.MakeInvalid();
 }
 
 bool NodeSelectOP::OnKeyDown(int keyCode)
