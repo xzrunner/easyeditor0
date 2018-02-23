@@ -29,6 +29,7 @@ public:
 private:
 	void NodeSelectionInsert(const ee0::VariantSet& variants);
 	void NodeSelectionDelete(const ee0::VariantSet& variants);
+	void NodeSelectionSetOne(const ee0::VariantSet& variants);
 
 protected:
 	SubjectMgr m_sub_mgr;
