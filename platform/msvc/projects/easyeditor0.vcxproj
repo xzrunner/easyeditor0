@@ -20,6 +20,7 @@
     <ClInclude Include="..\..\..\include\ee0\EditOpState.h" />
     <ClInclude Include="..\..\..\include\ee0\EditPanelImpl.h" />
     <ClInclude Include="..\..\..\include\ee0\KeysState.h" />
+    <ClInclude Include="..\..\..\include\ee0\MsgHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompNodeEditorPanel.h" />
@@ -58,6 +59,7 @@
     <ClCompile Include="..\..\..\source\msg\Subject.cpp" />
     <ClCompile Include="..\..\..\source\msg\SubjectMgr.cpp" />
     <ClCompile Include="..\..\..\source\tools\CameraHelper.cpp" />
+    <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompNodeEditorPanel.cpp" />
