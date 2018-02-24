@@ -21,14 +21,14 @@ bool NodeSelectOP::OnKeyDown(int keyCode)
 
 	if (keyCode == WXK_DELETE)
 	{
-		ee0::VariantSet vars;
-		ee0::Variant var;
-		var.m_type = ee0::VT_PVOID;
+		VariantSet vars;
+		Variant var;
+		var.m_type = VT_PVOID;
 		var.m_val.pv = const_cast<SelectionSet<n0::SceneNode>*>
 			(&m_stage.GetNodeSelection());
 		vars.SetVariant("selection", var);
 
-		bool succ = m_stage.GetSubjectMgr().NotifyObservers(ee0::MSG_NODE_SELECTION_DELETE, vars);
+		bool succ = m_stage.GetSubjectMgr().NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 		GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
 	}
 
@@ -47,35 +47,35 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 	auto selected = QueryByPos(x, y);
 	if (selected)
 	{
-		ee0::VariantSet vars;
-		ee0::Variant var;
-		var.m_type = ee0::VT_PVOID;
+		VariantSet vars;
+		Variant var;
+		var.m_type = VT_PVOID;
 		var.m_val.pv = &selected;
 		vars.SetVariant("node", var);
 
 		if (m_stage.GetKeyState(WXK_CONTROL)) 
 		{
 			if (selection.IsExist(selected)) {
-				sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_DELETE, vars);
+				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 			} else {
-				sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
+				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 			}
 		}
 		else
 		{
 			if (!selection.IsExist(selected))
 			{
-				sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-				sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
+				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 			}
 		}
 	}
 	else
 	{
-		sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
+		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 	}
 
-	sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
 
 	m_last_pos.Set(x, y);
 
@@ -101,44 +101,44 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 	{
 		for (auto& node : nodes)
 		{
-			ee0::VariantSet vars;
-			ee0::Variant var;
-			var.m_type = ee0::VT_PVOID;
+			VariantSet vars;
+			Variant var;
+			var.m_type = VT_PVOID;
 			var.m_val.pv = &node;
 			vars.SetVariant("node", var);
 
 			if (selection.IsExist(node)) {
-				sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_DELETE, vars);
+				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 			} else {
-				sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
+				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 			}
 		}
 	}
 	else
 	{
-		sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
+		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 
 		for (auto& node : nodes)
 		{
-			ee0::VariantSet vars;
+			VariantSet vars;
 
 			if (nodes.size() > 1) {
-				ee0::Variant var;
-				var.m_type = ee0::VT_BOOL;
+				Variant var;
+				var.m_type = VT_BOOL;
 				var.m_val.bl = true;
 				vars.SetVariant("multiple", var);
 			}
 
-			ee0::Variant var;
-			var.m_type = ee0::VT_PVOID;
+			Variant var;
+			var.m_type = VT_PVOID;
 			var.m_val.pv = &node;
 			vars.SetVariant("node", var);
 
-			sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
+			sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 		}
 	}
 
-	sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
 
 	m_last_pos.MakeInvalid();
 	

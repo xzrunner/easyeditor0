@@ -9,8 +9,8 @@ namespace ee0
 {
 
 WxCompNodeEditorPanel::WxCompNodeEditorPanel(wxWindow* parent, CompNodeEditor& ceditor, 
-	                                         ee0::SubjectMgr& sub_mgr)
-	: ee0::WxCompPanel(parent, "NodeEditor")
+	                                         SubjectMgr& sub_mgr)
+	: WxCompPanel(parent, "NodeEditor")
 	, m_ceditor(ceditor)
 	, m_sub_mgr(sub_mgr)
 {

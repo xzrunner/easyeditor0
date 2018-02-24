@@ -15,9 +15,9 @@ class WxStagePage : public WxEditPanel, public Observer
 public:
 	WxStagePage(wxWindow* parent);
 
-	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
+	virtual void OnNotify(MessageID msg, const VariantSet& variants) override;
 
-	ee0::SubjectMgr& GetSubjectMgr() { return m_sub_mgr; }
+	SubjectMgr& GetSubjectMgr() { return m_sub_mgr; }
 
 	const SelectionSet<n0::SceneNode>& GetNodeSelection() const {
 		return m_node_selection;
@@ -27,9 +27,8 @@ public:
 	}
 
 private:
-	void NodeSelectionInsert(const ee0::VariantSet& variants);
-	void NodeSelectionDelete(const ee0::VariantSet& variants);
-	void NodeSelectionSetOne(const ee0::VariantSet& variants);
+	void NodeSelectionInsert(const VariantSet& variants);
+	void NodeSelectionDelete(const VariantSet& variants);
 
 protected:
 	SubjectMgr m_sub_mgr;

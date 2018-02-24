@@ -15,7 +15,7 @@ class WxCompNodeEditorPanel : public WxCompPanel
 {
 public:
 	WxCompNodeEditorPanel(wxWindow* parent, CompNodeEditor& ceditor,
-		ee0::SubjectMgr& sub_mgr);
+		SubjectMgr& sub_mgr);
 
 	virtual void RefreshNodeComp() override;
 
@@ -28,7 +28,7 @@ private:
 
 private:
 	CompNodeEditor&  m_ceditor;
-	ee0::SubjectMgr& m_sub_mgr;
+	SubjectMgr& m_sub_mgr;
 
 	wxTextCtrl* m_filepath;
 	wxTextCtrl* m_name;
