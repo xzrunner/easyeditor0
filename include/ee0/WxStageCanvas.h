@@ -21,6 +21,7 @@ public:
 	WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 		const std::shared_ptr<wxGLContext>& glctx = nullptr, 
 		uint32_t flag = USE_CONTEXT_STACK | HAS_2D);
+	virtual ~WxStageCanvas();
 
 	const std::shared_ptr<wxGLContext>& GetGLContext() const { return m_gl_ctx; }
 

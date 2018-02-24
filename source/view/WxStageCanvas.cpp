@@ -75,6 +75,26 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	m_timer.Start(1000 / FPS);
 }
 
+WxStageCanvas::~WxStageCanvas()
+{
+	m_timer.Stop();
+
+	if (m_flag & USE_CONTEXT_STACK)
+	{
+		if (m_flag & HAS_2D) {
+			pt2::RenderCtxStack::Instance()->Pop();
+
+			auto ctx = pt2::RenderCtxStack::Instance()->Top();
+			if (ctx) {
+				gum::RenderContext::Instance()->OnSize(ctx->GetScreenWidth(), ctx->GetScreenHeight());
+			}
+		}
+		if (m_flag & HAS_3D) {
+			n3::RenderCtxStack::Instance()->Pop();
+		}
+	}
+}
+
 void WxStageCanvas::OnDrawWhole() const
 {
 	ur::RenderContext* rc = gum::RenderContext::Instance()->GetImpl();
