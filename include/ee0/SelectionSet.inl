@@ -12,7 +12,7 @@ inline void SelectionSet<T>::Clear()
 template<class T>
 inline void SelectionSet<T>::Add(const std::shared_ptr<T>& spr)
 {
-	if (spr) {
+	if (spr && !IsExist(spr)) {
 		m_items.push_back(spr);
 	}
 }
