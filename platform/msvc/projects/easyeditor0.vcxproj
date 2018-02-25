@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\include\ee0\Application.h" />
     <ClInclude Include="..\..\..\include\ee0\CameraHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\color_config.h" />
     <ClInclude Include="..\..\..\include\ee0\CompLibraryItem.h" />

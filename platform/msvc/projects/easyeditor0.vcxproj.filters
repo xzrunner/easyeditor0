@@ -157,6 +157,9 @@
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\Application.h">
+      <Filter>view\frame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
