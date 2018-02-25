@@ -17,6 +17,8 @@ public:
 
 	virtual void OnNotify(MessageID msg, const VariantSet& variants) override;
 
+	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const = 0;
+
 	SubjectMgr& GetSubjectMgr() { return m_sub_mgr; }
 
 	const SelectionSet<n0::SceneNode>& GetNodeSelection() const {
@@ -26,6 +28,8 @@ public:
 		return m_node_selection;
 	}
 
+	const std::string& GetFilepath() const { return m_filepath; }
+
 private:
 	void NodeSelectionInsert(const VariantSet& variants);
 	void NodeSelectionDelete(const VariantSet& variants);
@@ -34,6 +38,9 @@ protected:
 	SubjectMgr m_sub_mgr;
 
 	SelectionSet<n0::SceneNode> m_node_selection;
+
+private:
+	std::string m_filepath;
 
 }; // WxStagePage
 
