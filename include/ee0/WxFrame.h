@@ -24,6 +24,7 @@ protected:
 	virtual void OnOpen(wxCommandEvent& event);
 	virtual void OnSave(wxCommandEvent& event);
 	virtual void OnSaveAs(wxCommandEvent& event);
+	virtual void OnClear(wxCommandEvent& event);
 
 private:
 	void InitMenuBar();
@@ -31,7 +32,7 @@ private:
 
 	wxMenu* InitFileBar();
 
-private:
+protected:
 	std::shared_ptr<Application> m_app = nullptr;
 
 	DECLARE_EVENT_TABLE()

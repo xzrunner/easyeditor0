@@ -13,6 +13,7 @@ BEGIN_EVENT_TABLE(WxFrame, wxFrame)
 	EVT_MENU(wxID_OPEN, WxFrame::OnOpen)
 	EVT_MENU(wxID_SAVE, WxFrame::OnSave)
 	EVT_MENU(wxID_SAVEAS, WxFrame::OnSaveAs)
+	EVT_MENU(wxID_CLEAR, WxFrame::OnClear)
 END_EVENT_TABLE()
 
 WxFrame::WxFrame(const std::string& title, bool maxmize, const wxSize& size)
@@ -54,6 +55,11 @@ void WxFrame::OnSaveAs(wxCommandEvent& event)
 	}
 }
 
+void WxFrame::OnClear(wxCommandEvent& event)
+{
+	m_app->Clear();
+}
+
 void WxFrame::InitMenuBar()
 {
 	wxMenuBar* menu_bar = new wxMenuBar;
@@ -74,13 +80,15 @@ wxMenu* WxFrame::InitFileBar()
 	//}
 
 	wxMenu* menu = new wxMenu;
-	menu->Append(wxID_NEW, wxT("&New\tCtrl+N"), wxT("Create a project"));
+	menu->Append(wxID_NEW, wxT("&New...\tCtrl+N"), wxT("Create a project"));
 	menu->Append(wxID_OPEN, wxT("&Open...\tCtrl+O"), wxT("Open a project"));
 	menu->AppendSeparator();
 	menu->Append(wxID_SAVE, wxT("&Save\tCtrl+S"), wxT("Save the project"));
 	menu->Append(wxID_SAVEAS, wxT("&Save as...\tF11"), wxT("Save to a new file"));
 	menu->AppendSeparator();
-//	menu->AppendSubMenu(m_recent_menu->GetMenu(), wxT("Recent Files"));
+	menu->Append(wxID_CLEAR, wxT("Clear"), wxT("Clear the project"));
+	menu->AppendSeparator();
+	//	menu->AppendSubMenu(m_recent_menu->GetMenu(), wxT("Recent Files"));
 	//menu->AppendSeparator();
 	//menu->Append(wxID_EXIT, wxT("E&xit\tAlt+X"), wxT("Quit"));
 	return menu;
