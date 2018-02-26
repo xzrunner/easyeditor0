@@ -21,15 +21,20 @@ bool NodeSelectOP::OnKeyDown(int keyCode)
 
 	if (keyCode == WXK_DELETE)
 	{
-		VariantSet vars;
-		Variant var;
-		var.m_type = VT_PVOID;
-		var.m_val.pv = const_cast<SelectionSet<n0::SceneNode>*>
-			(&m_stage.GetNodeSelection());
-		vars.SetVariant("selection", var);
+		m_stage.GetNodeSelection().Traverse([&](const n0::SceneNodePtr& node)->bool
+		{
+			ee0::VariantSet vars;
+			ee0::Variant var;
+			var.m_type = ee0::VT_PVOID;
+			var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
+			vars.SetVariant("node", var);
+			bool succ = m_stage.GetSubjectMgr().NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
+			GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
 
-		bool succ = m_stage.GetSubjectMgr().NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
-		GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
+			return true;
+		});
+
+		m_stage.GetSubjectMgr().NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 	}
 
 	return false;

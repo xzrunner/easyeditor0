@@ -34,7 +34,7 @@ void WxStagePage::OnNotify(MessageID msg, const VariantSet& variants)
 void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type != VT_EMPTY, "no var in vars: node");
+	GD_ASSERT(var.m_type == VT_PVOID, "no var in vars: node");
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
@@ -46,7 +46,7 @@ void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 void WxStagePage::NodeSelectionDelete(const VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type != VT_EMPTY, "no var in vars: node");
+	GD_ASSERT(var.m_type == VT_PVOID, "no var in vars: node");
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 

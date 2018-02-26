@@ -11,7 +11,8 @@ public:
 	virtual ~Application() {}
 	virtual void LoadFromFile(const std::string& filepath) = 0;
 	virtual void StoreToFile(const std::string& filepath) const = 0;
-	
+	virtual void Clear() = 0;
+
 }; // Application
 
 }

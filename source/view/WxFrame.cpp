@@ -24,6 +24,7 @@ WxFrame::WxFrame(const std::string& title, bool maxmize, const wxSize& size)
 
 void WxFrame::OnNew(wxCommandEvent& event)
 {
+	m_app->Clear();
 }
 
 void WxFrame::OnOpen(wxCommandEvent& event)
