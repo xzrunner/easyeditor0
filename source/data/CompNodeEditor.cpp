@@ -5,7 +5,7 @@
 namespace ee0
 {
 
-const char* const CompNodeEditor::TYPE_NAME = "node_editor";
+const char* const CompNodeEditor::TYPE_NAME = "ee0_node_editor";
 
 CompNodeEditor::CompNodeEditor()
 	: m_visible(true)
