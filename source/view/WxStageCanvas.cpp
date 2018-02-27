@@ -3,6 +3,8 @@
 
 #include <unirender/RenderContext.h>
 #include <painting2/RenderCtxStack.h>
+#include <painting2/Blackboard.h>
+#include <painting2/Context.h>
 #include <sprite2/SprTimer.h>
 #include <node3/RenderCtxStack.h>
 #include <gum/Sprite2.h>
@@ -78,7 +80,8 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	if (m_flag & USE_CONTEXT_STACK)
 	{
 		if (m_flag & HAS_2D) {
-			m_ctx_idx_2d = pt2::RenderCtxStack::Instance()->Push(pt2::RenderContext());
+			auto& pt2_ctx = pt2::Blackboard::Instance()->GetContext();
+			m_ctx_idx_2d = pt2_ctx.GetCtxStack().Push(pt2::RenderContext());
 		}
 		if (m_flag & HAS_3D) {
 			m_ctx_idx_3d = n3::RenderCtxStack::Instance()->Push(n3::RenderContext());
@@ -95,9 +98,10 @@ WxStageCanvas::~WxStageCanvas()
 	if (m_flag & USE_CONTEXT_STACK)
 	{
 		if (m_flag & HAS_2D) {
-			pt2::RenderCtxStack::Instance()->Pop();
+			auto& pt2_ctx = pt2::Blackboard::Instance()->GetContext();
+			pt2_ctx.GetCtxStack().Pop();
 
-			auto ctx = pt2::RenderCtxStack::Instance()->Top();
+			auto ctx = pt2_ctx.GetCtxStack().Top();
 			if (ctx) {
 				m_gum_rc->OnSize(ctx->GetScreenWidth(), ctx->GetScreenHeight());
 			}
@@ -150,6 +154,8 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 
 void WxStageCanvas::OnMouse(wxMouseEvent& event)
 {
+	SetCurrentCanvas();
+
 	m_stage.OnMouse(event);
 
 	// The handler of this event should normally call event.Skip() to allow the default processing 
@@ -161,21 +167,29 @@ void WxStageCanvas::OnMouse(wxMouseEvent& event)
 
 void WxStageCanvas::OnKeyDown(wxKeyEvent& event)
 {
+	SetCurrentCanvas();
+
 	m_stage.OnKeyDown(event);
 }
 
 void WxStageCanvas::OnKeyUp(wxKeyEvent& event)
 {
+	SetCurrentCanvas();
+
 	m_stage.OnKeyUp(event);
 }
 
 void WxStageCanvas::OnChar(wxKeyEvent& event)
 {
+	SetCurrentCanvas();
+
 	m_stage.OnChar(event);
 }
 
 void WxStageCanvas::OnTimer(wxTimerEvent& event)
 {
+	SetCurrentCanvas();
+
 	OnTimer();
 
 	float dt = 0.166f;
@@ -205,6 +219,8 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 
 void WxStageCanvas::OnKillFocus(wxFocusEvent& event)
 {
+	SetCurrentCanvas();
+
 //	m_stage.GetKeyState().Reset();
 }
 
@@ -213,7 +229,8 @@ void WxStageCanvas::SetCurrentCanvas()
 	BindRenderContext();
 
 	if (m_flag & HAS_2D) {
-		pt2::RenderCtxStack::Instance()->Bind(m_ctx_idx_2d);
+		auto& pt2_ctx = pt2::Blackboard::Instance()->GetContext();
+		pt2_ctx.GetCtxStack().Bind(m_ctx_idx_2d);
 	}
 	if (m_flag & HAS_3D) {
 		n3::RenderCtxStack::Instance()->Bind(m_ctx_idx_3d);
