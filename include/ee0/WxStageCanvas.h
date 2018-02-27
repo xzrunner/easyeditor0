@@ -5,6 +5,8 @@
 
 #include <memory>
 
+namespace gum { class RenderContext; }
+
 namespace ee0
 {
 
@@ -19,11 +21,13 @@ public:
 	
 public:
 	WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
-		const std::shared_ptr<wxGLContext>& glctx = nullptr, 
+		const std::shared_ptr<wxGLContext>& gl_ctx = nullptr, 
+		const std::shared_ptr<gum::RenderContext>& gum_rc = nullptr,
 		uint32_t flag = USE_CONTEXT_STACK | HAS_2D);
 	virtual ~WxStageCanvas();
 
 	const std::shared_ptr<wxGLContext>& GetGLContext() const { return m_gl_ctx; }
+	const std::shared_ptr<gum::RenderContext>& GetGumRC() const { return m_gum_rc; }
 
 	void SetDirty() { m_dirty = true; }
 
@@ -51,13 +55,17 @@ private:
 	void SetCurrentCanvas();
 
 	void InitRender();
+	void InitOthers();
+
+	void BindRenderContext();
 
 private:
 	uint32_t m_flag;
 
 	EditPanelImpl& m_stage;
 
-	std::shared_ptr<wxGLContext> m_gl_ctx = nullptr;
+	std::shared_ptr<wxGLContext>        m_gl_ctx = nullptr;
+	std::shared_ptr<gum::RenderContext> m_gum_rc = nullptr;
 	int m_ctx_idx_2d, m_ctx_idx_3d;
 
 	wxTimer m_timer;

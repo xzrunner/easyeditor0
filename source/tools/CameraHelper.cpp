@@ -2,6 +2,7 @@
 
 #include <painting2/OrthoCamera.h>
 #include <gum/RenderContext.h>
+#include <gum/Blackboard.h>
 
 namespace ee0
 {
@@ -13,8 +14,9 @@ sm::vec2 CameraHelper::TransPosScreenToProject(const pt2::Camera& cam, int scree
 	}
 
 	auto& ortho_cam = dynamic_cast<const pt2::OrthoCamera&>(cam);
-	int w = gum::RenderContext::Instance()->GetWidth(),
-		h = gum::RenderContext::Instance()->GetHeight();
+	auto& gum_rc = gum::Blackboard::Instance()->GetRenderContext();
+	int w = gum_rc->GetWidth(),
+		h = gum_rc->GetHeight();
 	return ortho_cam.TransPosScreenToProject(screen_x, screen_y, w, h);
 }
 
@@ -25,8 +27,9 @@ sm::vec2 CameraHelper::TransPosProjectToScreen(const pt2::Camera& cam, const sm:
 	}
 
 	auto& ortho_cam = dynamic_cast<const pt2::OrthoCamera&>(cam);
-	int w = gum::RenderContext::Instance()->GetWidth(),
-		h = gum::RenderContext::Instance()->GetHeight();
+	auto& gum_rc = gum::Blackboard::Instance()->GetRenderContext();
+	int w = gum_rc->GetWidth(),
+		h = gum_rc->GetHeight();
 	return ortho_cam.TransPosProjectToScreen(project, w, h);
 }
 
