@@ -14,6 +14,7 @@
 #include <gum/Blackboard.h>
 
 #include <shaderlab/ShaderMgr.h>
+#include <shaderlab/RenderContext.h>
 #include <shaderlab/Shape2Shader.h>
 #include <shaderlab/Shape3Shader.h>
 #include <shaderlab/Sprite2Shader.h>
@@ -68,6 +69,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 		m_gl_ctx = std::make_shared<wxGLContext>(this);
 		SetCurrentCanvas();
 		InitRender();
+		SetCurrentCanvas();
 	}
 	InitOthers();
 
@@ -108,7 +110,7 @@ WxStageCanvas::~WxStageCanvas()
 
 void WxStageCanvas::OnDrawWhole() const
 {
-	m_gum_rc->GetContext()->Clear(0x88888888);
+	m_gum_rc->GetURRC().Clear(0x88888888);
 
 	OnDrawSprites();
 }
@@ -135,7 +137,7 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	OnDrawWhole();
 	m_dirty = false;
 
-	m_gum_rc->GetShaderMgr()->FlushShader();
+	m_gum_rc->GetSLRC().GetShaderMgr().FlushShader();
 
 	glFlush();
 	SwapBuffers();
@@ -221,16 +223,17 @@ void WxStageCanvas::SetCurrentCanvas()
 void WxStageCanvas::InitRender()
 {
 	m_gum_rc = std::make_shared<gum::RenderContext>();
-	auto& shader_mgr = *m_gum_rc->GetShaderMgr();
+	auto& sl_rc = m_gum_rc->GetSLRC();
+	auto& shader_mgr = sl_rc.GetShaderMgr();
 
-	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(shader_mgr));
-	shader_mgr.CreateShader(sl::SHAPE3, new sl::Shape3Shader(shader_mgr));
-	shader_mgr.CreateShader(sl::SPRITE2, new sl::Sprite2Shader(shader_mgr));
-	shader_mgr.CreateShader(sl::SPRITE3, new sl::Sprite3Shader(shader_mgr));
-	shader_mgr.CreateShader(sl::BLEND, new sl::BlendShader(shader_mgr));
-	shader_mgr.CreateShader(sl::FILTER, new sl::FilterShader(shader_mgr));
-	shader_mgr.CreateShader(sl::MASK, new sl::MaskShader(shader_mgr));
-	shader_mgr.CreateShader(sl::MODEL3, new sl::Model3Shader(shader_mgr));
+	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(sl_rc));
+	shader_mgr.CreateShader(sl::SHAPE3, new sl::Shape3Shader(sl_rc));
+	shader_mgr.CreateShader(sl::SPRITE2, new sl::Sprite2Shader(sl_rc));
+	shader_mgr.CreateShader(sl::SPRITE3, new sl::Sprite3Shader(sl_rc));
+	shader_mgr.CreateShader(sl::BLEND, new sl::BlendShader(sl_rc));
+	shader_mgr.CreateShader(sl::FILTER, new sl::FilterShader(sl_rc));
+	shader_mgr.CreateShader(sl::MASK, new sl::MaskShader(sl_rc));
+	shader_mgr.CreateShader(sl::MODEL3, new sl::Model3Shader(sl_rc));
 }
 
 void WxStageCanvas::InitOthers()
