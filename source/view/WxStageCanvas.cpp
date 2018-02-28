@@ -1,5 +1,6 @@
 #include "ee0/WxStageCanvas.h"
 #include "ee0/EditPanelImpl.h"
+#include "ee0/RenderContext.h"
 
 #include <unirender/RenderContext.h>
 #include <painting2/RenderCtxStack.h>
@@ -48,30 +49,19 @@ static const int GL_ATTRIB[20] = {WX_GL_RGBA, WX_GL_MIN_RED, 1, WX_GL_MIN_GREEN,
 static const float FPS = 30;
 
 WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
-	                         const std::shared_ptr<wxGLContext>& gl_ctx, 
-		                     const std::shared_ptr<gum::RenderContext>& gum_rc, 
+	                         const std::shared_ptr<RenderContext>& rc, 
 	                         uint32_t flag)
 	: wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB)
 	, m_flag(flag)
 	, m_stage(stage)
-	, m_gl_ctx()
+	, m_rc(rc)
 	, m_ctx_idx_2d(-1)
 	, m_ctx_idx_3d(-1)
 	, m_timer(this)
 	, m_dirty(false)
 {
-	if (gl_ctx) 
-	{
-		m_gl_ctx = gl_ctx;
-		GD_ASSERT(gum_rc, "null gum_rc");
-		m_gum_rc = gum_rc;
-	} 
-	else 
-	{
-		m_gl_ctx = std::make_shared<wxGLContext>(this);
-		SetCurrent(*m_gl_ctx);
-		InitRender();
-		SetCurrentCanvas();
+	if (!m_rc) {
+		InitRender();	
 	}
 	InitOthers();
 
@@ -103,7 +93,7 @@ WxStageCanvas::~WxStageCanvas()
 
 			auto ctx = pt2_ctx.GetCtxStack().Top();
 			if (ctx) {
-				m_gum_rc->OnSize(ctx->GetScreenWidth(), ctx->GetScreenHeight());
+				m_rc->gum_rc->OnSize(ctx->GetScreenWidth(), ctx->GetScreenHeight());
 			}
 		}
 		if (m_flag & HAS_3D) {
@@ -114,7 +104,7 @@ WxStageCanvas::~WxStageCanvas()
 
 void WxStageCanvas::OnDrawWhole() const
 {
-	m_gum_rc->GetURRC().Clear(0x88888888);
+	m_rc->gum_rc->GetURRC().Clear(0x88888888);
 
 	OnDrawSprites();
 }
@@ -129,7 +119,7 @@ void WxStageCanvas::OnSize(wxSizeEvent& event)
 
 	OnSize(w, h);
 
-	m_gum_rc->OnSize(w, h);
+	m_rc->gum_rc->OnSize(w, h);
 }
 
 void WxStageCanvas::OnPaint(wxPaintEvent& event)
@@ -141,7 +131,7 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	OnDrawWhole();
 	m_dirty = false;
 
-	m_gum_rc->GetSLRC().GetShaderMgr().FlushShader();
+	m_rc->gum_rc->GetSLRC().GetShaderMgr().FlushShader();
 
 	glFlush();
 	SwapBuffers();
@@ -239,8 +229,12 @@ void WxStageCanvas::SetCurrentCanvas()
 
 void WxStageCanvas::InitRender()
 {
-	m_gum_rc = std::make_shared<gum::RenderContext>();
-	auto& sl_rc = m_gum_rc->GetSLRC();
+	m_rc = std::make_shared<RenderContext>();
+	m_rc->gl_ctx = std::make_shared<wxGLContext>(this);
+	SetCurrent(*m_rc->gl_ctx);
+
+	m_rc->gum_rc = std::make_shared<gum::RenderContext>();
+	auto& sl_rc = m_rc->gum_rc->GetSLRC();
 	auto& shader_mgr = sl_rc.GetShaderMgr();
 
 	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(sl_rc));
@@ -251,6 +245,8 @@ void WxStageCanvas::InitRender()
 	shader_mgr.CreateShader(sl::FILTER, new sl::FilterShader(sl_rc));
 	shader_mgr.CreateShader(sl::MASK, new sl::MaskShader(sl_rc));
 	shader_mgr.CreateShader(sl::MODEL3, new sl::Model3Shader(sl_rc));
+
+	SetCurrentCanvas();
 }
 
 void WxStageCanvas::InitOthers()
@@ -273,11 +269,11 @@ void WxStageCanvas::InitOthers()
 
 void WxStageCanvas::BindRenderContext()
 {
-	SetCurrent(*m_gl_ctx);
+	SetCurrent(*m_rc->gl_ctx);
 
-	if (m_gum_rc) {
-		gum::Blackboard::Instance()->SetRenderContext(m_gum_rc);
-		m_gum_rc->Bind();
+	if (m_rc->gum_rc) {
+		gum::Blackboard::Instance()->SetRenderContext(m_rc->gum_rc);
+		m_rc->gum_rc->Bind();
 	}
 }
 
