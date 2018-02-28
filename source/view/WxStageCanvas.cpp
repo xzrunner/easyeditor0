@@ -69,7 +69,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	else 
 	{
 		m_gl_ctx = std::make_shared<wxGLContext>(this);
-		SetCurrentCanvas();
+		SetCurrent(*m_gl_ctx);
 		InitRender();
 		SetCurrentCanvas();
 	}
