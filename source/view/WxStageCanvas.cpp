@@ -119,15 +119,15 @@ void WxStageCanvas::OnDrawWhole() const
 
 void WxStageCanvas::OnSize(wxSizeEvent& event)
 {
-	SetCurrentCanvas();
-
 	wxSize size = event.GetSize();
 	int w = size.GetWidth();
 	int h = size.GetHeight();
-
-	OnSize(w, h);
-
-	m_rc->gum_rc->OnSize(w, h);
+	if (w != 0 && h != 0) 
+	{
+		SetCurrentCanvas();
+		OnSize(w, h);
+		m_rc->gum_rc->OnSize(w, h);
+	}
 }
 
 void WxStageCanvas::OnPaint(wxPaintEvent& event)
@@ -186,7 +186,7 @@ void WxStageCanvas::OnChar(wxKeyEvent& event)
 
 void WxStageCanvas::OnTimer(wxTimerEvent& event)
 {
-	SetCurrentCanvas();
+//	SetCurrentCanvas();
 
 	OnTimer();
 
