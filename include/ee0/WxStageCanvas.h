@@ -61,6 +61,7 @@ private:
 
 	EditPanelImpl& m_stage;
 
+	bool m_new_rc;
 	std::shared_ptr<RenderContext> m_rc;
 	int m_ctx_idx_2d, m_ctx_idx_3d;
 

@@ -54,6 +54,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	: wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB)
 	, m_flag(flag)
 	, m_stage(stage)
+	, m_new_rc(rc == nullptr)
 	, m_rc(rc)
 	, m_ctx_idx_2d(-1)
 	, m_ctx_idx_3d(-1)
@@ -85,6 +86,8 @@ WxStageCanvas::~WxStageCanvas()
 {
 	m_timer.Stop();
 
+	SetCurrentCanvas();
+
 	if (m_flag & USE_CONTEXT_STACK)
 	{
 		if (m_flag & HAS_2D) {
@@ -99,6 +102,11 @@ WxStageCanvas::~WxStageCanvas()
 		if (m_flag & HAS_3D) {
 			n3::RenderCtxStack::Instance()->Pop();
 		}
+	}
+
+	gum::Blackboard::Instance()->SetRenderContext(nullptr);
+	if (m_new_rc) {
+		m_rc->gum_rc->Unbind();
 	}
 }
 
@@ -271,10 +279,8 @@ void WxStageCanvas::BindRenderContext()
 {
 	SetCurrent(*m_rc->gl_ctx);
 
-	if (m_rc->gum_rc) {
-		gum::Blackboard::Instance()->SetRenderContext(m_rc->gum_rc);
-		m_rc->gum_rc->Bind();
-	}
+	gum::Blackboard::Instance()->SetRenderContext(m_rc->gum_rc);
+	m_rc->gum_rc->Bind();
 }
 
 }
