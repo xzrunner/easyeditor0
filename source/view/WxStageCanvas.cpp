@@ -3,11 +3,11 @@
 #include "ee0/RenderContext.h"
 
 #include <unirender/RenderContext.h>
-#include <painting2/RenderCtxStack.h>
+#include <painting2/WndCtxStack.h>
 #include <painting2/Blackboard.h>
-#include <painting2/Context.h>
+#include <painting2/RenderContext.h>
+#include <painting3/WndCtxStack.h>
 #include <sprite2/SprTimer.h>
-#include <node3/RenderCtxStack.h>
 #include <gum/Sprite2.h>
 #include <gum/Audio.h>
 #include <gum/Model3.h>
@@ -72,10 +72,10 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	{
 		if (m_flag & HAS_2D) {
 			auto& pt2_ctx = pt2::Blackboard::Instance()->GetContext();
-			m_ctx_idx_2d = pt2_ctx.GetCtxStack().Push(pt2::RenderContext());
+			m_ctx_idx_2d = pt2_ctx.GetCtxStack().Push(pt2::WindowContext());
 		}
 		if (m_flag & HAS_3D) {
-			m_ctx_idx_3d = n3::RenderCtxStack::Instance()->Push(n3::RenderContext());
+			m_ctx_idx_3d = pt3::WndCtxStack::Instance()->Push(pt3::WindowContext());
 		}
 	}
 
@@ -100,7 +100,7 @@ WxStageCanvas::~WxStageCanvas()
 			}
 		}
 		if (m_flag & HAS_3D) {
-			n3::RenderCtxStack::Instance()->Pop();
+			pt3::WndCtxStack::Instance()->Pop();
 		}
 	}
 
@@ -112,7 +112,7 @@ WxStageCanvas::~WxStageCanvas()
 
 void WxStageCanvas::OnDrawWhole() const
 {
-	m_rc->gum_rc->GetURRC().Clear(0x88888888);
+	m_rc->gum_rc->GetUrRc().Clear(0x88888888);
 
 	OnDrawSprites();
 }
@@ -139,7 +139,7 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	OnDrawWhole();
 	m_dirty = false;
 
-	m_rc->gum_rc->GetSLRC().GetShaderMgr().FlushShader();
+	m_rc->gum_rc->GetSlRc().GetShaderMgr().FlushShader();
 
 	glFlush();
 	SwapBuffers();
@@ -231,7 +231,7 @@ void WxStageCanvas::SetCurrentCanvas()
 		pt2_ctx.GetCtxStack().Bind(m_ctx_idx_2d);
 	}
 	if (m_flag & HAS_3D) {
-		n3::RenderCtxStack::Instance()->Bind(m_ctx_idx_3d);
+		pt3::WndCtxStack::Instance()->Bind(m_ctx_idx_3d);
 	}
 }
 
@@ -242,7 +242,7 @@ void WxStageCanvas::InitRender()
 	SetCurrent(*m_rc->gl_ctx);
 
 	m_rc->gum_rc = std::make_shared<gum::RenderContext>();
-	auto& sl_rc = m_rc->gum_rc->GetSLRC();
+	auto& sl_rc = m_rc->gum_rc->GetSlRc();
 	auto& shader_mgr = sl_rc.GetShaderMgr();
 
 	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(sl_rc));
