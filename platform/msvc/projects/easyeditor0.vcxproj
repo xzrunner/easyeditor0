@@ -24,6 +24,7 @@
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
+    <ClInclude Include="..\..\..\include\ee0\WindowContext.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompNodeEditorPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropData.h" />

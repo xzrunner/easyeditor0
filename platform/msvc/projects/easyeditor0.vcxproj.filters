@@ -166,6 +166,9 @@
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h">
       <Filter>view\stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WindowContext.h">
+      <Filter>view\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">

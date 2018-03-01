@@ -1,5 +1,8 @@
 #pragma once
 
+#include "ee0/RenderContext.h"
+#include "ee0/WindowContext.h"
+
 #include <wx/glcanvas.h>
 #include <wx/timer.h>
 
@@ -9,22 +12,21 @@ namespace ee0
 {
 
 class EditPanelImpl;
-class RenderContext;
 
 class WxStageCanvas : public wxGLCanvas
 {
 public:
-	static const uint32_t USE_CONTEXT_STACK = 0x00000001;
-	static const uint32_t HAS_2D            = 0x00000002;
-	static const uint32_t HAS_3D            = 0x00000004;
+	static const uint32_t HAS_2D            = 0x00000001;
+	static const uint32_t HAS_3D            = 0x00000002;
 	
 public:
 	WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
-		const std::shared_ptr<RenderContext>& rc = nullptr,
-		uint32_t flag = USE_CONTEXT_STACK | HAS_2D);
+		const RenderContext* rc = nullptr, const WindowContext* wc = nullptr,
+		uint32_t flag = HAS_2D);
 	virtual ~WxStageCanvas();
 
-	const std::shared_ptr<RenderContext>& GetContext() const { return m_rc; }
+	const RenderContext& GetRenderContext() const { return m_rc; }
+	const WindowContext& GetWidnowContext() const { return m_wc; }
 
 	void SetDirty() { m_dirty = true; }
 
@@ -52,6 +54,7 @@ private:
 	void SetCurrentCanvas();
 
 	void InitRender();
+	void InitWindow(const WindowContext* wc);
 	void InitOthers();
 
 	void BindRenderContext();
@@ -61,9 +64,10 @@ private:
 
 	EditPanelImpl& m_stage;
 
+	// context
 	bool m_new_rc;
-	std::shared_ptr<RenderContext> m_rc;
-	int m_ctx_idx_2d, m_ctx_idx_3d;
+	RenderContext m_rc;
+	WindowContext m_wc;
 
 	wxTimer m_timer;
 
