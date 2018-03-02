@@ -17,7 +17,8 @@ public:
 
 	virtual void OnNotify(MessageID msg, const VariantSet& variants) override;
 
-	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const = 0;
+	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func, 
+		const VariantSet& variants = VariantSet()) const = 0;
 
 	SubjectMgr& GetSubjectMgr() { return m_sub_mgr; }
 
