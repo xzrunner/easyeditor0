@@ -60,13 +60,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	, m_timer(this)
 	, m_dirty(false)
 {
-	if (rc) {
-		m_rc = *rc;
-		m_new_rc = false;
-	} else {
-		InitRender();
-		m_new_rc = true;
-	}
+	InitRender(rc);
 	InitWindow(wc);
 	InitOthers();
 
@@ -98,6 +92,46 @@ WxStageCanvas::~WxStageCanvas()
 	gum::Blackboard::Instance()->SetRenderContext(nullptr);
 	if (m_new_rc) {
 		m_rc.gum_rc->Unbind();
+	}
+}
+
+wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
+{
+	return new wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB);
+}
+
+void WxStageCanvas::CreateRenderContext(RenderContext& rc, wxGLCanvas* canvas)
+{
+	rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
+	canvas->SetCurrent(*rc.gl_ctx);
+
+	rc.gum_rc = std::make_shared<gum::RenderContext>();
+	auto& sl_rc = rc.gum_rc->GetSlRc();
+	auto& shader_mgr = sl_rc.GetShaderMgr();
+
+	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(sl_rc));
+	shader_mgr.CreateShader(sl::SHAPE3, new sl::Shape3Shader(sl_rc));
+	shader_mgr.CreateShader(sl::SPRITE2, new sl::Sprite2Shader(sl_rc));
+	shader_mgr.CreateShader(sl::SPRITE3, new sl::Sprite3Shader(sl_rc));
+	shader_mgr.CreateShader(sl::BLEND, new sl::BlendShader(sl_rc));
+	shader_mgr.CreateShader(sl::FILTER, new sl::FilterShader(sl_rc));
+	shader_mgr.CreateShader(sl::MASK, new sl::MaskShader(sl_rc));
+	shader_mgr.CreateShader(sl::MODEL3, new sl::Model3Shader(sl_rc));
+}
+
+void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3d)
+{
+	if (has2d)
+	{
+		wc.wc2 = std::make_shared<pt2::WindowContext>();
+		wc.wc2->Bind();
+		pt2::Blackboard::Instance()->SetWindowContext(wc.wc2);
+	}
+	if (has3d)
+	{
+		wc.wc3 = std::make_shared<pt3::WindowContext>();
+		wc.wc3->Bind();
+		pt3::Blackboard::Instance()->SetWindowContext(wc.wc3);
 	}
 }
 
@@ -227,43 +261,24 @@ void WxStageCanvas::SetCurrentCanvas()
 	}
 }
 
-void WxStageCanvas::InitRender()
+void WxStageCanvas::InitRender(const RenderContext* rc)
 {
-	m_rc.gl_ctx = std::make_shared<wxGLContext>(this);
-	SetCurrent(*m_rc.gl_ctx);
-
-	m_rc.gum_rc = std::make_shared<gum::RenderContext>();
-	auto& sl_rc = m_rc.gum_rc->GetSlRc();
-	auto& shader_mgr = sl_rc.GetShaderMgr();
-
-	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(sl_rc));
-	shader_mgr.CreateShader(sl::SHAPE3, new sl::Shape3Shader(sl_rc));
-	shader_mgr.CreateShader(sl::SPRITE2, new sl::Sprite2Shader(sl_rc));
-	shader_mgr.CreateShader(sl::SPRITE3, new sl::Sprite3Shader(sl_rc));
-	shader_mgr.CreateShader(sl::BLEND, new sl::BlendShader(sl_rc));
-	shader_mgr.CreateShader(sl::FILTER, new sl::FilterShader(sl_rc));
-	shader_mgr.CreateShader(sl::MASK, new sl::MaskShader(sl_rc));
-	shader_mgr.CreateShader(sl::MODEL3, new sl::Model3Shader(sl_rc));
-
-	SetCurrentCanvas();
+	if (rc) {
+		m_rc = *rc;
+		m_new_rc = false;
+	} else {
+		CreateRenderContext(m_rc, this);
+		SetCurrentCanvas();
+		m_new_rc = true;
+	}
 }
 
 void WxStageCanvas::InitWindow(const WindowContext* wc)
 {
 	if (wc) {
 		m_wc = *wc;
-	}
-	if (m_flag & HAS_2D)
-	{
-		m_wc.wc2 = std::make_shared<pt2::WindowContext>();
-		m_wc.wc2->Bind();
-		pt2::Blackboard::Instance()->SetWindowContext(m_wc.wc2);
-	}
-	if (m_flag & HAS_3D)
-	{
-		m_wc.wc3 = std::make_shared<pt3::WindowContext>();
-		m_wc.wc3->Bind();
-		pt3::Blackboard::Instance()->SetWindowContext(m_wc.wc3);
+	} else {
+		CreateWindowContext(m_wc, m_flag & HAS_2D, m_flag & HAS_3D);
 	}
 }
 

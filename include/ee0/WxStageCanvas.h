@@ -30,6 +30,10 @@ public:
 
 	void SetDirty() { m_dirty = true; }
 
+	static wxGLCanvas* CreateWxGLCanvas(wxWindow* wnd);
+	static void CreateRenderContext(RenderContext& rc, wxGLCanvas* canvas);
+	static void CreateWindowContext(WindowContext& wc, bool has2d, bool has3d);
+
 protected:
 	virtual void OnSize(int w, int h) = 0;
 	virtual void OnDrawWhole() const;
@@ -53,7 +57,7 @@ private:
 private:
 	void SetCurrentCanvas();
 
-	void InitRender();
+	void InitRender(const RenderContext* rc);
 	void InitWindow(const WindowContext* wc);
 	void InitOthers();
 
