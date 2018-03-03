@@ -29,8 +29,6 @@ public:
 		return m_node_selection;
 	}
 
-	const std::string& GetFilepath() const { return m_filepath; }
-
 private:
 	void NodeSelectionInsert(const VariantSet& variants);
 	void NodeSelectionDelete(const VariantSet& variants);
@@ -39,9 +37,6 @@ protected:
 	SubjectMgr m_sub_mgr;
 
 	SelectionSet<n0::SceneNode> m_node_selection;
-
-private:
-	std::string m_filepath;
 
 }; // WxStagePage
 
