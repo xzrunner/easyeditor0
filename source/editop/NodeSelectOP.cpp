@@ -1,6 +1,7 @@
 #include "ee0/NodeSelectOP.h"
 #include "ee0/WxStagePage.h"
 #include "ee0/MessageID.h"
+#include "ee0/MsgHelper.h"
 
 #include <guard/check.h>
 
@@ -23,14 +24,9 @@ bool NodeSelectOP::OnKeyDown(int keyCode)
 	{
 		m_stage.GetNodeSelection().Traverse([&](const n0::SceneNodePtr& node)->bool
 		{
-			ee0::VariantSet vars;
-			ee0::Variant var;
-			var.m_type = ee0::VT_PVOID;
-			var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
-			vars.SetVariant("node", var);
-			bool succ = m_stage.GetSubjectMgr().NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
+			bool succ = MsgHelper::DeleteNode(m_stage.GetSubjectMgr(), 
+				std::const_pointer_cast<n0::SceneNode>(node));
 			GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
-
 			return true;
 		});
 
