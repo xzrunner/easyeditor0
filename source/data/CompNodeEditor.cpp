@@ -15,6 +15,16 @@ CompNodeEditor::CompNodeEditor()
 	m_name = "node" + std::to_string(COUNT++);
 }
 
+std::unique_ptr<n0::NodeComponent> CompNodeEditor::Clone() const
+{
+	auto comp = std::make_unique<CompNodeEditor>();
+	comp->m_filepath = m_filepath;
+	comp->m_name     = m_name;
+	comp->m_visible  = m_visible;
+	comp->m_editable = m_editable;
+	return comp;
+}
+
 const std::string& CompNodeEditor::GetName() const
 {
 	return m_name;
