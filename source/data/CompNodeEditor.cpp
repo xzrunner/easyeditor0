@@ -15,7 +15,7 @@ CompNodeEditor::CompNodeEditor()
 	m_name = "node" + std::to_string(COUNT++);
 }
 
-std::unique_ptr<n0::NodeComponent> CompNodeEditor::Clone() const
+std::unique_ptr<n0::NodeUniqueComp> CompNodeEditor::Clone() const
 {
 	auto comp = std::make_unique<CompNodeEditor>();
 	comp->m_filepath = m_filepath;

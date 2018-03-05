@@ -1,19 +1,22 @@
 #pragma once
 
-#include <node0/NodeComponent.h>
+#include <node0/NodeUniqueComp.h>
+
+#include <string>
 
 namespace ee0
 {
 
-class CompNodeEditor : public n0::NodeComponent
+class CompNodeEditor : public n0::NodeUniqueComp
 {
 public:
 	CompNodeEditor();
 
 	virtual const char* Type() const override { return TYPE_NAME; }
-	virtual n0::ComponentID TypeID() const override { 
-		return n0::GetComponentTypeID<CompNodeEditor>(); }
-	virtual std::unique_ptr<n0::NodeComponent> Clone() const override;
+	virtual n0::UniqueCompID TypeID() const override {
+		return n0::GetUniqueCompTypeID<CompNodeEditor>(); 
+	}
+	virtual std::unique_ptr<n0::NodeUniqueComp> Clone() const override;
 
 	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
 	const std::string& GetFilepath() const { return m_filepath; }
