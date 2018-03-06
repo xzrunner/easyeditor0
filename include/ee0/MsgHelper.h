@@ -11,7 +11,7 @@ class MsgHelper
 {
 public:
 	static bool InsertNode(SubjectMgr& mgr, n0::SceneNodePtr& node);
-	static bool DeleteNode(SubjectMgr& mgr, n0::SceneNodePtr& node);
+	static bool DeleteNode(SubjectMgr& mgr, const n0::SceneNodePtr& node);
 
 }; // MsgHelper
 

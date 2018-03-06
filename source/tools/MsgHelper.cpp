@@ -15,7 +15,7 @@ bool MsgHelper::InsertNode(SubjectMgr& mgr, n0::SceneNodePtr& node)
 	return mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
 }
 
-bool MsgHelper::DeleteNode(SubjectMgr& mgr, n0::SceneNodePtr& node)
+bool MsgHelper::DeleteNode(SubjectMgr& mgr, const n0::SceneNodePtr& node)
 {
 	ee0::VariantSet vars;
 	ee0::Variant var;
