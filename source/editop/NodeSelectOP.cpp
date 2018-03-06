@@ -14,13 +14,13 @@ NodeSelectOP::NodeSelectOP(WxStagePage& stage)
 	m_last_pos.MakeInvalid();
 }
 
-bool NodeSelectOP::OnKeyDown(int keyCode)
+bool NodeSelectOP::OnKeyDown(int key_code)
 {
-	if (EditOP::OnKeyDown(keyCode)) {
+	if (EditOP::OnKeyDown(key_code)) {
 		return true;
 	}
 
-	if (keyCode == WXK_DELETE)
+	if (key_code == WXK_DELETE)
 	{
 		m_stage.GetNodeSelection().Traverse([&](const n0::SceneNodePtr& node)->bool
 		{

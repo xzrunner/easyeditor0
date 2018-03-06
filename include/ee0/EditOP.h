@@ -10,9 +10,9 @@ class EditOP
 public:
 	virtual ~EditOP() {}
 
-	virtual bool OnKeyDown(int keyCode);
-	virtual bool OnKeyUp(int keyCode);
-	virtual bool OnChar(int keyCode);
+	virtual bool OnKeyDown(int key_code);
+	virtual bool OnKeyUp(int key_code);
+	virtual bool OnChar(int key_code);
 
 	virtual bool OnMouseLeftDown(int x, int y);
 	virtual bool OnMouseLeftUp(int x, int y);

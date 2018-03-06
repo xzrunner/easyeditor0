@@ -3,27 +3,27 @@
 namespace ee0
 {
 
-bool EditOP::OnKeyDown(int keyCode)
+bool EditOP::OnKeyDown(int key_code)
 {
-	if (m_prev_op && m_prev_op->OnKeyDown(keyCode)) {
+	if (m_prev_op && m_prev_op->OnKeyDown(key_code)) {
 		return true;
 	} else {
 		return false;
 	}
 }
 
-bool EditOP::OnKeyUp(int keyCode)
+bool EditOP::OnKeyUp(int key_code)
 {
-	if (m_prev_op && m_prev_op->OnKeyUp(keyCode)) {
+	if (m_prev_op && m_prev_op->OnKeyUp(key_code)) {
 		return true;
 	} else {
 		return false;
 	}
 }
 
-bool EditOP::OnChar(int keyCode)
+bool EditOP::OnChar(int key_code)
 {
-	if (m_prev_op && m_prev_op->OnChar(keyCode)) {
+	if (m_prev_op && m_prev_op->OnChar(key_code)) {
 		return true;
 	} else {
 		return false;
