@@ -34,6 +34,7 @@ public:
 	void OnMouseWheelRotation(int x, int y, int direction);
 
 	bool GetKeyState(int key) const { return m_keys_state.GetKeyState(key); }
+	const KeysState& GetKeyState() const { return m_keys_state; }
 
 	void OnSize(wxSizeEvent& event);
 
