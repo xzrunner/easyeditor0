@@ -21,7 +21,9 @@
     <ClInclude Include="..\..\..\include\ee0\EditOpState.h" />
     <ClInclude Include="..\..\..\include\ee0\EditPanelImpl.h" />
     <ClInclude Include="..\..\..\include\ee0\KeysState.h" />
+    <ClInclude Include="..\..\..\include\ee0\KeyType.h" />
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h" />
+    <ClInclude Include="..\..\..\include\ee0\NodeContainer.h" />
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h" />

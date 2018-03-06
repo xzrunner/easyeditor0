@@ -4,21 +4,19 @@
 #include "ee0/SubjectMgr.h"
 #include "ee0/WxEditPanel.h"
 #include "ee0/SelectionSet.h"
+#include "ee0/NodeContainer.h"
 
 #include <node0/typedef.h>
 
 namespace ee0
 {
 
-class WxStagePage : public WxEditPanel, public Observer
+class WxStagePage : public WxEditPanel, public Observer, public NodeContainer
 {
 public:
 	WxStagePage(wxWindow* parent);
 
 	virtual void OnNotify(MessageID msg, const VariantSet& variants) override;
-
-	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func, 
-		const VariantSet& variants = VariantSet()) const = 0;
 
 	SubjectMgr& GetSubjectMgr() { return m_sub_mgr; }
 

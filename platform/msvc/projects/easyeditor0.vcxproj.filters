@@ -49,6 +49,9 @@
     <Filter Include="gui">
       <UniqueIdentifier>{527cd7d7-f6ab-466b-bef4-418e16c5c19f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="interface">
+      <UniqueIdentifier>{71903ba5-5eb3-4586-b231-b468ddb5a52c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -130,9 +133,6 @@
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\KeysState.h">
-      <Filter>view\stage</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxFrame.h">
       <Filter>view\frame</Filter>
     </ClInclude>
@@ -168,6 +168,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h">
       <Filter>view\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\KeyType.h">
+      <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\NodeContainer.h">
+      <Filter>interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\KeysState.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -228,9 +237,6 @@
     <ClCompile Include="..\..\..\source\view\WxStagePage.cpp">
       <Filter>view\stage</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\view\KeysState.cpp">
-      <Filter>view\stage</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxFrame.cpp">
       <Filter>view\frame</Filter>
     </ClCompile>
@@ -254,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxListSelectDlg.cpp">
       <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\KeysState.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
