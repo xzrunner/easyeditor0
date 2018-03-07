@@ -34,7 +34,13 @@ void EditPanelImpl::OnMouse(wxMouseEvent& event)
 void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 {
 	int key_code = event.GetKeyCode();
-//	m_keys_state.OnKeyDown(key_code);
+	m_keys_state.OnKeyDown(key_code);
+
+	if (GetKeyState(WXK_CONTROL) && key_code == 'Z') {
+		m_edit_record.Undo();
+	} else if (GetKeyState(WXK_CONTROL) && key_code == 'Y') {
+		m_edit_record.Redo();
+	}
 
 	if (m_edit_op && !m_edit_op->OnKeyDown(key_code)) {
 		event.Skip();

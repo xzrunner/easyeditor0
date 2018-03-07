@@ -7,9 +7,6 @@
     <Filter Include="msg\variant">
       <UniqueIdentifier>{1b1273fc-3987-41b5-b234-f3823b42ae8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="editop">
-      <UniqueIdentifier>{e508db87-0061-481d-8fcd-b9c4d1de9bd5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="view">
       <UniqueIdentifier>{a6d5b45d-c8fa-450f-855e-e5dbe1462e92}</UniqueIdentifier>
     </Filter>
@@ -52,6 +49,9 @@
     <Filter Include="interface">
       <UniqueIdentifier>{71903ba5-5eb3-4586-b231-b468ddb5a52c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="edit">
+      <UniqueIdentifier>{e508db87-0061-481d-8fcd-b9c4d1de9bd5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -76,17 +76,17 @@
       <Filter>msg</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\EditOpState.h">
-      <Filter>editop</Filter>
+      <Filter>edit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\typedef.h" />
     <ClInclude Include="..\..\..\include\ee0\CameraHelper.h">
       <Filter>tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\NodeSelectOP.h">
-      <Filter>editop</Filter>
+      <Filter>edit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\EditOP.h">
-      <Filter>editop</Filter>
+      <Filter>edit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h">
       <Filter>data\node</Filter>
@@ -178,6 +178,12 @@
     <ClInclude Include="..\..\..\include\ee0\KeysState.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\AtomicOP.h">
+      <Filter>edit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\EditRecord.h">
+      <Filter>edit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -190,10 +196,10 @@
       <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\editop\NodeSelectOP.cpp">
-      <Filter>editop</Filter>
+      <Filter>edit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp">
-      <Filter>editop</Filter>
+      <Filter>edit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\data\CompNodeEditor.cpp">
       <Filter>data\node</Filter>
@@ -263,6 +269,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\view\KeysState.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\editop\EditRecord.cpp">
+      <Filter>edit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
