@@ -89,12 +89,12 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 		return true;
 	}
 
-	if (!m_last_pos.IsValid() || m_last_pos == sm::ivec2(x, y)) {
+	auto& selection = m_stage.GetNodeSelection();
+	if (!m_last_pos.IsValid() || m_last_pos == sm::ivec2(x, y) || !selection.IsEmpty()) {
 		return false;
 	}
 
 	auto& sub_mgr = m_stage.GetSubjectMgr();
-	auto& selection = m_stage.GetNodeSelection();
 
 	std::vector<n0::SceneNodePtr> nodes;
 	QueryByRect(m_last_pos, sm::ivec2(x, y), m_last_pos.x < x, nodes);
