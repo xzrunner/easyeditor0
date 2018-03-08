@@ -5,14 +5,20 @@
 namespace ee0
 {
 
-bool MsgHelper::InsertNode(SubjectMgr& mgr, n0::SceneNodePtr& node)
+bool MsgHelper::InsertNode(SubjectMgr& mgr, n0::SceneNodePtr& node, bool select_new)
 {
 	VariantSet vars;
 	Variant var;
 	var.m_type = VT_PVOID;
 	var.m_val.pv = &node;
 	vars.SetVariant("node", var);
-	return mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
+	bool insert = mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
+	if (select_new) {
+		bool select = mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+		return insert && select;
+	} else {
+		return insert;
+	}
 }
 
 bool MsgHelper::DeleteNode(SubjectMgr& mgr, const n0::SceneNodePtr& node)
