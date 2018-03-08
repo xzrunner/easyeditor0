@@ -7,7 +7,7 @@ namespace ee0
 {
 
 WxStagePage::WxStagePage(wxWindow* parent)
-	: WxEditPanel(parent) 
+	: WxEditPanel(parent, m_sub_mgr)
 {
 	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_INSERT, this);
 	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_DELETE, this);

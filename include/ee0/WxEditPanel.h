@@ -12,7 +12,7 @@ namespace ee0
 class WxEditPanel : public wxPanel
 {
 public:
-	WxEditPanel(wxWindow* parent);
+	WxEditPanel(wxWindow* parent, SubjectMgr& sub_mgr);
 	~WxEditPanel() = default;
 
 	EditPanelImpl& GetImpl() { return *m_impl; }

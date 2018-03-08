@@ -8,10 +8,10 @@ BEGIN_EVENT_TABLE(WxEditPanel, wxPanel)
  	EVT_SIZE(WxEditPanel::OnSize)
 END_EVENT_TABLE()
 
-WxEditPanel::WxEditPanel(wxWindow* parent)
+WxEditPanel::WxEditPanel(wxWindow* parent, SubjectMgr& sub_mgr)
 	: wxPanel(parent)
 {
-	m_impl = std::make_unique<EditPanelImpl>();
+	m_impl = std::make_unique<EditPanelImpl>(sub_mgr);
 }
 
 bool WxEditPanel::GetKeyState(int key) const
