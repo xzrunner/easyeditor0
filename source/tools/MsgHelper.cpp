@@ -25,4 +25,14 @@ bool MsgHelper::DeleteNode(SubjectMgr& mgr, const n0::SceneNodePtr& node)
 	return mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
 }
 
+bool MsgHelper::SetEditorDirty(SubjectMgr& mgr, bool dirty)
+{
+	ee0::VariantSet vars;
+	ee0::Variant var;
+	var.m_type = ee0::VT_BOOL;
+	var.m_val.bl = dirty;
+	vars.SetVariant("dirty", var);
+	return mgr.NotifyObservers(MSG_SET_EDITOR_DIRTY, vars);
+}
+
 }

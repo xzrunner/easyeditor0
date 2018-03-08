@@ -2,6 +2,7 @@
 #include "ee0/EditOP.h"
 #include "ee0/WxStageCanvas.h"
 #include "ee0/SubjectMgr.h"
+#include "ee0/MsgHelper.h"
 
 namespace ee0
 {
@@ -41,24 +42,12 @@ void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 	if (GetKeyState(WXK_CONTROL) && key_code == 'Z') 
 	{
 		bool dirty = m_edit_record.Undo();
-
-		ee0::VariantSet vars;
-		ee0::Variant var;
-		var.m_type = ee0::VT_BOOL;
-		var.m_val.bl = dirty;
-		vars.SetVariant("dirty", var);
-		m_sub_mgr.NotifyObservers(MSG_SET_EDITOR_DIRTY, vars);		
+		MsgHelper::SetEditorDirty(m_sub_mgr, dirty);	
 	} 
 	else if (GetKeyState(WXK_CONTROL) && key_code == 'Y') 
 	{
 		bool dirty = m_edit_record.Redo();
-
-		ee0::VariantSet vars;
-		ee0::Variant var;
-		var.m_type = ee0::VT_BOOL;
-		var.m_val.bl = dirty;
-		vars.SetVariant("dirty", var);
-		m_sub_mgr.NotifyObservers(MSG_SET_EDITOR_DIRTY, vars);
+		MsgHelper::SetEditorDirty(m_sub_mgr, dirty);
 	}
 
 	if (m_edit_op && !m_edit_op->OnKeyDown(key_code)) {
