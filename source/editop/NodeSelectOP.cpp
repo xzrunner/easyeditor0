@@ -22,10 +22,10 @@ bool NodeSelectOP::OnKeyDown(int key_code)
 
 	if (key_code == WXK_DELETE)
 	{
-		m_stage.GetNodeSelection().Traverse([&](const n0::SceneNodePtr& node)->bool
+		m_stage.GetNodeSelection().Traverse([&](const n0::NodeWithPos& nwp)->bool
 		{
 			bool succ = MsgHelper::DeleteNode(m_stage.GetSubjectMgr(), 
-				std::const_pointer_cast<n0::SceneNode>(node));
+				std::const_pointer_cast<n0::SceneNode>(nwp.node));
 			GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
 			return true;
 		});

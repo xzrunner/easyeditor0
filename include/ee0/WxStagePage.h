@@ -6,7 +6,7 @@
 #include "ee0/SelectionSet.h"
 #include "ee0/NodeContainer.h"
 
-#include <node0/typedef.h>
+#include <node0/NodeWithPos.h>
 
 namespace ee0
 {
@@ -20,10 +20,10 @@ public:
 
 	SubjectMgr& GetSubjectMgr() { return m_sub_mgr; }
 
-	const SelectionSet<n0::SceneNode>& GetNodeSelection() const {
+	const SelectionSet<n0::NodeWithPos>& GetNodeSelection() const {
 		return m_node_selection;
 	}
-	SelectionSet<n0::SceneNode>& GetNodeSelection() {
+	SelectionSet<n0::NodeWithPos>& GetNodeSelection() {
 		return m_node_selection;
 	}
 
@@ -34,7 +34,7 @@ private:
 protected:
 	SubjectMgr m_sub_mgr;
 
-	SelectionSet<n0::SceneNode> m_node_selection;
+	SelectionSet<n0::NodeWithPos> m_node_selection;
 
 }; // WxStagePage
 

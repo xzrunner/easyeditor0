@@ -10,15 +10,15 @@ inline void SelectionSet<T>::Clear()
 }
 
 template<class T>
-inline void SelectionSet<T>::Add(const std::shared_ptr<T>& spr)
+inline void SelectionSet<T>::Add(const T& spr)
 {
-	if (spr && !IsExist(spr)) {
+	if (!IsExist(spr)) {
 		m_items.push_back(spr);
 	}
 }
 
 template<class T>
-inline void SelectionSet<T>::Remove(const std::shared_ptr<T>& spr)
+inline void SelectionSet<T>::Remove(const T& spr)
 {
 	auto itr = m_items.begin();
 	for (; itr != m_items.end(); ++itr) {
@@ -42,7 +42,7 @@ inline bool SelectionSet<T>::IsEmpty() const
 }
 
 template<class T>
-inline bool SelectionSet<T>::IsExist(const std::shared_ptr<T>& spr) const
+inline bool SelectionSet<T>::IsExist(const T& spr) const
 {
 	for (auto& item : m_items) {
 		if (item == spr) {
@@ -53,7 +53,7 @@ inline bool SelectionSet<T>::IsExist(const std::shared_ptr<T>& spr) const
 }
 
 template<class T>
-inline void SelectionSet<T>::Traverse(std::function<bool(const std::shared_ptr<T>&)> func) const
+inline void SelectionSet<T>::Traverse(std::function<bool(const T&)> func) const
 {
 	for (auto& item : m_items) {
 		if (!func(item)) {

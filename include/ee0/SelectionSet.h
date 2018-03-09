@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include <functional>
 #include <vector>
 
@@ -15,18 +14,18 @@ public:
 
 	virtual void Clear();
 
-	virtual void Add(const std::shared_ptr<T>& item);
-	virtual void Remove(const std::shared_ptr<T>& item);
+	virtual void Add(const T& item);
+	virtual void Remove(const T& item);
 
 	size_t Size() const;
 	bool IsEmpty() const;
 
-	bool IsExist(const std::shared_ptr<T>& item) const;
+	bool IsExist(const T& item) const;
 
-	void Traverse(std::function<bool(const std::shared_ptr<T>&)> func) const;
+	void Traverse(std::function<bool(const T&)> func) const;
 
 protected:
-	std::vector<std::shared_ptr<T>> m_items;
+	std::vector<T> m_items;
 
 }; // SelectionSet
 
