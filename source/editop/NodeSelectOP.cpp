@@ -49,10 +49,21 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 	if (selected)
 	{
 		VariantSet vars;
-		Variant var;
-		var.m_type = VT_PVOID;
-		var.m_val.pv = &selected;
-		vars.SetVariant("node", var);
+
+		Variant var_node;
+		var_node.m_type = VT_PVOID;
+		var_node.m_val.pv = &selected;
+		vars.SetVariant("node", var_node);
+
+		Variant var_root;
+		var_root.m_type = ee0::VT_PVOID;
+		var_root.m_val.pv = &selected;
+		vars.SetVariant("root", var_root);
+
+		Variant var_id;
+		var_id.m_type = ee0::VT_ULONG;
+		var_id.m_val.ul = 0;
+		vars.SetVariant("id", var_id);
 
 		if (m_stage.GetKeyState(WXK_CONTROL)) 
 		{
