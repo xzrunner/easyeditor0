@@ -26,11 +26,20 @@ protected:
 	virtual void OnSaveAs(wxCommandEvent& event);
 	virtual void OnClear(wxCommandEvent& event);
 
+	virtual void OnSettings(wxCommandEvent& event);
+
 private:
 	void InitMenuBar();
 	void InitStatueBar();
 
 	wxMenu* InitFileBar();
+	wxMenu* InitSettingsBar();
+
+private:
+	enum
+	{
+		ID_SETTINGS = 1000,
+	};
 
 protected:
 	std::shared_ptr<Application> m_app = nullptr;

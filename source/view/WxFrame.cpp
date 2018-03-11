@@ -14,6 +14,7 @@ BEGIN_EVENT_TABLE(WxFrame, wxFrame)
 	EVT_MENU(wxID_SAVE, WxFrame::OnSave)
 	EVT_MENU(wxID_SAVEAS, WxFrame::OnSaveAs)
 	EVT_MENU(wxID_CLEAR, WxFrame::OnClear)
+	EVT_MENU(ID_SETTINGS, WxFrame::OnSettings)
 END_EVENT_TABLE()
 
 WxFrame::WxFrame(const std::string& title, bool maxmize, const wxSize& size)
@@ -60,10 +61,15 @@ void WxFrame::OnClear(wxCommandEvent& event)
 	m_app->Clear();
 }
 
+void WxFrame::OnSettings(wxCommandEvent& event)
+{
+}
+
 void WxFrame::InitMenuBar()
 {
 	wxMenuBar* menu_bar = new wxMenuBar;
 	menu_bar->Append(InitFileBar(), "&File");
+	menu_bar->Append(InitSettingsBar(), "&Settings");
 	SetMenuBar(menu_bar);
 }
 
@@ -91,6 +97,13 @@ wxMenu* WxFrame::InitFileBar()
 	//	menu->AppendSubMenu(m_recent_menu->GetMenu(), wxT("Recent Files"));
 	//menu->AppendSeparator();
 	//menu->Append(wxID_EXIT, wxT("E&xit\tAlt+X"), wxT("Quit"));
+	return menu;
+}
+
+wxMenu* WxFrame::InitSettingsBar()
+{
+	wxMenu* menu = new wxMenu;
+	menu->Append(ID_SETTINGS, wxT("Base"), wxT("Base"));
 	return menu;
 }
 

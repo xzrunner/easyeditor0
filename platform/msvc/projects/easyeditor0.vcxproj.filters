@@ -184,6 +184,9 @@
     <ClInclude Include="..\..\..\include\ee0\EditRecord.h">
       <Filter>edit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\SettingCfg.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -272,6 +275,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp">
       <Filter>edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
