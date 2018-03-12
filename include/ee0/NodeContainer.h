@@ -13,7 +13,7 @@ class NodeContainer
 {
 public:
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
-		const VariantSet& variants = VariantSet()) const = 0;
+		const VariantSet& variants = VariantSet(), bool inverse = false) const = 0;
 
 }; // NodeContainer
 
