@@ -54,7 +54,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	                         const RenderContext* rc, 
 	                         const WindowContext* wc,
 	                         uint32_t flag)
-	: wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB)
+	: wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB, wxDefaultPosition, wxDefaultSize, wxWANTS_CHARS)
 	, m_flag(flag)
 	, m_stage(stage)
 	, m_timer(this)
