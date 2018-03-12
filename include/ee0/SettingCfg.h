@@ -9,6 +9,7 @@ namespace EditOpType
 {
 	enum {
 		EDIT_SHARED,
+		EDIT_SHARED_PATCH,
 		EDIT_UNIQUE,
 	};
 }
