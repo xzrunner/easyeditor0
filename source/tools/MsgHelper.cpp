@@ -5,40 +5,62 @@
 namespace ee0
 {
 
-bool MsgHelper::InsertNode(SubjectMgr& mgr, n0::SceneNodePtr& node, bool select_new)
+bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, n0::SceneNodePtr& node, bool select_new)
 {
 	VariantSet vars;
 	Variant var;
 	var.m_type = VT_PVOID;
 	var.m_val.pv = &node;
 	vars.SetVariant("node", var);
-	bool insert = mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
+	bool insert = sub_mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
 	if (select_new) {
-		bool select = mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+		bool select = sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 		return insert && select;
 	} else {
 		return insert;
 	}
 }
 
-bool MsgHelper::DeleteNode(SubjectMgr& mgr, const n0::SceneNodePtr& node)
+bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const n0::SceneNodePtr& node)
 {
 	ee0::VariantSet vars;
 	ee0::Variant var;
 	var.m_type = ee0::VT_PVOID;
 	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
 	vars.SetVariant("node", var);
-	return mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
+	return sub_mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
 }
 
-bool MsgHelper::SetEditorDirty(SubjectMgr& mgr, bool dirty)
+void MsgHelper::InsertNodeSelection(SubjectMgr& sub_mgr, const std::vector<n0::SceneNodePtr>& nodes)
+{
+	for (auto& node : nodes)
+	{
+		VariantSet vars;
+
+		if (nodes.size() > 1) {
+			Variant var;
+			var.m_type = VT_BOOL;
+			var.m_val.bl = true;
+			vars.SetVariant("multiple", var);
+		}
+
+		Variant var;
+		var.m_type = VT_PVOID;
+		var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
+		vars.SetVariant("node", var);
+
+		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+	}
+}
+
+bool MsgHelper::SetEditorDirty(SubjectMgr& sub_mgr, bool dirty)
 {
 	ee0::VariantSet vars;
 	ee0::Variant var;
 	var.m_type = ee0::VT_BOOL;
 	var.m_val.bl = dirty;
 	vars.SetVariant("dirty", var);
-	return mgr.NotifyObservers(MSG_SET_EDITOR_DIRTY, vars);
+	return sub_mgr.NotifyObservers(MSG_SET_EDITOR_DIRTY, vars);
 }
 
 }

@@ -129,25 +129,7 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 	else
 	{
 		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
-
-		for (auto& node : nodes)
-		{
-			VariantSet vars;
-
-			if (nodes.size() > 1) {
-				Variant var;
-				var.m_type = VT_BOOL;
-				var.m_val.bl = true;
-				vars.SetVariant("multiple", var);
-			}
-
-			Variant var;
-			var.m_type = VT_PVOID;
-			var.m_val.pv = &node;
-			vars.SetVariant("node", var);
-
-			sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
-		}
+		MsgHelper::InsertNodeSelection(sub_mgr, nodes);
 	}
 
 	sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
