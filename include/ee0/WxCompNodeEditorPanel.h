@@ -3,6 +3,8 @@
 #include "ee0/WxCompPanel.h"
 #include "ee0/CompNodeEditor.h"
 
+#include <node0/typedef.h>
+
 class wxTextCtrl;
 class wxCheckBox;
 
@@ -15,7 +17,7 @@ class WxCompNodeEditorPanel : public WxCompPanel
 {
 public:
 	WxCompNodeEditorPanel(wxWindow* parent, CompNodeEditor& ceditor,
-		SubjectMgr& sub_mgr);
+		SubjectMgr& sub_mgr, const n0::SceneNodePtr& node);
 
 	virtual void RefreshNodeComp() override;
 
@@ -28,7 +30,8 @@ private:
 
 private:
 	CompNodeEditor&  m_ceditor;
-	SubjectMgr& m_sub_mgr;
+	SubjectMgr&      m_sub_mgr;
+	n0::SceneNodePtr m_node;
 
 	wxTextCtrl* m_filepath;
 	wxTextCtrl* m_name;

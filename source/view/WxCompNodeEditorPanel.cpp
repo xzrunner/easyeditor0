@@ -1,4 +1,5 @@
 #include "ee0/WxCompNodeEditorPanel.h"
+#include "ee0/SubjectMgr.h"
 
 #include <wx/sizer.h>
 #include <wx/textctrl.h>
@@ -9,10 +10,11 @@ namespace ee0
 {
 
 WxCompNodeEditorPanel::WxCompNodeEditorPanel(wxWindow* parent, CompNodeEditor& ceditor, 
-	                                         SubjectMgr& sub_mgr)
+	                                         SubjectMgr& sub_mgr, const n0::SceneNodePtr& node)
 	: WxCompPanel(parent, "NodeEditor")
 	, m_ceditor(ceditor)
 	, m_sub_mgr(sub_mgr)
+	, m_node(node)
 {
 	InitLayout();
 	Expand();
@@ -37,7 +39,7 @@ void WxCompNodeEditorPanel::InitLayout()
 		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
 		sizer->Add(m_filepath = new wxTextCtrl(win, wxID_ANY, m_ceditor.GetFilepath(),
-			wxDefaultPosition, wxSize(200, -1), wxTE_READONLY));
+			wxDefaultPosition, wxSize(200, 20), wxTE_READONLY));
 
 		pane_sizer->Add(sizer);
 	}
@@ -47,10 +49,9 @@ void WxCompNodeEditorPanel::InitLayout()
 
 		sizer->Add(new wxStaticText(win, wxID_ANY, wxT("Name ")));
 
-		sizer->Add(m_name = new wxTextCtrl(win, wxID_ANY, m_ceditor.GetName()));
+		sizer->Add(m_name = new wxTextCtrl(win, wxID_ANY, m_ceditor.GetName(), wxDefaultPosition, wxSize(-1, 20)));
 		Connect(m_name->GetId(), wxEVT_COMMAND_TEXT_UPDATED,
 			wxCommandEventHandler(WxCompNodeEditorPanel::UpdateNameValue));
-
 		pane_sizer->Add(sizer);
 	}
 	// visible, editable
@@ -79,6 +80,14 @@ void WxCompNodeEditorPanel::InitLayout()
 void WxCompNodeEditorPanel::UpdateNameValue(wxCommandEvent& event)
 {
 	m_ceditor.SetName(m_name->GetValue().ToStdString());
+
+	VariantSet vars;
+	Variant var;
+	var.m_type = VT_PVOID;
+	var.m_val.pv = &m_node;
+	vars.SetVariant("node", var);
+
+	m_sub_mgr.NotifyObservers(ee0::MSG_UPDATE_NODE_NAME, vars);
 }
 
 void WxCompNodeEditorPanel::UpdateVisibleValue(wxCommandEvent& event)
