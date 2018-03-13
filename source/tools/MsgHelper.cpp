@@ -31,7 +31,7 @@ bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const n0::SceneNodePtr& node)
 	return sub_mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
 }
 
-void MsgHelper::InsertNodeSelection(SubjectMgr& sub_mgr, const std::vector<n0::SceneNodePtr>& nodes)
+void MsgHelper::InsertNodeSelection(SubjectMgr& sub_mgr, const std::vector<n0::NodeWithPos>& nodes)
 {
 	for (auto& node : nodes)
 	{
@@ -44,10 +44,20 @@ void MsgHelper::InsertNodeSelection(SubjectMgr& sub_mgr, const std::vector<n0::S
 			vars.SetVariant("multiple", var);
 		}
 
-		Variant var;
-		var.m_type = VT_PVOID;
-		var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
-		vars.SetVariant("node", var);
+		Variant var_node;
+		var_node.m_type = VT_PVOID;
+		var_node.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.node);
+		vars.SetVariant("node", var_node);
+
+		Variant var_root;
+		var_root.m_type = ee0::VT_PVOID;
+		var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.root);
+		vars.SetVariant("root", var_root);
+
+		Variant var_id;
+		var_id.m_type = ee0::VT_ULONG;
+		var_id.m_val.ul = node.node_id;
+		vars.SetVariant("id", var_id);
 
 		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 	}

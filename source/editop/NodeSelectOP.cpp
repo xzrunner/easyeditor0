@@ -129,7 +129,13 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 	else
 	{
 		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
-		MsgHelper::InsertNodeSelection(sub_mgr, nodes);
+
+		std::vector<n0::NodeWithPos> nwps;
+		nwps.reserve(nodes.size());
+		for (auto& node : nodes) {
+			nwps.push_back(n0::NodeWithPos(node, node, 0));
+		}
+		MsgHelper::InsertNodeSelection(sub_mgr, nwps);
 	}
 
 	sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
