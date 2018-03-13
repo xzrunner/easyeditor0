@@ -52,6 +52,14 @@ void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 		nwp.node_id = var_id.m_val.ul;
 	}
 
+	auto var_clear = variants.GetVariant("clear");
+	if (var_clear.m_type != VT_EMPTY) {
+		GD_ASSERT(var_clear.m_type == VT_BOOL, "no var in vars: node");
+		if (var_clear.m_val.bl) {
+			m_node_selection.Clear();
+		}
+	}
+
 	m_node_selection.Add(nwp);
 
 	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
