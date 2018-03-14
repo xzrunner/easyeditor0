@@ -27,14 +27,21 @@ public:
 		return m_node_selection;
 	}
 
+	bool IsEditDirty() const { return m_edit_dirty; }
+
 private:
 	void NodeSelectionInsert(const VariantSet& variants);
 	void NodeSelectionDelete(const VariantSet& variants);
+
+	void SetEditorDirty(const ee0::VariantSet& variants);
 
 protected:
 	SubjectMgr m_sub_mgr;
 
 	SelectionSet<n0::NodeWithPos> m_node_selection;
+
+private:
+	bool m_edit_dirty;
 
 }; // WxStagePage
 

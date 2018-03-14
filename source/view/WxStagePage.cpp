@@ -8,10 +8,12 @@ namespace ee0
 
 WxStagePage::WxStagePage(wxWindow* parent)
 	: WxEditPanel(parent, m_sub_mgr)
+	, m_edit_dirty(false)
 {
 	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_INSERT, this);
 	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_DELETE, this);
 	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_CLEAR, this);
+	m_sub_mgr.RegisterObserver(MSG_SET_EDITOR_DIRTY, this);
 }
 
 void WxStagePage::OnNotify(MessageID msg, const VariantSet& variants)
@@ -27,6 +29,9 @@ void WxStagePage::OnNotify(MessageID msg, const VariantSet& variants)
 	case MSG_NODE_SELECTION_CLEAR:
 		m_node_selection.Clear();
 		m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+		break;
+	case MSG_SET_EDITOR_DIRTY:
+		SetEditorDirty(variants);
 		break;
 	}
 }
@@ -76,6 +81,13 @@ void WxStagePage::NodeSelectionDelete(const VariantSet& variants)
 	m_node_selection.Remove(node_pos);
 
 	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+}
+
+void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
+{
+	auto var = variants.GetVariant("dirty");
+	GD_ASSERT(var.m_type == ee0::VT_BOOL, "err val");
+	m_edit_dirty = var.m_val.bl;
 }
 
 }
