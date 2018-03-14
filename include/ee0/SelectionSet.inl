@@ -10,19 +10,19 @@ inline void SelectionSet<T>::Clear()
 }
 
 template<class T>
-inline void SelectionSet<T>::Add(const T& spr)
+inline void SelectionSet<T>::Add(const T& item)
 {
-	if (!IsExist(spr)) {
-		m_items.push_back(spr);
+	if (!IsExist(item)) {
+		m_items.push_back(item);
 	}
 }
 
 template<class T>
-inline void SelectionSet<T>::Remove(const T& spr)
+inline void SelectionSet<T>::Remove(const T& item)
 {
 	auto itr = m_items.begin();
 	for (; itr != m_items.end(); ++itr) {
-		if (*itr == spr) {
+		if (*itr == item) {
 			m_items.erase(itr);
 			break;
 		}
@@ -42,10 +42,10 @@ inline bool SelectionSet<T>::IsEmpty() const
 }
 
 template<class T>
-inline bool SelectionSet<T>::IsExist(const T& spr) const
+inline bool SelectionSet<T>::IsExist(const T& _item) const
 {
 	for (auto& item : m_items) {
-		if (item == spr) {
+		if (item == _item) {
 			return true;
 		}
 	}
