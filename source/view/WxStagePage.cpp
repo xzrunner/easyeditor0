@@ -72,7 +72,8 @@ void WxStagePage::NodeSelectionDelete(const VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	m_node_selection.Remove(*node);
+	n0::NodeWithPos node_pos(*node, *node, 0);
+	m_node_selection.Remove(node_pos);
 
 	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }

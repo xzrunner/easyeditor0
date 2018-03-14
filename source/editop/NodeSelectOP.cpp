@@ -65,9 +65,10 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 		var_id.m_val.ul = 0;
 		vars.SetVariant("id", var_id);
 
+		n0::NodeWithPos selected_pos(selected, selected, 0);
 		if (m_stage.GetKeyState(WXK_CONTROL)) 
 		{
-			if (selection.IsExist(selected)) {
+			if (selection.IsExist(selected_pos)) {
 				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 			} else {
 				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
@@ -75,7 +76,7 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 		}
 		else
 		{
-			if (!selection.IsExist(selected))
+			if (!selection.IsExist(selected_pos))
 			{
 				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
@@ -119,7 +120,8 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 			var.m_val.pv = &node;
 			vars.SetVariant("node", var);
 
-			if (selection.IsExist(node)) {
+			n0::NodeWithPos node_pos(node, node, 0);
+			if (selection.IsExist(node_pos)) {
 				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 			} else {
 				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
