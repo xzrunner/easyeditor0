@@ -25,7 +25,7 @@ bool NodeSelectOP::OnKeyDown(int key_code)
 		m_stage.GetNodeSelection().Traverse([&](const n0::NodeWithPos& nwp)->bool
 		{
 			bool succ = MsgHelper::DeleteNode(m_stage.GetSubjectMgr(), 
-				std::const_pointer_cast<n0::SceneNode>(nwp.node));
+				std::const_pointer_cast<n0::SceneNode>(nwp.GetNode()));
 			GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
 			return true;
 		});

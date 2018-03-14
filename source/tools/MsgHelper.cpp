@@ -62,17 +62,17 @@ void MsgHelper::InsertNodeSelection(SubjectMgr& sub_mgr, const std::vector<n0::N
 
 		Variant var_node;
 		var_node.m_type = VT_PVOID;
-		var_node.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.node);
+		var_node.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.GetNode());
 		vars.SetVariant("node", var_node);
 
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
-		var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.root);
+		var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.GetRoot());
 		vars.SetVariant("root", var_root);
 
 		Variant var_id;
 		var_id.m_type = ee0::VT_ULONG;
-		var_id.m_val.ul = node.node_id;
+		var_id.m_val.ul = node.GetNodeID();
 		vars.SetVariant("id", var_id);
 
 		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);

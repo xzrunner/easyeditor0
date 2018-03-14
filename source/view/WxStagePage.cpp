@@ -38,23 +38,24 @@ void WxStagePage::OnNotify(MessageID msg, const VariantSet& variants)
 
 void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 {
-	n0::NodeWithPos nwp;
+	n0::SceneNodePtr node, root;
+	size_t node_id = 0;
 
 	auto var_node = variants.GetVariant("node");
 	GD_ASSERT(var_node.m_type == VT_PVOID, "no var in vars: node");
-	nwp.node = *static_cast<n0::SceneNodePtr*>(var_node.m_val.pv);
-	GD_ASSERT(nwp.node, "err scene node");
+	node = *static_cast<n0::SceneNodePtr*>(var_node.m_val.pv);
+	GD_ASSERT(node, "err scene node");
 
 	auto var_root = variants.GetVariant("root");
 	if (var_root.m_type != VT_EMPTY) {
 		GD_ASSERT(var_root.m_type == VT_PVOID, "no var in vars: node");
-		nwp.root = *static_cast<n0::SceneNodePtr*>(var_root.m_val.pv);
+		root = *static_cast<n0::SceneNodePtr*>(var_root.m_val.pv);
 	}
 
 	auto var_id = variants.GetVariant("id");
 	if (var_id.m_type != VT_EMPTY) {
 		GD_ASSERT(var_id.m_type == VT_ULONG, "no var in vars: node");
-		nwp.node_id = var_id.m_val.ul;
+		node_id = var_id.m_val.ul;
 	}
 
 	auto var_clear = variants.GetVariant("clear");
@@ -65,7 +66,7 @@ void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 		}
 	}
 
-	m_node_selection.Add(nwp);
+	m_node_selection.Add(n0::NodeWithPos(node, root, node_id));
 
 	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
