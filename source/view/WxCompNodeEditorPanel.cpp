@@ -49,9 +49,10 @@ void WxCompNodeEditorPanel::InitLayout()
 
 		sizer->Add(new wxStaticText(win, wxID_ANY, wxT("Name ")));
 
-		sizer->Add(m_name = new wxTextCtrl(win, wxID_ANY, m_ceditor.GetName(), wxDefaultPosition, wxSize(-1, 20)));
-		Connect(m_name->GetId(), wxEVT_COMMAND_TEXT_UPDATED,
-			wxCommandEventHandler(WxCompNodeEditorPanel::UpdateNameValue));
+		sizer->Add(m_name = new wxTextCtrl(win, wxID_ANY, m_ceditor.GetName(), 
+			wxDefaultPosition, wxSize(-1, 20), wxTE_PROCESS_ENTER));
+		Connect(m_name->GetId(), wxEVT_COMMAND_TEXT_ENTER,
+			wxCommandEventHandler(WxCompNodeEditorPanel::EnterNameValue));
 		pane_sizer->Add(sizer);
 	}
 	// visible, editable
@@ -77,7 +78,7 @@ void WxCompNodeEditorPanel::InitLayout()
 	pane_sizer->SetSizeHints(win);
 }
 
-void WxCompNodeEditorPanel::UpdateNameValue(wxCommandEvent& event)
+void WxCompNodeEditorPanel::EnterNameValue(wxCommandEvent& event)
 {
 	m_ceditor.SetName(m_name->GetValue().ToStdString());
 

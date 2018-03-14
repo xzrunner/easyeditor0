@@ -24,7 +24,7 @@ public:
 private:
 	void InitLayout();
 
-	void UpdateNameValue(wxCommandEvent& event);
+	void EnterNameValue(wxCommandEvent& event);
 	void UpdateVisibleValue(wxCommandEvent& event);
 	void UpdateEditableValue(wxCommandEvent& event);
 
