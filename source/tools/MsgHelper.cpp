@@ -8,15 +8,31 @@ namespace ee0
 bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, n0::SceneNodePtr& node, bool select_new)
 {
 	VariantSet vars;
+
 	Variant var;
 	var.m_type = VT_PVOID;
 	var.m_val.pv = &node;
 	vars.SetVariant("node", var);
+
 	bool insert = sub_mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
-	if (select_new) {
+
+	if (select_new) 
+	{
+		Variant var_root;
+		var_root.m_type = ee0::VT_PVOID;
+		var_root.m_val.pv = &node;
+		vars.SetVariant("root", var_root);
+
+		Variant var_id;
+		var_id.m_type = ee0::VT_ULONG;
+		var_id.m_val.ul = 0;
+		vars.SetVariant("id", var_id);
+
 		bool select = sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 		return insert && select;
-	} else {
+	} 
+	else 
+	{
 		return insert;
 	}
 }
