@@ -41,6 +41,8 @@ protected:
 
 	virtual void OnTimer() {}
 
+	virtual void OnMouse(int x, int y) {}
+
 private:
 	void OnSize(wxSizeEvent& event);
 	void OnPaint(wxPaintEvent& event);
