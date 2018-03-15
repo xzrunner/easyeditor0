@@ -7,7 +7,7 @@
 namespace ee0
 {
 
-EditPanelImpl::EditPanelImpl(SubjectMgr& sub_mgr)
+EditPanelImpl::EditPanelImpl(const SubjectMgrPtr& sub_mgr)
 	: m_sub_mgr(sub_mgr)
 {
 }
@@ -42,12 +42,12 @@ void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 	if (GetKeyState(WXK_CONTROL) && key_code == 'Z') 
 	{
 		bool dirty = m_edit_record.Undo();
-		MsgHelper::SetEditorDirty(m_sub_mgr, dirty);	
+		MsgHelper::SetEditorDirty(*m_sub_mgr, dirty);	
 	} 
 	else if (GetKeyState(WXK_CONTROL) && key_code == 'Y') 
 	{
 		bool dirty = m_edit_record.Redo();
-		MsgHelper::SetEditorDirty(m_sub_mgr, dirty);
+		MsgHelper::SetEditorDirty(*m_sub_mgr, dirty);
 	}
 
 	if (m_edit_op && !m_edit_op->OnKeyDown(key_code)) {

@@ -11,7 +11,7 @@ namespace ee0
 {
 
 WxColorSpinCtrl::WxColorSpinCtrl(wxWindow* parent, pt2::Color& col,
-	                             const std::string& title, SubjectMgr& sub_mgr)
+	                             const std::string& title, const SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY)
 	, m_col(col)
 	, m_sub_mgr(sub_mgr)
@@ -87,7 +87,7 @@ void WxColorSpinCtrl::SetColor(int id)
 		m_col.a = m_a->GetValue();
 	}
 
-	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
 }

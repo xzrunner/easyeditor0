@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ee0/typedef.h"
+
 #include <wx/panel.h>
 
 namespace pt2 { class Color; }
@@ -7,13 +9,11 @@ namespace pt2 { class Color; }
 namespace ee0
 {
 
-class SubjectMgr;
-
 class WxColorSpinCtrl : public wxPanel
 {
 public:
 	WxColorSpinCtrl(wxWindow* parent, pt2::Color& col, 
-		const std::string& title, SubjectMgr& sub_mgr);
+		const std::string& title, const SubjectMgrPtr& sub_mgr);
 
 	void Refresh();
 
@@ -26,7 +26,7 @@ private:
 	void SetColor(int id);
 
 private:
-	SubjectMgr& m_sub_mgr;
+	SubjectMgrPtr m_sub_mgr;
 
 	pt2::Color& m_col;
 

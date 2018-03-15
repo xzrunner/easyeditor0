@@ -2,6 +2,7 @@
 
 #include "ee0/KeysState.h"
 #include "ee0/EditRecord.h"
+#include "ee0/typedef.h"
 
 #include <memory>
 
@@ -14,12 +15,11 @@ namespace ee0
 
 class EditOP;
 class WxStageCanvas;
-class SubjectMgr;
 
 class EditPanelImpl
 {
 public:
-	EditPanelImpl(SubjectMgr& sub_mgr);
+	EditPanelImpl(const SubjectMgrPtr& sub_mgr);
 
 	const std::shared_ptr<EditOP>& GetEditOP() const { return m_edit_op; }
 	std::shared_ptr<EditOP>& GetEditOP() { return m_edit_op; }
@@ -43,7 +43,7 @@ public:
 	void OnSize(wxSizeEvent& event);
 
 private:
-	SubjectMgr& m_sub_mgr;
+	SubjectMgrPtr m_sub_mgr;
 
 	std::shared_ptr<EditOP> m_edit_op = nullptr;
 	EditRecord m_edit_record;

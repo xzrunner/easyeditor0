@@ -2,6 +2,7 @@
 #include "ee0/WxStagePage.h"
 #include "ee0/MessageID.h"
 #include "ee0/MsgHelper.h"
+#include "ee0/SubjectMgr.h"
 
 #include <guard/check.h>
 
@@ -24,13 +25,13 @@ bool NodeSelectOP::OnKeyDown(int key_code)
 	{
 		m_stage.GetNodeSelection().Traverse([&](const n0::NodeWithPos& nwp)->bool
 		{
-			bool succ = MsgHelper::DeleteNode(m_stage.GetSubjectMgr(), 
+			bool succ = MsgHelper::DeleteNode(*m_stage.GetSubjectMgr(), 
 				std::const_pointer_cast<n0::SceneNode>(nwp.GetNode()));
 			GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
 			return true;
 		});
 
-		m_stage.GetSubjectMgr().NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+		m_stage.GetSubjectMgr()->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 	}
 
 	return false;
@@ -69,26 +70,26 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 		if (m_stage.GetKeyState(WXK_CONTROL)) 
 		{
 			if (selection.IsExist(selected_pos)) {
-				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
+				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 			} else {
-				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 			}
 		}
 		else
 		{
 			if (!selection.IsExist(selected_pos))
 			{
-				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
-				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 			}
 		}
 	}
 	else
 	{
-		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+		sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 	}
 
-	sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+	sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 
 	m_last_pos.Set(x, y);
 
@@ -133,25 +134,25 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 
 			n0::NodeWithPos node_pos(node, node, 0);
 			if (selection.IsExist(node_pos)) {
-				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
+				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 			} else {
-				sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 			}
 		}
 	}
 	else
 	{
-		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+		sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 
 		std::vector<n0::NodeWithPos> nwps;
 		nwps.reserve(nodes.size());
 		for (auto& node : nodes) {
 			nwps.push_back(n0::NodeWithPos(node, node, 0));
 		}
-		MsgHelper::InsertNodeSelection(sub_mgr, nwps);
+		MsgHelper::InsertNodeSelection(*sub_mgr, nwps);
 	}
 
-	sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+	sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 
 	m_last_pos.MakeInvalid();
 	

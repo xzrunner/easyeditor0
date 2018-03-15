@@ -10,7 +10,7 @@ namespace ee0
 {
 
 WxCompNodeEditorPanel::WxCompNodeEditorPanel(wxWindow* parent, CompNodeEditor& ceditor, 
-	                                         SubjectMgr& sub_mgr, const n0::SceneNodePtr& node)
+	                                         const SubjectMgrPtr& sub_mgr, const n0::SceneNodePtr& node)
 	: WxCompPanel(parent, "NodeEditor")
 	, m_ceditor(ceditor)
 	, m_sub_mgr(sub_mgr)
@@ -88,7 +88,7 @@ void WxCompNodeEditorPanel::EnterNameValue(wxCommandEvent& event)
 	var.m_val.pv = &m_node;
 	vars.SetVariant("node", var);
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_UPDATE_NODE_NAME, vars);
+	m_sub_mgr->NotifyObservers(ee0::MSG_UPDATE_NODE_NAME, vars);
 }
 
 void WxCompNodeEditorPanel::UpdateVisibleValue(wxCommandEvent& event)

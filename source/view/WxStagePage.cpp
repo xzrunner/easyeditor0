@@ -1,4 +1,5 @@
 #include "ee0/WxStagePage.h"
+#include "ee0/SubjectMgr.h"
 
 #include <node0/typedef.h>
 #include <guard/check.h>
@@ -7,13 +8,13 @@ namespace ee0
 {
 
 WxStagePage::WxStagePage(wxWindow* parent)
-	: WxEditPanel(parent, m_sub_mgr)
+	: WxEditPanel(parent, nullptr)
 	, m_edit_dirty(false)
 {
-	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_INSERT, this);
-	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_DELETE, this);
-	m_sub_mgr.RegisterObserver(MSG_NODE_SELECTION_CLEAR, this);
-	m_sub_mgr.RegisterObserver(MSG_SET_EDITOR_DIRTY, this);
+	m_sub_mgr->RegisterObserver(MSG_NODE_SELECTION_INSERT, this);
+	m_sub_mgr->RegisterObserver(MSG_NODE_SELECTION_DELETE, this);
+	m_sub_mgr->RegisterObserver(MSG_NODE_SELECTION_CLEAR, this);
+	m_sub_mgr->RegisterObserver(MSG_SET_EDITOR_DIRTY, this);
 }
 
 void WxStagePage::OnNotify(MessageID msg, const VariantSet& variants)
@@ -28,7 +29,7 @@ void WxStagePage::OnNotify(MessageID msg, const VariantSet& variants)
 		break;
 	case MSG_NODE_SELECTION_CLEAR:
 		m_node_selection.Clear();
-		m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+		m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 		break;
 	case MSG_SET_EDITOR_DIRTY:
 		SetEditorDirty(variants);
@@ -68,7 +69,7 @@ void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 
 	m_node_selection.Add(n0::NodeWithPos(node, root, node_id));
 
-	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::NodeSelectionDelete(const VariantSet& variants)
@@ -81,7 +82,7 @@ void WxStagePage::NodeSelectionDelete(const VariantSet& variants)
 	n0::NodeWithPos node_pos(*node, *node, 0);
 	m_node_selection.Remove(node_pos);
 
-	m_sub_mgr.NotifyObservers(MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
