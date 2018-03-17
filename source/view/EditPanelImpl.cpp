@@ -50,6 +50,13 @@ void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 		MsgHelper::SetEditorDirty(*m_sub_mgr, dirty);
 	}
 
+	switch (key_code)
+	{
+	case WXK_F5:
+		m_sub_mgr->NotifyObservers(ee0::MSG_EDITOR_RELOAD);
+		break;
+	}
+
 	if (m_edit_op && !m_edit_op->OnKeyDown(key_code)) {
 		event.Skip();
 	}
