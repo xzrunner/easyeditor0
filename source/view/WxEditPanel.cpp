@@ -18,7 +18,7 @@ WxEditPanel::WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 	if (!m_sub_mgr) {
 		m_sub_mgr = std::make_shared<SubjectMgr>();
 	}
-	m_vm = std::make_shared<dust::LuaVM>();
+	m_lua = std::make_shared<dust::LuaVM>();
 	m_impl = std::make_unique<EditPanelImpl>(m_sub_mgr);
 }
 

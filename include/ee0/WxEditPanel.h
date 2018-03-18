@@ -3,11 +3,13 @@
 #include "ee0/EditPanelImpl.h"
 #include "ee0/typedef.h"
 
+#include <dust/typedef.h>
+
 #include <wx/wx.h>
 
 #include <memory>
 
-namespace dust { class LuaVM; }
+namespace dust { class LuaVM;}
 
 namespace ee0
 {
@@ -17,7 +19,6 @@ class WxEditPanel : public wxPanel
 public:
 	WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr);
 	~WxEditPanel() = default;
-
 	const SubjectMgrPtr& GetSubjectMgr() const { return m_sub_mgr; }
 
 	EditPanelImpl& GetImpl() { return *m_impl; }
@@ -25,7 +26,7 @@ public:
 
 	bool GetKeyState(int key) const;
 
-	const std::shared_ptr<dust::LuaVM>& GetLuaVM() const { return m_vm; }
+	const dust::LuaVMPtr& GetLuaVM() const { return m_lua; }
 
 private:
 	void OnSize(wxSizeEvent& event);
@@ -36,7 +37,7 @@ protected:
 private:
 	std::unique_ptr<EditPanelImpl> m_impl;
 
-	std::shared_ptr<dust::LuaVM> m_vm = nullptr;
+	dust::LuaVMPtr m_lua = nullptr;
 
 	DECLARE_EVENT_TABLE()
 
