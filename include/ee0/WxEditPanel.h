@@ -9,8 +9,6 @@
 
 #include <memory>
 
-namespace dust { class LuaVM;}
-
 namespace ee0
 {
 
@@ -26,7 +24,7 @@ public:
 
 	bool GetKeyState(int key) const;
 
-	const dust::LuaVMPtr& GetLuaVM() const { return m_lua; }
+	const dust::ContextPtr& GetDustCtx() const { return m_dust_ctx; }
 
 private:
 	void OnSize(wxSizeEvent& event);
@@ -37,7 +35,7 @@ protected:
 private:
 	std::unique_ptr<EditPanelImpl> m_impl;
 
-	dust::LuaVMPtr m_lua = nullptr;
+	dust::ContextPtr m_dust_ctx = nullptr;
 
 	DECLARE_EVENT_TABLE()
 
