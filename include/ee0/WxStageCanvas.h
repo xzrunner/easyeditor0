@@ -56,9 +56,10 @@ private:
 
 	void OnKillFocus(wxFocusEvent& event);
 
-private:
+protected:
 	void SetCurrentCanvas();
 
+private:
 	void InitRender(const RenderContext* rc);
 	void InitWindow(const WindowContext* wc);
 	void InitOthers();
