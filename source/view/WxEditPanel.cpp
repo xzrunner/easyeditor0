@@ -23,6 +23,7 @@ WxEditPanel::WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 
 	m_dust_ctx = std::make_shared<dust::Context>();
 	dust::Blackboard::Instance()->ctx = m_dust_ctx;
+	m_dust_ctx->Init();
 }
 
 bool WxEditPanel::GetKeyState(int key) const
