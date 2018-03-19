@@ -22,7 +22,7 @@ WxEditPanel::WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 	m_impl = std::make_unique<EditPanelImpl>(m_sub_mgr);
 
 	m_dust_ctx = std::make_shared<dust::Context>();
-	dust::Blackboard::Instance()->ctx = m_dust_ctx;
+	dust::Blackboard::Instance()->SetContext(m_dust_ctx);
 	m_dust_ctx->Init();
 }
 
