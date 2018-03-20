@@ -3,7 +3,7 @@
 #include "ee0/EditPanelImpl.h"
 #include "ee0/typedef.h"
 
-#include <dust/typedef.h>
+#include <moon/typedef.h>
 
 #include <wx/wx.h>
 
@@ -24,7 +24,7 @@ public:
 
 	bool GetKeyState(int key) const;
 
-	const dust::ContextPtr& GetDustCtx() const { return m_dust_ctx; }
+	const moon::ContextPtr& GetMoonCtx() const { return m_moon_ctx; }
 
 private:
 	void OnSize(wxSizeEvent& event);
@@ -35,7 +35,7 @@ protected:
 private:
 	std::unique_ptr<EditPanelImpl> m_impl;
 
-	dust::ContextPtr m_dust_ctx = nullptr;
+	moon::ContextPtr m_moon_ctx = nullptr;
 
 	DECLARE_EVENT_TABLE()
 

@@ -2,8 +2,8 @@
 #include "ee0/EditPanelImpl.h"
 #include "ee0/SubjectMgr.h"
 
-#include <dust/Context.h>
-#include <dust/Blackboard.h>
+#include <moon/Context.h>
+#include <moon/Blackboard.h>
 
 namespace ee0
 {
@@ -21,9 +21,9 @@ WxEditPanel::WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 	}
 	m_impl = std::make_unique<EditPanelImpl>(m_sub_mgr);
 
-	m_dust_ctx = std::make_shared<dust::Context>();
-	dust::Blackboard::Instance()->SetContext(m_dust_ctx);
-	m_dust_ctx->Init();
+	m_moon_ctx = std::make_shared<moon::Context>();
+	moon::Blackboard::Instance()->SetContext(m_moon_ctx);
+	m_moon_ctx->Init();
 }
 
 bool WxEditPanel::GetKeyState(int key) const
