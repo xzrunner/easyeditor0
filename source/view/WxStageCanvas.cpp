@@ -140,6 +140,8 @@ void WxStageCanvas::OnDrawWhole() const
 	m_rc.gum_rc->GetUrRc().Clear(0x88888888);
 
 	OnDrawSprites();
+
+//	DebugDraw();
 }
 
 void WxStageCanvas::OnSize(wxSizeEvent& event)
@@ -249,6 +251,11 @@ void WxStageCanvas::OnKillFocus(wxFocusEvent& event)
 	SetCurrentCanvas();
 
 //	m_stage.GetKeyState().Reset();
+}
+
+void WxStageCanvas::DebugDraw() const
+{
+	gum::DTex::Instance()->DebugDraw();
 }
 
 void WxStageCanvas::SetCurrentCanvas()

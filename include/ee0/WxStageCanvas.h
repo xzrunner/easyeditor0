@@ -57,6 +57,8 @@ private:
 
 	void OnKillFocus(wxFocusEvent& event);
 
+	void DebugDraw() const;
+
 protected:
 	void SetCurrentCanvas();
 
