@@ -181,7 +181,7 @@ void WxStageCanvas::OnMouse(wxMouseEvent& event)
 
 	m_stage.OnMouse(event);
 
-	OnMouse(event.GetX(), event.GetY());
+	OnMouseImpl(event);
 
 	// The handler of this event should normally call event.Skip() to allow the default processing 
 	// to take place as otherwise the window under mouse wouldn't get the focus.
@@ -195,6 +195,8 @@ void WxStageCanvas::OnKeyDown(wxKeyEvent& event)
 	SetCurrentCanvas();
 
 	m_stage.OnKeyDown(event);
+
+	OnKeyDownImpl(event);
 }
 
 void WxStageCanvas::OnKeyUp(wxKeyEvent& event)

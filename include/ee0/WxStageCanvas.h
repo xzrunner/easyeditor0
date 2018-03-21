@@ -41,7 +41,8 @@ protected:
 
 	virtual void OnTimer() {}
 
-	virtual void OnMouse(int x, int y) {}
+	virtual void OnMouseImpl(wxMouseEvent& event) {}
+	virtual void OnKeyDownImpl(wxKeyEvent& event) {}
 
 private:
 	void OnSize(wxSizeEvent& event);
