@@ -187,6 +187,12 @@
     <ClInclude Include="..\..\..\include\ee0\SettingCfg.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -277,6 +283,12 @@
       <Filter>edit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxColorGradientDlg.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp">
       <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>

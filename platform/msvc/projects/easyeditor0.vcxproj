@@ -29,7 +29,9 @@
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
     <ClInclude Include="..\..\..\include\ee0\SettingCfg.h" />
+    <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h" />
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompNodeEditorPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropData.h" />
@@ -65,6 +67,7 @@
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
     <ClCompile Include="..\..\..\source\editop\NodeSelectOP.cpp" />
+    <ClCompile Include="..\..\..\source\gui\WxColorGradientDlg.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxListSelectDlg.cpp" />
     <ClCompile Include="..\..\..\source\msg\Subject.cpp" />
@@ -72,6 +75,7 @@
     <ClCompile Include="..\..\..\source\tools\CameraHelper.cpp" />
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp" />
     <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp" />
+    <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompNodeEditorPanel.cpp" />
