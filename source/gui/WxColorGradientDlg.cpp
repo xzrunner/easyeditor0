@@ -1,5 +1,6 @@
 #include "ee0/WxColorGradientDlg.h"
 
+#include <sm_const.h>
 #include <painting2/GradientColor.h>
 
 #include <wx/sizer.h>
@@ -106,8 +107,9 @@ void WxColorGradientDlg::InitLayout()
 
 		sizer->Add(new wxStaticText(this, wxID_ANY, wxT("Angle ")));
 
-		sizer->Add(m_angle = new wxSpinCtrl(this, wxID_ANY, std::to_string(m_col.angle),
-			wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 90, m_col.angle));
+		int deg = static_cast<int>(m_col.angle * SM_RAD_TO_DEG);
+		sizer->Add(m_angle = new wxSpinCtrl(this, wxID_ANY, std::to_string(deg),
+			wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 90, deg));
 		Connect(m_angle->GetId(), wxEVT_COMMAND_SPINCTRL_UPDATED,
 			wxSpinEventHandler(WxColorGradientDlg::SpinEventHandler));
 
@@ -140,7 +142,7 @@ void WxColorGradientDlg::SpinEventHandler(wxSpinEvent& event)
 {
 	if (event.GetId() == m_angle->GetId()) 
 	{
-		m_col.angle = m_angle->GetValue();
+		m_col.angle = m_angle->GetValue() * SM_DEG_TO_RAD;
 	}
 }
 
