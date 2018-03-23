@@ -17,7 +17,7 @@ class WxColorGradientDlg : public wxDialog
 public:
 	WxColorGradientDlg(wxWindow* parent, const pt2::GradientColor& col);
 
-	const pt2::GradientColor& GetColor() const { return m_col; }
+	pt2::GradientColor GetColor() const;
 
 private:
 	class ColorPreview : public wxPanel
@@ -53,9 +53,11 @@ private:
 	}; // ColorPreview
 
 private:
+	void InitColor();
 	void InitLayout();
 
 	void CommandEventHandler(wxCommandEvent& event);
+	void SpinEventHandler(wxSpinEvent& event);
 	void ColourPickerEventHandler(wxColourPickerEvent& event);
 
 private:
@@ -66,6 +68,8 @@ private:
 	wxTextCtrl *m_begin_pos, *m_mid_pos, *m_end_pos;
 
 	ColorPreview* m_preview;
+
+	wxSpinCtrl* m_angle;
 
 }; // WxColorGradientDlg
 
