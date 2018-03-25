@@ -1,5 +1,6 @@
 #include "ee0/WxCompNodeEditorPanel.h"
 #include "ee0/SubjectMgr.h"
+#include "ee0/MessageID.h"
 
 #include <wx/sizer.h>
 #include <wx/textctrl.h>

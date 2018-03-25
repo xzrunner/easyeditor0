@@ -1,7 +1,5 @@
 #pragma once
 
-#include "ee0/MessageID.h"
-
 #include <memory>
 #include <set>
 
@@ -14,7 +12,7 @@ class Observer;
 class Subject
 {
 public:
-	Subject(MessageID id);
+	Subject(uint32_t id);
 
 	void RegisterObserver(Observer* o);
 	void UnregisterObserver(Observer* o);
@@ -22,7 +20,7 @@ public:
 	void NotifyObservers(const VariantSet& variants);
 
 private:
-	MessageID m_id;
+	uint32_t m_id;
 
 	// todo: Observer usually is wxWindow which is raw pointer.
 	std::set<Observer*> m_observers;

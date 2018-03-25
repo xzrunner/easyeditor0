@@ -17,7 +17,7 @@ WxStagePage::WxStagePage(wxWindow* parent)
 	m_sub_mgr->RegisterObserver(MSG_SET_EDITOR_DIRTY, this);
 }
 
-void WxStagePage::OnNotify(MessageID msg, const VariantSet& variants)
+void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 {
 	switch (msg)
 	{

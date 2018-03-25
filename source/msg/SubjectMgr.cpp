@@ -6,7 +6,7 @@
 namespace ee0
 {
 
-void SubjectMgr::RegisterObserver(MessageID msg, Observer* o)
+void SubjectMgr::RegisterObserver(uint32_t msg, Observer* o)
 {
 	auto sub = QuerySubject(msg);
 	if (!sub) {
@@ -18,7 +18,7 @@ void SubjectMgr::RegisterObserver(MessageID msg, Observer* o)
 	sub->RegisterObserver(o);
 }
 
-bool SubjectMgr::UnregisterObserver(MessageID msg, Observer* o)
+bool SubjectMgr::UnregisterObserver(uint32_t msg, Observer* o)
 {
 	auto sub = QuerySubject(msg);
 	if (!sub) {
@@ -29,7 +29,7 @@ bool SubjectMgr::UnregisterObserver(MessageID msg, Observer* o)
 	}
 }
 
-bool SubjectMgr::NotifyObservers(MessageID msg, const VariantSet& variants)
+bool SubjectMgr::NotifyObservers(uint32_t msg, const VariantSet& variants)
 {
 	auto sub = QuerySubject(msg);
 	if (!sub) {
@@ -40,7 +40,7 @@ bool SubjectMgr::NotifyObservers(MessageID msg, const VariantSet& variants)
 	}
 }
 
-Subject* SubjectMgr::QuerySubject(MessageID id) const
+Subject* SubjectMgr::QuerySubject(uint32_t id) const
 {
 	auto& itr = m_subjects.find(id);
 	return itr == m_subjects.end() ? nullptr : itr->second.get();

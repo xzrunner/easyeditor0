@@ -16,7 +16,7 @@ class WxStagePage : public WxEditPanel, public Observer, public NodeContainer
 public:
 	WxStagePage(wxWindow* parent);
 
-	virtual void OnNotify(MessageID msg, const VariantSet& variants) override;
+	virtual void OnNotify(uint32_t msg, const VariantSet& variants) override;
 
 	const SelectionSet<n0::NodeWithPos>& GetNodeSelection() const {
 		return m_node_selection;

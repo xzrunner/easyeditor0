@@ -5,7 +5,7 @@
 namespace ee0
 {
 
-Subject::Subject(MessageID id)
+Subject::Subject(uint32_t id)
 	: m_id(id) 
 {
 }

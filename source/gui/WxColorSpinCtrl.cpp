@@ -1,5 +1,6 @@
 #include "ee0/WxColorSpinCtrl.h"
 #include "ee0/SubjectMgr.h"
+#include "ee0/MessageID.h"
 
 #include <painting2/Color.h>
 

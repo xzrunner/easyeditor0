@@ -3,6 +3,7 @@
 #include "ee0/WxStageCanvas.h"
 #include "ee0/SubjectMgr.h"
 #include "ee0/MsgHelper.h"
+#include "ee0/MessageID.h"
 
 namespace ee0
 {
