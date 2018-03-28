@@ -28,7 +28,8 @@ void Subject::NotifyObservers(const VariantSet& variants)
 		skip = static_cast<Observer*>(var.m_val.pv);
 	}
 
-	for (auto& o : m_observers) 
+	auto copy = m_observers;
+	for (auto& o : copy)
 	{
 		if (skip && skip == o) {
 			continue;
