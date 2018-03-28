@@ -14,6 +14,13 @@ namespace ee0
 class WxStagePage : public WxEditPanel, public Observer, public NodeContainer
 {
 public:
+	enum TraverseType
+	{
+		TRAV_DRAW = 0,
+		TRAV_QUERY,
+	};
+
+public:
 	WxStagePage(wxWindow* parent);
 	// todo
 //	virtual ~WxStagePage();
