@@ -16,7 +16,7 @@ class WxEditPanel : public wxPanel
 {
 public:
 	WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr);
-	~WxEditPanel() = default;
+	virtual ~WxEditPanel() = default;
 	const SubjectMgrPtr& GetSubjectMgr() const { return m_sub_mgr; }
 
 	EditPanelImpl& GetImpl() { return *m_impl; }
