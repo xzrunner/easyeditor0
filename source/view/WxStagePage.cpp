@@ -4,6 +4,19 @@
 #include <node0/typedef.h>
 #include <guard/check.h>
 
+namespace
+{
+
+const uint32_t MESSAGES[] =
+{
+	ee0::MSG_NODE_SELECTION_INSERT,
+	ee0::MSG_NODE_SELECTION_DELETE,
+	ee0::MSG_NODE_SELECTION_CLEAR,
+	ee0::MSG_SET_EDITOR_DIRTY,
+};
+
+}
+
 namespace ee0
 {
 
@@ -11,11 +24,18 @@ WxStagePage::WxStagePage(wxWindow* parent)
 	: WxEditPanel(parent, nullptr)
 	, m_edit_dirty(false)
 {
-	m_sub_mgr->RegisterObserver(MSG_NODE_SELECTION_INSERT, this);
-	m_sub_mgr->RegisterObserver(MSG_NODE_SELECTION_DELETE, this);
-	m_sub_mgr->RegisterObserver(MSG_NODE_SELECTION_CLEAR, this);
-	m_sub_mgr->RegisterObserver(MSG_SET_EDITOR_DIRTY, this);
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->RegisterObserver(msg, this);
+	}
 }
+
+// todo
+//WxStagePage::~WxStagePage()
+//{
+//	for (auto& msg : MESSAGES) {
+//		m_sub_mgr->UnregisterObserver(msg, this);
+//	}
+//}
 
 void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 {

@@ -15,6 +15,8 @@ class WxStagePage : public WxEditPanel, public Observer, public NodeContainer
 {
 public:
 	WxStagePage(wxWindow* parent);
+	// todo
+//	virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const VariantSet& variants) override;
 
