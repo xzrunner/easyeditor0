@@ -10,6 +10,7 @@
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
 #include <sprite2/SprTimer.h>
+#include <anim/GlobalClock.h>
 #include <gum/Sprite2.h>
 #include <gum/Audio.h>
 #include <gum/Model3.h>
@@ -235,11 +236,11 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 
 	gum::DTex::Instance()->Flush();
 
-	// todo update
-	//bool dirty = m_stage.Update();
-	//if (dirty) {
-	//	m_dirty = dirty;
-	//}
+	anim::GlobalClock::Instance()->Update(dt);
+
+	if (OnUpdate()) {
+		m_dirty = true;
+	}
 
 	if (m_dirty) {
 		Refresh();

@@ -40,6 +40,7 @@ protected:
 	virtual void OnDrawSprites() const = 0;
 
 	virtual void OnTimer() {}
+	virtual bool OnUpdate() { return false; }
 
 	virtual void OnMouseImpl(wxMouseEvent& event) {}
 	virtual void OnKeyDownImpl(wxKeyEvent& event) {}
