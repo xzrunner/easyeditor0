@@ -1,18 +1,13 @@
 #include "ee0/WxBitmap.h"
-#include "ee0/CompSymEditor.h"
 
 #include <gimg_typedef.h>
 #include <gimg_import.h>
 #include <pimg/Condense.h>
 #include <pimg/Rect.h>
-#include <sprite2/SymType.h>
-#include <sprite2/DrawRT.h>
-#include <sprite2/Symbol.h>
-#include <s2loader/SymbolFile.h>
-#include <gum/Config.h>
-#include <gum/SymbolPool.h>
 
 #include <wx/image.h>
+
+#include <boost/filesystem.hpp>
 
 namespace ee0
 {
@@ -36,14 +31,15 @@ WxBitmap::WxBitmap(const std::string& filepath)
 
 bool WxBitmap::LoadFromFile(const std::string& filepath)
 {
-	int type = s2loader::SymbolFile::Instance()->Type(filepath.c_str());
-	if (type == s2::SYM_INVALID || type == s2::SYM_UNKNOWN) {
-		return false;
-	} else if (type == s2::SYM_IMAGE) {
-		return LoadFromImageFile(filepath);
-	} else {
-		return LoadFromSymbol(filepath, type);
+	auto ext = boost::filesystem::extension(filepath);
+	if (ext == ".png" || ext == ".jpg" || ext == ".bmp" || ext == ".ppm" || ext == ".pvr" || ext == ".pkm") {
+		LoadFromImageFile(filepath);
+	} else if (ext == ".json") {
+		// todo
+//		LoadFromSymbol(filepath);
 	}
+
+	return false;
 }
 
 bool WxBitmap::LoadFromImageFile(const std::string& filepath)
@@ -52,9 +48,9 @@ bool WxBitmap::LoadFromImageFile(const std::string& filepath)
 
 	int width, height, format;
 	uint8_t* pixels = gimg_import(filepath.c_str(), &width, &height, &format);
-	if (format == GPF_RGBA8 && gum::Config::Instance()->GetPreMulAlpha()) {
-		gimg_pre_mul_alpha(pixels, width, height);
-	}
+	//if (format == GPF_RGBA8 && gum::Config::Instance()->GetPreMulAlpha()) {
+	//	gimg_pre_mul_alpha(pixels, width, height);
+	//}
 	if (format != GPF_RGBA8) {
 		image.LoadFile(filepath.c_str());
 		return true;
@@ -118,38 +114,38 @@ void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 
 bool WxBitmap::LoadFromSymbol(const std::string& filepath, int type)
 {
-	auto sym = gum::SymbolPool::Instance()->Fetch(filepath.c_str(), type);
-	if (!sym) {
-		return false;
-	}
-	
-	sm::rect rect = sym->GetBounding();
-	if (!rect.IsValid()) {
-		return false;
-	}
+	//auto sym = gum::SymbolPool::Instance()->Fetch(filepath.c_str(), type);
+	//if (!sym) {
+	//	return false;
+	//}
+	//
+	//sm::rect rect = sym->GetBounding();
+	//if (!rect.IsValid()) {
+	//	return false;
+	//}
 
-	float w = std::max(1.0f, rect.Size().x),
-		  h = std::max(1.0f, rect.Size().y);
-	float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE; 
-	w *= scale;
-	h *= scale;
-	w = std::max(1.0f, w);
-	h = std::max(1.0f, h);
+	//float w = std::max(1.0f, rect.Size().x),
+	//	  h = std::max(1.0f, rect.Size().y);
+	//float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE; 
+	//w *= scale;
+	//h *= scale;
+	//w = std::max(1.0f, w);
+	//h = std::max(1.0f, h);
 
- 	s2::DrawRT rt;
- 	rt.Draw(*sym, true, scale);
- 	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
- 	if (!rgba) {
- 		return false;
- 	}
- 
- 	uint8_t* rgb = gimg_rgba2rgb(rgba, w, h);
- 
- 	wxImage image(w, h, rgb, true);
-	LoadFromImage(image, false);
- 
- 	free(rgb);
- 	delete[] rgba;
+ //	s2::DrawRT rt;
+ //	rt.Draw(*sym, true, scale);
+ //	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
+ //	if (!rgba) {
+ //		return false;
+ //	}
+ //
+ //	uint8_t* rgb = gimg_rgba2rgb(rgba, w, h);
+ //
+ //	wxImage image(w, h, rgb, true);
+	//LoadFromImage(image, false);
+ //
+ //	free(rgb);
+ //	delete[] rgba;
 
 	return true;
 }

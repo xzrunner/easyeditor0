@@ -3,7 +3,6 @@
 #include <wx/dnd.h>
 
 #include <SM_Vector.h>
-#include <sprite2/typedef.h>
 
 #include <memory>
 

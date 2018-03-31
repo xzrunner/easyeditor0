@@ -16,9 +16,6 @@
     <Filter Include="tools">
       <UniqueIdentifier>{c3023874-474b-4af4-a2ce-d5374fecc933}</UniqueIdentifier>
     </Filter>
-    <Filter Include="data\symbol">
-      <UniqueIdentifier>{21333446-767b-4539-be83-d06bc648a246}</UniqueIdentifier>
-    </Filter>
     <Filter Include="data\node">
       <UniqueIdentifier>{3dc2683f-e8d5-43bc-be2c-bd8c3f541262}</UniqueIdentifier>
     </Filter>
@@ -90,12 +87,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h">
       <Filter>data\node</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\CompLibraryItem.h">
-      <Filter>data\symbol</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\CompSymEditor.h">
-      <Filter>data\symbol</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxBitmap.h">
       <Filter>data</Filter>
@@ -193,6 +184,9 @@
     <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\StringHelper.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -212,12 +206,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\data\CompNodeEditor.cpp">
       <Filter>data\node</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\data\CompLibraryItem.cpp">
-      <Filter>data\symbol</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\data\CompSymEditor.cpp">
-      <Filter>data\symbol</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp">
       <Filter>data</Filter>
@@ -289,6 +277,9 @@
       <Filter>gui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\StringHelper.cpp">
       <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>

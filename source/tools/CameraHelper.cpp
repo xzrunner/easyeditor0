@@ -3,7 +3,6 @@
 #include <painting2/OrthoCamera.h>
 #include <painting2/Blackboard.h>
 #include <painting2/WindowContext.h>
-#include <gum/Blackboard.h>
 
 namespace ee0
 {

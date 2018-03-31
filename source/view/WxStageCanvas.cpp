@@ -3,21 +3,16 @@
 #include "ee0/RenderContext.h"
 #include "ee0/WindowContext.h"
 
+#include <guard/check.h>
 #include <unirender/RenderContext.h>
 #include <painting2/Blackboard.h>
 #include <painting2/RenderContext.h>
 #include <painting2/WindowContext.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
-#include <sprite2/SprTimer.h>
 #include <anim/GlobalClock.h>
-#include <gum/Sprite2.h>
-#include <gum/Audio.h>
-#include <gum/Model3.h>
-#include <gum/RenderContext.h>
-#include <gum/ShaderLab.h>
-#include <gum/DTex.h>
-#include <gum/Blackboard.h>
+#include <facade/Blackboard.h>
+#include <facade/RenderContext.h>
 
 #include <shaderlab/ShaderMgr.h>
 #include <shaderlab/RenderContext.h>
@@ -29,8 +24,6 @@
 #include <shaderlab/FilterShader.h>
 #include <shaderlab/MaskShader.h>
 #include <shaderlab/Model3Shader.h>
-
-#include <guard/check.h>
 
 namespace ee0
 {
@@ -83,16 +76,16 @@ WxStageCanvas::~WxStageCanvas()
 
 	//	auto ctx = wc_mgr.Top();
 	//	if (ctx) {
-	//		m_rc.gum_rc->OnSize(ctx->GetScreenWidth(), ctx->GetScreenHeight());
+	//		m_rc.facade_rc->OnSize(ctx->GetScreenWidth(), ctx->GetScreenHeight());
 	//	}
 	//}
 	//if (m_flag & HAS_3D) {
 	//	pt3::Blackboard::Instance()->GetWndCtxMgr().Pop();
 	//}
 
-	gum::Blackboard::Instance()->SetRenderContext(nullptr);
+	facade::Blackboard::Instance()->SetRenderContext(nullptr);
 	if (m_new_rc) {
-		m_rc.gum_rc->Unbind();
+		m_rc.facade_rc->Unbind();
 	}
 }
 
@@ -106,8 +99,8 @@ void WxStageCanvas::CreateRenderContext(RenderContext& rc, wxGLCanvas* canvas)
 	rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
 	canvas->SetCurrent(*rc.gl_ctx);
 
-	rc.gum_rc = std::make_shared<gum::RenderContext>();
-	auto& sl_rc = rc.gum_rc->GetSlRc();
+	rc.facade_rc = std::make_shared<facade::RenderContext>();
+	auto& sl_rc = rc.facade_rc->GetSlRc();
 	auto& shader_mgr = sl_rc.GetShaderMgr();
 
 	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(sl_rc));
@@ -138,7 +131,7 @@ void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3
 
 void WxStageCanvas::OnDrawWhole() const
 {
-	m_rc.gum_rc->GetUrRc().Clear(0x88888888);
+	m_rc.facade_rc->GetUrRc().Clear(0x88888888);
 
 	OnDrawSprites();
 
@@ -154,7 +147,7 @@ void WxStageCanvas::OnSize(wxSizeEvent& event)
 	{
 		SetCurrentCanvas();
 		OnSize(w, h);
-		m_rc.gum_rc->OnSize(w, h);
+//		m_rc.facade_rc->OnSize(w, h);
 	}
 }
 
@@ -167,12 +160,12 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	OnDrawWhole();
 	m_dirty = false;
 
-	m_rc.gum_rc->GetSlRc().GetShaderMgr().FlushShader();
+	m_rc.facade_rc->GetSlRc().GetShaderMgr().FlushShader();
 
 	glFlush();
 	SwapBuffers();
 
-	gum::ShaderLab::Instance()->Update(1 / 30.0f);
+	//gum::ShaderLab::Instance()->Update(1 / 30.0f);
 
 //	wxPaintDC dc(this);
 //	OnDrawDC();
@@ -230,11 +223,7 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 	}
 	last_time = curr_time;
 
-	if (s2::SprTimer::Instance()->Update(dt)) {
-		m_dirty = true;
-	}
-
-	gum::DTex::Instance()->Flush();
+//	gum::DTex::Instance()->Flush();
 
 	anim::GlobalClock::Instance()->Update(dt);
 
@@ -256,7 +245,7 @@ void WxStageCanvas::OnKillFocus(wxFocusEvent& event)
 
 void WxStageCanvas::DebugDraw() const
 {
-	gum::DTex::Instance()->DebugDraw();
+//	gum::DTex::Instance()->DebugDraw();
 }
 
 void WxStageCanvas::SetCurrentCanvas()
@@ -301,11 +290,8 @@ void WxStageCanvas::InitOthers()
 		return;
 	}
 
-	s2::SprTimer::Instance()->Init();
-
-	gum::Model3::Instance();
-	gum::Sprite2::Instance()->Init();
-	gum::Audio::Instance()->Initialize(nullptr, nullptr);
+	//gum::Model3::Instance();
+	//gum::Audio::Instance()->Initialize(nullptr, nullptr);
 	//DTex::Init();
 	//GTxt::Init();
 
@@ -316,8 +302,8 @@ void WxStageCanvas::BindRenderContext()
 {
 	SetCurrent(*m_rc.gl_ctx);
 
-	gum::Blackboard::Instance()->SetRenderContext(m_rc.gum_rc);
-	m_rc.gum_rc->Bind();
+	facade::Blackboard::Instance()->SetRenderContext(m_rc.facade_rc);
+	m_rc.facade_rc->Bind();
 }
 
 }
