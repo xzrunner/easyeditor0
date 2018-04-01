@@ -10,9 +10,9 @@
 #include <painting2/WindowContext.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
-#include <anim/GlobalClock.h>
 #include <facade/Blackboard.h>
 #include <facade/RenderContext.h>
+#include <facade/Facade.h>
 
 #include <shaderlab/ShaderMgr.h>
 #include <shaderlab/RenderContext.h>
@@ -224,7 +224,7 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 
 //	gum::DTex::Instance()->Flush();
 
-	anim::GlobalClock::Instance()->Update(dt);
+	facade::Facade::Update(dt);
 
 	if (OnUpdate()) {
 		m_dirty = true;
