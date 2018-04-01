@@ -56,7 +56,6 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 {
 	InitRender(rc);
 	InitWindow(wc);
-	InitOthers();
 
 	Bind(wxEVT_TIMER, &WxStageCanvas::OnTimer, this, m_timer.GetId());
 
@@ -281,21 +280,6 @@ void WxStageCanvas::InitWindow(const WindowContext* wc)
 	} else {
 		CreateWindowContext(m_wc, m_flag & HAS_2D, m_flag & HAS_3D);
 	}
-}
-
-void WxStageCanvas::InitOthers()
-{
-	static bool inited = false;
-	if (inited) {
-		return;
-	}
-
-	//gum::Model3::Instance();
-	//gum::Audio::Instance()->Initialize(nullptr, nullptr);
-	//DTex::Init();
-	//GTxt::Init();
-
-	inited = true;
 }
 
 void WxStageCanvas::BindRenderContext()

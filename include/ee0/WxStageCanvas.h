@@ -66,7 +66,6 @@ protected:
 private:
 	void InitRender(const RenderContext* rc);
 	void InitWindow(const WindowContext* wc);
-	void InitOthers();
 
 	void BindRenderContext();
 
