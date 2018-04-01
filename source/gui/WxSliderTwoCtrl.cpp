@@ -112,7 +112,7 @@ void WxSliderTwoCtrl::OnSetValue(wxScrollEvent& event)
 
 	Variant var1;
 	var1.m_type = VT_FLOAT;
-	var1.m_val.flt = fval0;
+	var1.m_val.flt = fval1;
 	variants.SetVariant("var1", var1);
 
 	m_cb.SetValue(m_key, variants);
@@ -140,7 +140,7 @@ void WxSliderTwoCtrl::OnSetValue(wxCommandEvent& event)
 
 	Variant var1;
 	var1.m_type = VT_FLOAT;
-	var1.m_val.flt = fval0;
+	var1.m_val.flt = fval1;
 	variants.SetVariant("var1", var1);
 
 	m_cb.SetValue(m_key, variants);
