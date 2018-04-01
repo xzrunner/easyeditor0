@@ -1,5 +1,6 @@
 #include "ee0/WxBitmap.h"
 
+#include <ns/ResFileHelper.h>
 #include <gimg_typedef.h>
 #include <gimg_import.h>
 #include <pimg/Condense.h>
@@ -31,15 +32,19 @@ WxBitmap::WxBitmap(const std::string& filepath)
 
 bool WxBitmap::LoadFromFile(const std::string& filepath)
 {
-	auto ext = boost::filesystem::extension(filepath);
-	if (ext == ".png" || ext == ".jpg" || ext == ".bmp" || ext == ".ppm" || ext == ".pvr" || ext == ".pkm") {
-		LoadFromImageFile(filepath);
-	} else if (ext == ".json") {
+	bool ret = false;
+	auto type = ns::ResFileHelper::Type(filepath);
+	switch (type)
+	{
+	case ns::FILE_IMAGE:
+		ret = LoadFromImageFile(filepath);
+		break;
+	case ns::FIME_JSON:
 		// todo
 //		LoadFromSymbol(filepath);
+		break;
 	}
-
-	return false;
+	return ret;
 }
 
 bool WxBitmap::LoadFromImageFile(const std::string& filepath)
