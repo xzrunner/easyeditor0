@@ -49,6 +49,9 @@
     <Filter Include="edit">
       <UniqueIdentifier>{e508db87-0061-481d-8fcd-b9c4d1de9bd5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gui\slider">
+      <UniqueIdentifier>{2055fe25-ef04-43a5-ae24-3394a7d2a63e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -187,6 +190,24 @@
     <ClInclude Include="..\..\..\include\ee0\StringHelper.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxSliderCtrl.h">
+      <Filter>gui\slider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxSliderOneCtrl.h">
+      <Filter>gui\slider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\GuiCallback.h">
+      <Filter>gui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\SliderItem.h">
+      <Filter>gui\slider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxSliderTwoCtrl.h">
+      <Filter>gui\slider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxImagePanel.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -281,6 +302,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\StringHelper.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxSliderOneCtrl.cpp">
+      <Filter>gui\slider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxSliderTwoCtrl.cpp">
+      <Filter>gui\slider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\GuiCallback.cpp">
+      <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxImagePanel.cpp">
+      <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
