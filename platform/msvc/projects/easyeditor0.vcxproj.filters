@@ -320,5 +320,8 @@
     <None Include="..\..\..\include\ee0\SelectionSet.inl">
       <Filter>data</Filter>
     </None>
+    <None Include="..\..\..\include\ee0\StringHelper.inl">
+      <Filter>tools</Filter>
+    </None>
   </ItemGroup>
 </Project>
