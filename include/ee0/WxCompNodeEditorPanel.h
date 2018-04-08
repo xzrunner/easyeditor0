@@ -1,10 +1,9 @@
 #pragma once
 
+#include "ee0/GameObj.h"
 #include "ee0/WxCompPanel.h"
 #include "ee0/CompNodeEditor.h"
 #include "ee0/typedef.h"
-
-#include <node0/typedef.h>
 
 class wxTextCtrl;
 class wxCheckBox;
@@ -16,7 +15,7 @@ class WxCompNodeEditorPanel : public WxCompPanel
 {
 public:
 	WxCompNodeEditorPanel(wxWindow* parent, CompNodeEditor& ceditor,
-		const SubjectMgrPtr& sub_mgr, const n0::SceneNodePtr& node);
+		const SubjectMgrPtr& sub_mgr, const GameObj& obj);
 
 	virtual void RefreshNodeComp() override;
 
@@ -30,7 +29,7 @@ private:
 private:
 	CompNodeEditor&  m_ceditor;
 	SubjectMgrPtr    m_sub_mgr;
-	n0::SceneNodePtr m_node;
+	GameObj m_obj;
 
 	wxTextCtrl* m_filepath;
 	wxTextCtrl* m_name;

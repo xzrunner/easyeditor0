@@ -1,7 +1,6 @@
 #include "ee0/WxStagePage.h"
 #include "ee0/SubjectMgr.h"
 
-#include <node0/typedef.h>
 #include <guard/check.h>
 
 namespace
@@ -59,47 +58,47 @@ void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 
 void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 {
-	n0::SceneNodePtr node, root;
+	GameObj obj, root;
 	size_t node_id = 0;
 
-	auto var_node = variants.GetVariant("node");
-	GD_ASSERT(var_node.m_type == VT_PVOID, "no var in vars: node");
-	node = *static_cast<n0::SceneNodePtr*>(var_node.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var_obj = variants.GetVariant("obj");
+	GD_ASSERT(var_obj.m_type == VT_PVOID, "no var in vars: obj");
+	obj = *static_cast<GameObj*>(var_obj.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
 	auto var_root = variants.GetVariant("root");
 	if (var_root.m_type != VT_EMPTY) {
-		GD_ASSERT(var_root.m_type == VT_PVOID, "no var in vars: node");
-		root = *static_cast<n0::SceneNodePtr*>(var_root.m_val.pv);
+		GD_ASSERT(var_root.m_type == VT_PVOID, "no var in vars: obj");
+		root = *static_cast<GameObj*>(var_root.m_val.pv);
 	}
 
 	auto var_id = variants.GetVariant("id");
 	if (var_id.m_type != VT_EMPTY) {
-		GD_ASSERT(var_id.m_type == VT_ULONG, "no var in vars: node");
+		GD_ASSERT(var_id.m_type == VT_ULONG, "no var in vars: obj");
 		node_id = var_id.m_val.ul;
 	}
 
 	auto var_clear = variants.GetVariant("clear");
 	if (var_clear.m_type != VT_EMPTY) {
-		GD_ASSERT(var_clear.m_type == VT_BOOL, "no var in vars: node");
+		GD_ASSERT(var_clear.m_type == VT_BOOL, "no var in vars: obj");
 		if (var_clear.m_val.bl) {
 			m_node_selection.Clear();
 		}
 	}
 
-	m_node_selection.Add(n0::NodeWithPos(node, root, node_id));
+	m_node_selection.Add(n0::NodeWithPos(obj, root, node_id));
 
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::NodeSelectionDelete(const VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == VT_PVOID, "no var in vars: obj");
+	GameObj* obj = static_cast<GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	n0::NodeWithPos node_pos(*node, *node, 0);
+	n0::NodeWithPos node_pos(*obj, *obj, 0);
 	m_node_selection.Remove(node_pos);
 
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);

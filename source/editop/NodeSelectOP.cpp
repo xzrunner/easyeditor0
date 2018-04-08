@@ -51,10 +51,10 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 	{
 		VariantSet vars;
 
-		Variant var_node;
-		var_node.m_type = VT_PVOID;
-		var_node.m_val.pv = &selected;
-		vars.SetVariant("node", var_node);
+		Variant var_obj;
+		var_obj.m_type = VT_PVOID;
+		var_obj.m_val.pv = &selected;
+		vars.SetVariant("obj", var_obj);
 
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
@@ -109,22 +109,22 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 
 	auto& sub_mgr = m_stage.GetSubjectMgr();
 
-	std::vector<n0::SceneNodePtr> nodes;
-	QueryByRect(m_last_pos, sm::ivec2(x, y), m_last_pos.x < x, nodes);
+	std::vector<GameObj> objs;
+	QueryByRect(m_last_pos, sm::ivec2(x, y), m_last_pos.x < x, objs);
 	if (m_stage.GetKeyState(WXK_CONTROL))
 	{
-		for (auto& node : nodes)
+		for (auto& obj : objs)
 		{
 			VariantSet vars;
 
-			Variant var_node;
-			var_node.m_type = VT_PVOID;
-			var_node.m_val.pv = &node;
-			vars.SetVariant("node", var_node);
+			Variant var_obj;
+			var_obj.m_type = VT_PVOID;
+			var_obj.m_val.pv = &obj;
+			vars.SetVariant("obj", var_obj);
 
 			Variant var_root;
 			var_root.m_type = ee0::VT_PVOID;
-			var_root.m_val.pv = &node;
+			var_root.m_val.pv = &obj;
 			vars.SetVariant("root", var_root);
 
 			Variant var_id;
@@ -132,7 +132,7 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 			var_id.m_val.ul = 0;
 			vars.SetVariant("id", var_id);
 
-			n0::NodeWithPos node_pos(node, node, 0);
+			n0::NodeWithPos node_pos(obj, obj, 0);
 			if (selection.IsExist(node_pos)) {
 				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
 			} else {
@@ -145,9 +145,9 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 		sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
 
 		std::vector<n0::NodeWithPos> nwps;
-		nwps.reserve(nodes.size());
-		for (auto& node : nodes) {
-			nwps.push_back(n0::NodeWithPos(node, node, 0));
+		nwps.reserve(objs.size());
+		for (auto& obj : objs) {
+			nwps.push_back(n0::NodeWithPos(obj, obj, 0));
 		}
 		MsgHelper::InsertNodeSelection(*sub_mgr, nwps);
 	}

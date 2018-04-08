@@ -1,6 +1,6 @@
 #include "ee0/WxBitmap.h"
 
-#include <ns/ResFileHelper.h>
+#include <sx/ResFileHelper.h>
 #include <gimg_typedef.h>
 #include <gimg_import.h>
 #include <pimg/Condense.h>
@@ -33,13 +33,13 @@ WxBitmap::WxBitmap(const std::string& filepath)
 bool WxBitmap::LoadFromFile(const std::string& filepath)
 {
 	bool ret = false;
-	auto type = ns::ResFileHelper::Type(filepath);
+	auto type = sx::ResFileHelper::Type(filepath);
 	switch (type)
 	{
-	case ns::FILE_IMAGE:
+	case sx::FILE_IMAGE:
 		ret = LoadFromImageFile(filepath);
 		break;
-	case ns::FIME_JSON:
+	case sx::FILE_JSON:
 		// todo
 //		LoadFromSymbol(filepath);
 		break;
@@ -158,9 +158,9 @@ bool WxBitmap::LoadFromSymbol(const std::string& filepath, int type)
 bool WxBitmap::CanLoadFromWX(const std::string& filepath)
 {
 	const wxList& list = wxImage::GetHandlers();
-	for (wxList::compatibility_iterator node = list.GetFirst(); node; node = node->GetNext())
+	for (wxList::compatibility_iterator obj = list.GetFirst(); obj; obj = obj->GetNext())
 	{
-		auto handler = (wxImageHandler*)node->GetData();
+		auto handler = (wxImageHandler*)obj->GetData();
 		if (handler->CanRead(filepath)) {
 			return true;
 		}

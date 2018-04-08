@@ -16,7 +16,7 @@ public:
 	virtual n0::UniqueCompID TypeID() const override {
 		return n0::GetUniqueCompTypeID<CompNodeEditor>(); 
 	}
-	virtual std::unique_ptr<n0::NodeUniqueComp> Clone(const n0::SceneNode& node) const override;
+	virtual std::unique_ptr<n0::NodeUniqueComp> Clone(const n0::SceneNode& obj) const override;
 
 	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
 	const std::string& GetFilepath() const { return m_filepath; }

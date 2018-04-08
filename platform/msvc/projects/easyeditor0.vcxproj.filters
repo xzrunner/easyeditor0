@@ -208,6 +208,10 @@
     <ClInclude Include="..\..\..\include\ee0\WxImagePanel.h">
       <Filter>gui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\GameObj.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\Config.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">

@@ -1,9 +1,9 @@
 #pragma once
 
 #include "ee0/EditOP.h"
+#include "ee0/GameObj.h"
 
 #include <SM_Vector.h>
-#include <node0/typedef.h>
 
 #include <vector>
 
@@ -22,9 +22,9 @@ public:
 	virtual bool OnMouseLeftUp(int x, int y) override;
 
 private:
-	virtual n0::SceneNodePtr QueryByPos(int screen_x, int screen_y) const = 0;
+	virtual GameObj QueryByPos(int screen_x, int screen_y) const = 0;
 	virtual void QueryByRect(const sm::ivec2& p0, const sm::ivec2& p1,
-		bool contain, std::vector<n0::SceneNodePtr>& result) const = 0;
+		bool contain, std::vector<GameObj>& result) const = 0;
 
 protected:
 	WxStagePage& m_stage;

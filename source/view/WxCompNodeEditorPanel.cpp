@@ -11,11 +11,11 @@ namespace ee0
 {
 
 WxCompNodeEditorPanel::WxCompNodeEditorPanel(wxWindow* parent, CompNodeEditor& ceditor, 
-	                                         const SubjectMgrPtr& sub_mgr, const n0::SceneNodePtr& node)
+	                                         const SubjectMgrPtr& sub_mgr, const GameObj& obj)
 	: WxCompPanel(parent, "NodeEditor")
 	, m_ceditor(ceditor)
 	, m_sub_mgr(sub_mgr)
-	, m_node(node)
+	, m_obj(obj)
 {
 	InitLayout();
 	Expand();
@@ -86,8 +86,8 @@ void WxCompNodeEditorPanel::EnterNameValue(wxCommandEvent& event)
 	VariantSet vars;
 	Variant var;
 	var.m_type = VT_PVOID;
-	var.m_val.pv = &m_node;
-	vars.SetVariant("node", var);
+	var.m_val.pv = &m_obj;
+	vars.SetVariant("obj", var);
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_UPDATE_NODE_NAME, vars);
 }

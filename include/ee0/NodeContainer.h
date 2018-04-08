@@ -1,8 +1,7 @@
 #pragma once
 
+#include "ee0/GameObj.h"
 #include "ee0/VariantSet.h"
-
-#include <node0/typedef.h>
 
 #include <functional>
 
@@ -12,7 +11,7 @@ namespace ee0
 class NodeContainer
 {
 public:
-	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+	virtual void Traverse(std::function<bool(const GameObj&)> func,
 		const VariantSet& variants = VariantSet(), bool inverse = false) const = 0;
 
 }; // NodeContainer

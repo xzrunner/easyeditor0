@@ -12,10 +12,10 @@ CompNodeEditor::CompNodeEditor()
 	, m_editable(true)
 {
 	static size_t COUNT = 0;
-	m_name = "node" + std::to_string(COUNT++);
+	m_name = "obj" + std::to_string(COUNT++);
 }
 
-std::unique_ptr<n0::NodeUniqueComp> CompNodeEditor::Clone(const n0::SceneNode& node) const
+std::unique_ptr<n0::NodeUniqueComp> CompNodeEditor::Clone(const n0::SceneNode& obj) const
 {
 	auto comp = std::make_unique<CompNodeEditor>();
 	comp->m_filepath = m_filepath;

@@ -6,14 +6,14 @@
 namespace ee0
 {
 
-bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, n0::SceneNodePtr& node, bool select_new)
+bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, GameObj& obj, bool select_new)
 {
 	VariantSet vars;
 
 	Variant var;
 	var.m_type = VT_PVOID;
-	var.m_val.pv = &node;
-	vars.SetVariant("node", var);
+	var.m_val.pv = &obj;
+	vars.SetVariant("obj", var);
 
 	bool insert = sub_mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
 
@@ -21,7 +21,7 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, n0::SceneNodePtr& node, bool sel
 	{
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
-		var_root.m_val.pv = &node;
+		var_root.m_val.pv = &obj;
 		vars.SetVariant("root", var_root);
 
 		Variant var_id;
@@ -38,19 +38,19 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, n0::SceneNodePtr& node, bool sel
 	}
 }
 
-bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const n0::SceneNodePtr& node)
+bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj)
 {
 	ee0::VariantSet vars;
 	ee0::Variant var;
 	var.m_type = ee0::VT_PVOID;
-	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
-	vars.SetVariant("node", var);
+	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj);
+	vars.SetVariant("obj", var);
 	return sub_mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
 }
 
 void MsgHelper::InsertNodeSelection(SubjectMgr& sub_mgr, const std::vector<n0::NodeWithPos>& nodes)
 {
-	for (auto& node : nodes)
+	for (auto& obj : nodes)
 	{
 		VariantSet vars;
 
@@ -61,19 +61,19 @@ void MsgHelper::InsertNodeSelection(SubjectMgr& sub_mgr, const std::vector<n0::N
 			vars.SetVariant("multiple", var);
 		}
 
-		Variant var_node;
-		var_node.m_type = VT_PVOID;
-		var_node.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.GetNode());
-		vars.SetVariant("node", var_node);
+		Variant var_obj;
+		var_obj.m_type = VT_PVOID;
+		var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj.GetNode());
+		vars.SetVariant("obj", var_obj);
 
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
-		var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node.GetRoot());
+		var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj.GetRoot());
 		vars.SetVariant("root", var_root);
 
 		Variant var_id;
 		var_id.m_type = ee0::VT_ULONG;
-		var_id.m_val.ul = node.GetNodeID();
+		var_id.m_val.ul = obj.GetNodeID();
 		vars.SetVariant("id", var_id);
 
 		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
