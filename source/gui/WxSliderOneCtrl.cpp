@@ -2,9 +2,9 @@
 #include "ee0/SliderItem.h"
 #include "ee0/VariantSet.h"
 #include "ee0/GuiCallback.h"
-#include "ee0/StringHelper.h"
 
 #include <guard/check.h>
+#include <sx/StringHelper.h>
 
 #include <wx/statbox.h>
 #include <wx/sizer.h>
@@ -56,7 +56,7 @@ void WxSliderOneCtrl::LoadFromCB()
 	float fval = var.m_val.flt;
 	int ival = std::lround(fval / m_scale_slider2text);
 	m_slider->SetValue(ival);
-	m_text->SetValue(StringHelper::ToString(fval));
+	m_text->SetValue(sx::StringHelper::ToString(fval));
 }
 
 void WxSliderOneCtrl::StoreToCB()
@@ -68,7 +68,7 @@ void WxSliderOneCtrl::OnSetValue(wxScrollEvent& event)
 {
 	int ival = m_slider->GetValue();
 	float fval = ival * m_scale_slider2text;
-	m_text->SetValue(StringHelper::ToString(fval));
+	m_text->SetValue(sx::StringHelper::ToString(fval));
 
 	VariantSet variants;
 	Variant var;

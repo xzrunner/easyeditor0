@@ -32,7 +32,6 @@
     <ClInclude Include="..\..\..\include\ee0\SettingCfg.h" />
     <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h" />
     <ClInclude Include="..\..\..\include\ee0\SliderItem.h" />
-    <ClInclude Include="..\..\..\include\ee0\StringHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
@@ -85,7 +84,6 @@
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp" />
     <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp" />
     <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp" />
-    <ClCompile Include="..\..\..\source\tools\StringHelper.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompNodeEditorPanel.cpp" />
@@ -105,7 +103,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\include\ee0\SelectionSet.inl" />
-    <None Include="..\..\..\include\ee0\StringHelper.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectName>4.easyeditor0</ProjectName>
@@ -150,7 +147,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\serializerx\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -164,7 +161,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\serializerx\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

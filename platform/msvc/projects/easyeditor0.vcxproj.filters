@@ -187,9 +187,6 @@
     <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\StringHelper.h">
-      <Filter>tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxSliderCtrl.h">
       <Filter>gui\slider</Filter>
     </ClInclude>
@@ -304,9 +301,6 @@
     <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp">
       <Filter>tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\tools\StringHelper.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxSliderOneCtrl.cpp">
       <Filter>gui\slider</Filter>
     </ClCompile>
@@ -323,9 +317,6 @@
   <ItemGroup>
     <None Include="..\..\..\include\ee0\SelectionSet.inl">
       <Filter>data</Filter>
-    </None>
-    <None Include="..\..\..\include\ee0\StringHelper.inl">
-      <Filter>tools</Filter>
     </None>
   </ItemGroup>
 </Project>

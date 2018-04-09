@@ -2,9 +2,9 @@
 #include "ee0/SliderItem.h"
 #include "ee0/VariantSet.h"
 #include "ee0/GuiCallback.h"
-#include "ee0/StringHelper.h"
 
 #include <guard/check.h>
+#include <sx/StringHelper.h>
 
 #include <wx/statbox.h>
 #include <wx/sizer.h>
