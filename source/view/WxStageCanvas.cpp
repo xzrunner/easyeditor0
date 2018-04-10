@@ -13,6 +13,7 @@
 #include <facade/Blackboard.h>
 #include <facade/RenderContext.h>
 #include <facade/Facade.h>
+#include <facade/DTex.h>
 
 #include <shaderlab/ShaderMgr.h>
 #include <shaderlab/RenderContext.h>
@@ -134,7 +135,7 @@ void WxStageCanvas::OnDrawWhole() const
 
 	OnDrawSprites();
 
-//	DebugDraw();
+	DebugDraw();
 }
 
 void WxStageCanvas::OnSize(wxSizeEvent& event)
@@ -222,7 +223,7 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 	}
 	last_time = curr_time;
 
-//	gum::DTex::Instance()->Flush();
+	facade::DTex::Instance()->Flush();
 
 	facade::Facade::Update(dt);
 
@@ -244,7 +245,7 @@ void WxStageCanvas::OnKillFocus(wxFocusEvent& event)
 
 void WxStageCanvas::DebugDraw() const
 {
-//	gum::DTex::Instance()->DebugDraw();
+	facade::DTex::Instance()->DebugDraw();
 }
 
 void WxStageCanvas::SetCurrentCanvas()
