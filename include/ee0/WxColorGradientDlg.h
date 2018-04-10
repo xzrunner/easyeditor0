@@ -52,22 +52,39 @@ private:
 
 	}; // ColorPreview
 
+	class ColorSlider : public wxPanel
+	{
+	public:
+		ColorSlider(wxWindow* parent, wxSize size, pt2::GradientColor& col);
+
+	private:
+		void OnPaint(wxPaintEvent& event);
+		void OnMouse(wxMouseEvent& event);
+
+		void SelectByPos(int x);
+		
+	private:
+		static const int HALF_WIDTH = 5;
+
+	private:
+		pt2::GradientColor& m_col;
+
+		int m_selected;
+
+		DECLARE_EVENT_TABLE()
+
+	}; // ColorSlider
+
 private:
-	void InitColor();
 	void InitLayout();
 
-	void CommandEventHandler(wxCommandEvent& event);
 	void SpinEventHandler(wxSpinEvent& event);
-	void ColourPickerEventHandler(wxColourPickerEvent& event);
 
 private:
 	pt2::GradientColor m_col;
 
-	wxColourPickerCtrl *m_begin_col, *m_mid_col, *m_end_col;
-
-	wxTextCtrl *m_begin_pos, *m_mid_pos, *m_end_pos;
-
 	ColorPreview* m_preview;
+	ColorSlider* m_slider;
 
 	wxSpinCtrl* m_angle;
 

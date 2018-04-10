@@ -24,7 +24,7 @@ void SimpleGLCanvas::OnPaint(wxPaintEvent& event)
 {
 	SetCurrent(*m_context);
 
-	glClearColor(1, 1, 0, 1);
+	glClearColor(0, 0, 0, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	OnDraw();
