@@ -52,6 +52,9 @@
     <Filter Include="gui\slider">
       <UniqueIdentifier>{2055fe25-ef04-43a5-ae24-3394a7d2a63e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="tools\config">
+      <UniqueIdentifier>{d77a0c37-07fc-4829-a354-b4f1543537cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -178,9 +181,6 @@
     <ClInclude Include="..\..\..\include\ee0\EditRecord.h">
       <Filter>edit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\SettingCfg.h">
-      <Filter>tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h">
       <Filter>gui</Filter>
     </ClInclude>
@@ -208,7 +208,15 @@
     <ClInclude Include="..\..\..\include\ee0\GameObj.h">
       <Filter>data</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\Config.h" />
+    <ClInclude Include="..\..\..\include\ee0\SettingCfg.h">
+      <Filter>tools\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\Config.h">
+      <Filter>tools\config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\ConfigFile.h">
+      <Filter>tools\config</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -292,9 +300,6 @@
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp">
       <Filter>edit</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxColorGradientDlg.cpp">
       <Filter>gui</Filter>
     </ClCompile>
@@ -312,6 +317,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxImagePanel.cpp">
       <Filter>gui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp">
+      <Filter>tools\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\ConfigFile.cpp">
+      <Filter>tools\config</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
