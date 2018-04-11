@@ -5,8 +5,7 @@
 #include "ee0/SelectionSet.h"
 #include "ee0/NodeContainer.h"
 #include "ee0/typedef.h"
-
-#include <node0/NodeWithPos.h>
+#include "ee0/Config.h"
 
 namespace ee0
 {
@@ -27,23 +26,23 @@ public:
 
 	virtual void OnNotify(uint32_t msg, const VariantSet& variants) override;
 
-	const SelectionSet<n0::NodeWithPos>& GetNodeSelection() const {
-		return m_node_selection;
+	const SelectionSet<GameObjWithPos>& GetSelection() const {
+		return m_selection;
 	}
-	SelectionSet<n0::NodeWithPos>& GetNodeSelection() {
-		return m_node_selection;
+	SelectionSet<GameObjWithPos>& GetSelection() {
+		return m_selection;
 	}
 
 	bool IsEditDirty() const { return m_edit_dirty; }
 
 private:
-	void NodeSelectionInsert(const VariantSet& variants);
-	void NodeSelectionDelete(const VariantSet& variants);
+	void SelectionInsert(const VariantSet& variants);
+	void SelectionDelete(const VariantSet& variants);
 
 	void SetEditorDirty(const ee0::VariantSet& variants);
 
 protected:
-	SelectionSet<n0::NodeWithPos> m_node_selection;
+	SelectionSet<GameObjWithPos> m_selection;
 
 private:
 	bool m_edit_dirty;

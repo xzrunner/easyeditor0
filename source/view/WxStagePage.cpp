@@ -41,13 +41,13 @@ void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 	switch (msg)
 	{
 	case MSG_NODE_SELECTION_INSERT:
-		NodeSelectionInsert(variants);
+		SelectionInsert(variants);
 		break;
 	case MSG_NODE_SELECTION_DELETE:
-		NodeSelectionDelete(variants);
+		SelectionDelete(variants);
 		break;
 	case MSG_NODE_SELECTION_CLEAR:
-		m_node_selection.Clear();
+		m_selection.Clear();
 		m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 		break;
 	case MSG_SET_EDITOR_DIRTY:
@@ -56,9 +56,10 @@ void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 	}
 }
 
-void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
+void WxStagePage::SelectionInsert(const VariantSet& variants)
 {
-	GameObj obj, root;
+#ifndef GAME_OBJ_ECS
+	n0::SceneNodePtr obj, root;
 	size_t node_id = 0;
 
 	auto var_obj = variants.GetVariant("obj");
@@ -82,24 +83,33 @@ void WxStagePage::NodeSelectionInsert(const VariantSet& variants)
 	if (var_clear.m_type != VT_EMPTY) {
 		GD_ASSERT(var_clear.m_type == VT_BOOL, "no var in vars: obj");
 		if (var_clear.m_val.bl) {
-			m_node_selection.Clear();
+			m_selection.Clear();
 		}
 	}
 
-	m_node_selection.Add(n0::NodeWithPos(obj, root, node_id));
+	m_selection.Add(n0::NodeWithPos(obj, root, node_id));
+#else
+	auto var_obj = variants.GetVariant("obj");
+	GD_ASSERT(var_obj.m_type == VT_PVOID, "no var in vars: obj");
+	auto obj = *static_cast<ecsx::Entity*>(var_obj.m_val.pv);
+	m_selection.Add(obj);
+#endif // GAME_OBJ_ECS
 
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
-void WxStagePage::NodeSelectionDelete(const VariantSet& variants)
+void WxStagePage::SelectionDelete(const VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == VT_PVOID, "no var in vars: obj");
 	GameObj* obj = static_cast<GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
-	n0::NodeWithPos node_pos(*obj, *obj, 0);
-	m_node_selection.Remove(node_pos);
+#ifndef GAME_OBJ_ECS
+	m_selection.Remove(n0::NodeWithPos(*obj, *obj, 0));
+#else
+	m_selection.Remove(*obj);
+#endif // GAME_OBJ_ECS
 
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }

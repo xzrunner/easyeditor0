@@ -1,3 +1,3 @@
 #pragma once
 
-//#define EONE_ECS
+//#define GAME_OBJ_ECS
