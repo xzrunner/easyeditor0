@@ -25,19 +25,10 @@ namespace ee0
 {
 
 WxColorGradientDlg::WxColorGradientDlg(wxWindow* parent, const pt2::GradientColor& col)
-	: wxDialog(parent, wxID_ANY, "Color Gradient", wxGetMousePosition() - wxPoint(500, 350), wxSize(450, 300))
+	: wxDialog(parent, wxID_ANY, "Color Gradient", wxGetMousePosition() - wxPoint(500, 350))
 	, m_col(col)
 {
 	InitLayout();
-}
-
-pt2::GradientColor WxColorGradientDlg::GetColor() const 
-{
-	pt2::GradientColor ret = m_col;
-	if (ret.items[1].pos < 0) {
-		ret.items.erase(ret.items.begin() + 1);
-	}
-	return ret;
 }
 
 void WxColorGradientDlg::InitLayout()
@@ -45,12 +36,13 @@ void WxColorGradientDlg::InitLayout()
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
 	// preview
 	{
-		top_sizer->Add(m_preview = new ColorPreview(this, wxSize(400, 50), m_col), wxALIGN_CENTER);
+		top_sizer->Add(m_preview = new ColorPreview(this, wxSize(400, 50), m_col), 0, wxCENTER);
 	}
 	// control
 	{
-		top_sizer->Add(m_slider = new ColorSlider(this, wxSize(400, 20), m_col), wxALIGN_CENTER_HORIZONTAL);
+		top_sizer->Add(m_slider = new ColorSlider(this, wxSize(400, 20), m_col), 0, wxCENTER);
 	}
+	top_sizer->AddSpacer(10);
 	// angle
 	{
 		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
@@ -63,9 +55,10 @@ void WxColorGradientDlg::InitLayout()
 		Connect(m_angle->GetId(), wxEVT_COMMAND_SPINCTRL_UPDATED,
 			wxSpinEventHandler(WxColorGradientDlg::SpinEventHandler));
 
-		top_sizer->Add(sizer);
+		top_sizer->Add(sizer, 0, wxCENTER);
 
 	}
+	top_sizer->AddSpacer(10);
 	// default
 	{
 		SetEscapeId(wxID_CANCEL);

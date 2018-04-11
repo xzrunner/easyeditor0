@@ -17,7 +17,7 @@ class WxColorGradientDlg : public wxDialog
 public:
 	WxColorGradientDlg(wxWindow* parent, const pt2::GradientColor& col);
 
-	pt2::GradientColor GetColor() const;
+	const pt2::GradientColor& GetColor() const { return m_col; }
 
 private:
 	class ColorPreview : public wxPanel
