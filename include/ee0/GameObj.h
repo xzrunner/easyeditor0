@@ -4,6 +4,7 @@
 
 #ifndef GAME_OBJ_ECS
 #include <node0/typedef.h>
+#include <node0/NodeWithPos.h>
 #else
 #include <ecsx/Entity.h>
 #endif // GAME_OBJ_ECS

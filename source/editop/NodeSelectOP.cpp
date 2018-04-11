@@ -162,7 +162,6 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 #endif // GAME_OBJ_ECS
 
 #ifndef GAME_OBJ_ECS
-			 node_pos();
 			if (selection.IsExist(n0::NodeWithPos(obj, obj, 0))) {
 #else
 			if (selection.IsExist(obj)) {
