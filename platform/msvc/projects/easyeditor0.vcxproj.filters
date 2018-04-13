@@ -16,9 +16,6 @@
     <Filter Include="tools">
       <UniqueIdentifier>{c3023874-474b-4af4-a2ce-d5374fecc933}</UniqueIdentifier>
     </Filter>
-    <Filter Include="data\node">
-      <UniqueIdentifier>{3dc2683f-e8d5-43bc-be2c-bd8c3f541262}</UniqueIdentifier>
-    </Filter>
     <Filter Include="view\library">
       <UniqueIdentifier>{9bb25c1f-6124-4f08-a7df-8780dc47925f}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="tools\config">
       <UniqueIdentifier>{d77a0c37-07fc-4829-a354-b4f1543537cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data\comp">
+      <UniqueIdentifier>{3dc2683f-e8d5-43bc-be2c-bd8c3f541262}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -92,7 +92,7 @@
       <Filter>edit</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h">
-      <Filter>data\node</Filter>
+      <Filter>data\comp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxBitmap.h">
       <Filter>data</Filter>
@@ -217,6 +217,9 @@
     <ClInclude Include="..\..\..\include\ee0\ConfigFile.h">
       <Filter>tools\config</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\CompEntityEditor.h">
+      <Filter>data\comp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -235,7 +238,7 @@
       <Filter>edit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\data\CompNodeEditor.cpp">
-      <Filter>data\node</Filter>
+      <Filter>data\comp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp">
       <Filter>data</Filter>

@@ -15,6 +15,7 @@
     <ClInclude Include="..\..\..\include\ee0\AtomicOP.h" />
     <ClInclude Include="..\..\..\include\ee0\CameraHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\color_config.h" />
+    <ClInclude Include="..\..\..\include\ee0\CompEntityEditor.h" />
     <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h" />
     <ClInclude Include="..\..\..\include\ee0\Config.h" />
     <ClInclude Include="..\..\..\include\ee0\ConfigFile.h" />
