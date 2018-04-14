@@ -12,7 +12,7 @@ class SubjectMgr;
 class MsgHelper
 {
 public:
-	static bool InsertNode(SubjectMgr& sub_mgr, GameObj& obj, bool select_new = false);
+	static bool InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_new = false);
 	static bool DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj);
 
 	static void InsertSelection(SubjectMgr& sub_mgr, const std::vector<GameObjWithPos>& objs);

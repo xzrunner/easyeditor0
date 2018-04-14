@@ -59,12 +59,12 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 	{
 		VariantSet vars;
 
-#ifndef GAME_OBJ_ECS
 		Variant var_obj;
 		var_obj.m_type = VT_PVOID;
 		var_obj.m_val.pv = &selected;
 		vars.SetVariant("obj", var_obj);
 
+#ifndef GAME_OBJ_ECS
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
 		var_root.m_val.pv = &selected;
@@ -74,11 +74,6 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 		var_id.m_type = ee0::VT_ULONG;
 		var_id.m_val.ul = 0;
 		vars.SetVariant("id", var_id);
-#else
-		Variant var_obj;
-		var_obj.m_type = VT_ULONGLONG;
-		var_obj.m_val.ull = selected.id;
-		vars.SetVariant("obj", var_obj);
 #endif // GAME_OBJ_ECS
 
 		if (m_stage.GetKeyState(WXK_CONTROL)) 
@@ -139,12 +134,12 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 		{
 			VariantSet vars;
 
-#ifndef GAME_OBJ_ECS
 			Variant var_obj;
 			var_obj.m_type = VT_PVOID;
 			var_obj.m_val.pv = &obj;
 			vars.SetVariant("obj", var_obj);
 
+#ifndef GAME_OBJ_ECS
 			Variant var_root;
 			var_root.m_type = ee0::VT_PVOID;
 			var_root.m_val.pv = &obj;
@@ -154,11 +149,6 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 			var_id.m_type = ee0::VT_ULONG;
 			var_id.m_val.ul = 0;
 			vars.SetVariant("id", var_id);
-#else
-			Variant var_obj;
-			var_obj.m_type = VT_ULONGLONG;
-			var_obj.m_val.ull = obj.id;
-			vars.SetVariant("obj", var_obj);
 #endif // GAME_OBJ_ECS
 
 #ifndef GAME_OBJ_ECS

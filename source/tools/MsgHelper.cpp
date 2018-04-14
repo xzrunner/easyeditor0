@@ -6,13 +6,13 @@
 namespace ee0
 {
 
-bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, GameObj& obj, bool select_new)
+bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_new)
 {
 	VariantSet vars;
 
 	Variant var;
 	var.m_type = VT_PVOID;
-	var.m_val.pv = &obj;
+	var.m_val.pv = &const_cast<GameObj&>(obj);
 	vars.SetVariant("obj", var);
 
 	bool insert = sub_mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
@@ -21,7 +21,7 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, GameObj& obj, bool select_new)
 	{
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
-		var_root.m_val.pv = &obj;
+		var_root.m_val.pv = &const_cast<GameObj&>(obj);
 		vars.SetVariant("root", var_root);
 
 		Variant var_id;
@@ -46,7 +46,7 @@ bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj)
 #ifndef GAME_OBJ_ECS
 	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj);
 #else
-	var.m_val.pv = &const_cast<ecsx::Entity&>(obj);
+	var.m_val.pv = &const_cast<GameObj&>(obj);
 #endif // GAME_OBJ_ECS
 	vars.SetVariant("obj", var);
 	return sub_mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
@@ -65,12 +65,16 @@ void MsgHelper::InsertSelection(SubjectMgr& sub_mgr, const std::vector<GameObjWi
 			vars.SetVariant("multiple", var);
 		}
 
-#ifndef GAME_OBJ_ECS
 		Variant var_obj;
 		var_obj.m_type = VT_PVOID;
+#ifndef GAME_OBJ_ECS
 		var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj.GetNode());
+#else
+		var_obj.m_val.pv = &const_cast<GameObj&>(obj);
+#endif // GAME_OBJ_ECS
 		vars.SetVariant("obj", var_obj);
 
+#ifndef GAME_OBJ_ECS
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
 		var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj.GetRoot());
@@ -80,11 +84,6 @@ void MsgHelper::InsertSelection(SubjectMgr& sub_mgr, const std::vector<GameObjWi
 		var_id.m_type = ee0::VT_ULONG;
 		var_id.m_val.ul = obj.GetNodeID();
 		vars.SetVariant("id", var_id);
-#else
-		Variant var_obj;
-		var_obj.m_type = VT_ULONGLONG;
-		var_obj.m_val.ull = obj.id;
-		vars.SetVariant("obj", var_obj);
 #endif // GAME_OBJ_ECS
 
 		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
