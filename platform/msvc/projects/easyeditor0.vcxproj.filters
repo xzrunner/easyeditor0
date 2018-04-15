@@ -148,9 +148,6 @@
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h">
       <Filter>gui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\WxCompNodeEditorPanel.h">
-      <Filter>view\detail</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h">
       <Filter>tools</Filter>
     </ClInclude>
@@ -220,6 +217,9 @@
     <ClInclude Include="..\..\..\include\ee0\CompEntityEditor.h">
       <Filter>data\comp</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxCompObjEditorPanel.h">
+      <Filter>view\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -288,9 +288,6 @@
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp">
       <Filter>gui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\view\WxCompNodeEditorPanel.cpp">
-      <Filter>view\detail</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp">
       <Filter>tools</Filter>
     </ClCompile>
@@ -326,6 +323,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\ConfigFile.cpp">
       <Filter>tools\config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\WxCompObjEditorPanel.cpp">
+      <Filter>view\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

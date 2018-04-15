@@ -37,7 +37,7 @@
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
-    <ClInclude Include="..\..\..\include\ee0\WxCompNodeEditorPanel.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxCompObjEditorPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropData.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropTarget.h" />
     <ClInclude Include="..\..\..\include\ee0\WxEditPanel.h" />
@@ -89,7 +89,7 @@
     <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
-    <ClCompile Include="..\..\..\source\view\WxCompNodeEditorPanel.cpp" />
+    <ClCompile Include="..\..\..\source\view\WxCompObjEditorPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxDropData.cpp" />
     <ClCompile Include="..\..\..\source\view\WxDropTarget.cpp" />
     <ClCompile Include="..\..\..\source\view\WxEditPanel.cpp" />
