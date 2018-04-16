@@ -51,11 +51,7 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 
 	auto& selection = m_stage.GetSelection();
 	auto selected = QueryByPos(x, y);
-#ifndef GAME_OBJ_ECS
-	if (selected)
-#else
-	if (!selected.IsNull())
-#endif // GAME_OBJ_ECS
+	if (GAME_OBJ_VALID(selected))
 	{
 		VariantSet vars;
 

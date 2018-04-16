@@ -9,9 +9,7 @@
 #endif // GAME_OBJ_ECS
 #include "ee0/typedef.h"
 
-#ifdef GAME_OBJ_ECS
-namespace ecsx { class World; }
-#endif // GAME_OBJ_ECS
+ECS_WORLD_DECL
 class wxTextCtrl;
 class wxCheckBox;
 
@@ -21,14 +19,8 @@ namespace ee0
 class WxCompObjEditorPanel : public WxCompPanel
 {
 public:
-	WxCompObjEditorPanel(
-		wxWindow* parent,
-		const SubjectMgrPtr& sub_mgr, 
-#ifdef GAME_OBJ_ECS
-		const ecsx::World& world,
-#endif // GAME_OBJ_ECS
-		const GameObj& obj
-	);
+	WxCompObjEditorPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr, 
+		ECS_WORLD_PARAM const GameObj& obj);
 
 	virtual void RefreshNodeComp() override;
 
@@ -41,9 +33,7 @@ private:
 
 private:
 	SubjectMgrPtr      m_sub_mgr;
-#ifdef GAME_OBJ_ECS
-	const ecsx::World& m_world;
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_DEF
 	GameObj            m_obj;
 
 	wxTextCtrl* m_filepath;

@@ -16,17 +16,11 @@
 namespace ee0
 {
 
-WxCompObjEditorPanel::WxCompObjEditorPanel(wxWindow* parent, 
-	                                       const SubjectMgrPtr& sub_mgr, 
-#ifdef GAME_OBJ_ECS
-	                                       const ecsx::World& world,
-#endif // GAME_OBJ_ECS
-	                                       const GameObj& obj)
+WxCompObjEditorPanel::WxCompObjEditorPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr, 
+	                                       ECS_WORLD_PARAM const GameObj& obj)
 	: WxCompPanel(parent, "NodeEditor")
 	, m_sub_mgr(sub_mgr)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 	, m_obj(obj)
 {
 	InitLayout();
