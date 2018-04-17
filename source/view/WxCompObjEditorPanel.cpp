@@ -37,8 +37,11 @@ void WxCompObjEditorPanel::RefreshNodeComp()
 	m_editable->SetValue(ceditor.IsEditable());
 #else
 	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(m_obj);
-	m_filepath->SetValue(ceditor.filepath);
-	m_name->SetValue(ceditor.name);
+
+	m_filepath->SetValue(*ceditor.filepath);
+	if (ceditor.name) {
+		m_name->SetValue(*ceditor.name);
+	}
 	m_visible->SetValue(ceditor.visible);
 	m_editable->SetValue(ceditor.editable);
 #endif // GAME_OBJ_ECS
@@ -62,7 +65,10 @@ void WxCompObjEditorPanel::InitLayout()
 #ifndef GAME_OBJ_ECS
 		auto& filepath = ceditor.GetFilepath();
 #else
-		auto& filepath = ceditor.filepath;
+		std::string filepath;
+		if (ceditor.filepath) {
+			filepath = *ceditor.filepath;
+		}
 #endif // GAME_OBJ_ECS
 		sizer->Add(m_filepath = new wxTextCtrl(win, wxID_ANY, filepath,
 			wxDefaultPosition, wxSize(200, 20), wxTE_READONLY));
@@ -78,7 +84,10 @@ void WxCompObjEditorPanel::InitLayout()
 #ifndef GAME_OBJ_ECS
 		auto& name = ceditor.GetName();
 #else
-		auto& name = ceditor.name;
+		std::string name;
+		if (ceditor.name) {
+			name = *ceditor.name;
+		}
 #endif // GAME_OBJ_ECS
 		sizer->Add(m_name = new wxTextCtrl(win, wxID_ANY, name, 
 			wxDefaultPosition, wxSize(-1, 20), wxTE_PROCESS_ENTER));
@@ -126,7 +135,7 @@ void WxCompObjEditorPanel::EnterNameValue(wxCommandEvent& event)
 	ceditor.SetName(m_name->GetValue().ToStdString());
 #else
 	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(m_obj);
-	ceditor.name = m_name->GetValue().ToStdString();
+	ceditor.name = std::make_unique<std::string>(m_name->GetValue().ToStdString());
 #endif // GAME_OBJ_ECS
 
 	VariantSet vars;
