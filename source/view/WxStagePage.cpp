@@ -91,7 +91,7 @@ void WxStagePage::SelectionInsert(const VariantSet& variants)
 #else
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == VT_PVOID, "no var in vars: obj");
-	auto obj = *static_cast<ecsx::Entity*>(var_obj.m_val.pv);
+	auto obj = *static_cast<e0::Entity*>(var_obj.m_val.pv);
 	m_selection.Add(obj);
 #endif // GAME_OBJ_ECS
 

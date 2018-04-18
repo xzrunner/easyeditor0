@@ -5,7 +5,7 @@
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #else
-#include <ecsx/World.h>
+#include <entity0/World.h>
 #endif // GAME_OBJ_ECS
 
 #include <wx/sizer.h>

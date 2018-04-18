@@ -1,13 +1,13 @@
 #pragma once
 
-//#define GAME_OBJ_ECS
+#define GAME_OBJ_ECS
 
 #ifdef GAME_OBJ_ECS
-#define ECS_WORLD_DECL        namespace ecsx { class World; }
+#define ECS_WORLD_DECL        namespace e0 { class World; }
 #define ECS_WORLD_VAR         world,
-#define ECS_WORLD_PARAM       ecsx::World& world,
+#define ECS_WORLD_PARAM       e0::World& world,
 #define ECS_WORLD_SELF_VAR    m_world,
-#define ECS_WORLD_SELF_DEF    ecsx::World& m_world;
+#define ECS_WORLD_SELF_DEF    e0::World& m_world;
 #define ECS_WORLD_SELF_ASSIGN ,m_world(world)
 #else
 #define ECS_WORLD_DECL
