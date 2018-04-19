@@ -5,6 +5,10 @@
 #include <gimg_import.h>
 #include <pimg/Condense.h>
 #include <pimg/Rect.h>
+#include <ns/NodeFactory.h>
+#include <node0/CompAsset.h>
+#include <node2/RenderSystem.h>
+#include <painting2/DrawRT.h>
 
 #include <wx/image.h>
 
@@ -40,8 +44,7 @@ bool WxBitmap::LoadFromFile(const std::string& filepath)
 		ret = LoadFromImageFile(filepath);
 		break;
 	case sx::FILE_JSON:
-		// todo
-//		LoadFromSymbol(filepath);
+		ret = LoadFromJsonFile(filepath);
 		break;
 	}
 	return ret;
@@ -109,7 +112,7 @@ void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 	}
 	{
 		float w = image.GetWidth(),
-			h = image.GetHeight();
+			  h = image.GetHeight();
 		float scale = (float)SMALL_SIZE / w;
 		w = std::max(1.0f, w * scale);
 		h = std::max(1.0f, h * scale);
@@ -117,40 +120,42 @@ void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 	}
 }
 
-bool WxBitmap::LoadFromSymbol(const std::string& filepath, int type)
+bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
 {
-	//auto sym = gum::SymbolPool::Instance()->Fetch(filepath.c_str(), type);
-	//if (!sym) {
-	//	return false;
-	//}
-	//
-	//sm::rect rect = sym->GetBounding();
-	//if (!rect.IsValid()) {
-	//	return false;
-	//}
+	auto casset = ns::NodeFactory::CreateAssetComp(filepath);
+	if (!casset) {
+		return false;
+	}
 
-	//float w = std::max(1.0f, rect.Size().x),
-	//	  h = std::max(1.0f, rect.Size().y);
-	//float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE; 
-	//w *= scale;
-	//h *= scale;
-	//w = std::max(1.0f, w);
-	//h = std::max(1.0f, h);
+	auto bounding = casset->GetBounding();
+	if (!bounding.IsValid()) {
+		return false;
+	}
 
- //	s2::DrawRT rt;
- //	rt.Draw(*sym, true, scale);
- //	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
- //	if (!rgba) {
- //		return false;
- //	}
- //
- //	uint8_t* rgb = gimg_rgba2rgb(rgba, w, h);
- //
- //	wxImage image(w, h, rgb, true);
-	//LoadFromImage(image, false);
- //
- //	free(rgb);
- //	delete[] rgba;
+	float w = std::max(1.0f, bounding.Size().x),
+		  h = std::max(1.0f, bounding.Size().y);
+	float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE; 
+	w *= scale;
+	h *= scale;
+	w = std::max(1.0f, w);
+	h = std::max(1.0f, h);
+
+	pt2::DrawRT rt;
+	rt.Draw<n0::CompAsset>(*casset, [](const n0::CompAsset& casset, const sm::Matrix2D& mt) {
+		n2::RenderSystem::Draw(casset, mt);
+	}, true, scale);
+ 	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
+ 	if (!rgba) {
+ 		return false;
+ 	}
+ 
+ 	uint8_t* rgb = gimg_rgba2rgb(rgba, w, h);
+ 
+ 	wxImage image(w, h, rgb, true);
+	LoadFromImage(image, false);
+ 
+ 	free(rgb);
+ 	delete[] rgba;
 
 	return true;
 }

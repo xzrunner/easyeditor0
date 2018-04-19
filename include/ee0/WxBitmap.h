@@ -22,7 +22,7 @@ private:
 	bool LoadFromImageFile(const std::string& filepath);
 	void LoadFromImage(const wxImage& image, bool scale);
 
-	bool LoadFromSymbol(const std::string& filepath, int type);
+	bool LoadFromJsonFile(const std::string& filepath);
 
 	static bool CanLoadFromWX(const std::string& filepath);
 
