@@ -22,7 +22,7 @@ static const int SMALL_SIZE = 24;
 static const float MAX_WIDTH = 150.0f;
 static const float SCALE = 0.5f;
 
-WxBitmap::WxBitmap(const std::string& filepath)
+WxBitmap::WxBitmap()
 {
 	static bool inited = false;
 	if (!inited)
@@ -30,8 +30,6 @@ WxBitmap::WxBitmap(const std::string& filepath)
 		wxInitAllImageHandlers();
 		inited = true;
 	}
-
-	LoadFromFile(filepath);
 }
 
 bool WxBitmap::LoadFromFile(const std::string& filepath)

@@ -11,14 +11,14 @@ namespace ee0
 class WxBitmap
 {
 public:
-	WxBitmap(const std::string& filepath);
+	WxBitmap();
 
 	const std::unique_ptr<wxBitmap>& GetLargeBmp() const { return m_bmp_large; }
 	const std::unique_ptr<wxBitmap>& GetSmallBmp() const { return m_bmp_small; }
 
-private:
 	bool LoadFromFile(const std::string& filepath);
 
+private:
 	bool LoadFromImageFile(const std::string& filepath);
 	void LoadFromImage(const wxImage& image, bool scale);
 
