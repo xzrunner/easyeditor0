@@ -13,8 +13,6 @@ WxLibraryItem::WxLibraryItem(const std::string& filepath)
 	, m_ud(nullptr)
 	, m_show(true)
 {
-	m_name = boost::filesystem::path(filepath).filename().string();
-
 	m_bitmap = facade::ResPool::Instance().Fetch<WxBitmap>(filepath);
 }
 

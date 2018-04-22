@@ -2,6 +2,8 @@
 #include "ee0/WxLibraryItem.h"
 #include "ee0/WxBitmap.h"
 
+#include <boost/filesystem.hpp>
+
 #include <set>
 #include <algorithm>
 
@@ -133,7 +135,8 @@ std::shared_ptr<WxLibraryItem> WxImageVList::GetSelected() const
 
 void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 {
-	if (m_items[n]->IsHide()) {
+	auto& item = m_items[n];
+	if (item->IsHide()) {
 		return;
 	}
 
@@ -151,10 +154,11 @@ void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 		is_selected = n == GetSelection();
 	}
 
+	auto name = boost::filesystem::path(item->GetFilepath()).filename().string();
 	if (m_compact) 
 	{
 		// bmp
-		if (auto& bmp = m_items[n]->GetBitmap()) {
+		if (auto& bmp = item->GetBitmap()) {
 			if (auto& wx_bmp = bmp->GetSmallBmp()) {
 				int x = COMPACT_SPACE_LEFT;
 				int y = rect.y + COMPACT_SPACE_UP;
@@ -163,7 +167,6 @@ void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 		}
 
 		// name
-		auto& name = m_items[n]->GetName();
 		dc.SetFont(wxFont(is_selected ? 12 : 10, wxDEFAULT, wxNORMAL, wxNORMAL));
 		wxSize size = dc.GetTextExtent(name.c_str());
 		int x = rect.x + COMPACT_SPACE_LEFT + COMPACT_HEIGHT * 2;
@@ -173,26 +176,25 @@ void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 	else 
 	{
 		int y = rect.y + NORMAL_SPACE_UP;
-		if (auto bmp = m_items[n]->GetBitmap()) {
+		if (auto bmp = item->GetBitmap()) {
 			if (auto& wx_bmp = bmp->GetLargeBmp()) {
 				// bmp
 				int x = wx_bmp->GetWidth() > rect.width ? 0 : (rect.width - wx_bmp->GetWidth()) * 0.5f;
 				dc.DrawBitmap(*wx_bmp, x, y);
 
-				// info
-				auto info = m_items[n]->GetInfo();
-				dc.SetFont(wxFont(18, wxDEFAULT, wxNORMAL, wxNORMAL));
-				//dc.SetTextForeground(wxColour(0xFF, 0x20, 0xFF));
-				wxSize size = dc.GetTextExtent(info.c_str());
-				//dc.DrawText(info, rect.x/* + rect.width * 0.5f - size.GetWidth() * 0.5f*/, y);
-				dc.DrawText(info.c_str(), rect.x + NORMAL_SPACE_UP, y);
+				//// info
+				//auto info = item->GetInfo();
+				//dc.SetFont(wxFont(18, wxDEFAULT, wxNORMAL, wxNORMAL));
+				////dc.SetTextForeground(wxColour(0xFF, 0x20, 0xFF));
+				//wxSize size = dc.GetTextExtent(info.c_str());
+				////dc.DrawText(info, rect.x/* + rect.width * 0.5f - size.GetWidth() * 0.5f*/, y);
+				//dc.DrawText(info.c_str(), rect.x + NORMAL_SPACE_UP, y);
 
 				y += wx_bmp->GetHeight();
 			}
 		}
 
 		// name
-		auto name = m_items[n]->GetName();
 		dc.SetFont(wxFont(is_selected ? 12 : 10, wxDEFAULT, wxNORMAL, wxNORMAL));
 		wxSize size = dc.GetTextExtent(name.c_str());
 		dc.DrawText(name.c_str(), rect.x + rect.width * 0.5f - size.GetWidth() * 0.5f, y + NORMAL_SPACE_UP);
@@ -207,7 +209,8 @@ void WxImageVList::OnDrawSeparator(wxDC& dc, wxRect& rect, size_t n) const
 
 wxCoord WxImageVList::OnMeasureItem(size_t n) const
 {
-	if (m_items[n]->IsHide()) {
+	auto& item = m_items[n];
+	if (item->IsHide()) {
 		return 0;
 	}
 
@@ -215,7 +218,7 @@ wxCoord WxImageVList::OnMeasureItem(size_t n) const
 		return COMPACT_HEIGHT;
 	} else {
 		int size = NORMAL_SPACE_UP + NORMAL_SPACE_DOWN;
-		if (auto& bmp = m_items[n]->GetBitmap()) {
+		if (auto& bmp = item->GetBitmap()) {
 			if (auto& wx_bmp = bmp->GetLargeBmp()) {
 				size = wx_bmp->GetHeight() + NORMAL_SPACE_UP + NORMAL_SPACE_DOWN;
 			}
