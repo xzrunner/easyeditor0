@@ -26,9 +26,14 @@ public:
 	virtual void Remove(int index);
 	virtual void Swap(int i0, int i1);
 
+	void Traverse(std::function<bool(const WxLibraryItem&)> func) const;
+
 	void SetFileter(const std::string& filter) {
 		m_name = filter;
 	}
+
+	int GetItemsSize() const { return m_items.size(); }
+	std::shared_ptr<WxLibraryItem> GetItemByIndex(int idx);
 
 	std::shared_ptr<WxLibraryItem> GetSelected() const;
 

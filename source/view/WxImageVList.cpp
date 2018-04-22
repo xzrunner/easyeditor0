@@ -1,4 +1,4 @@
-#include "ee0/WxImageVList.h"
+ #include "ee0/WxImageVList.h"
 #include "ee0/WxLibraryItem.h"
 #include "ee0/WxBitmap.h"
 
@@ -97,6 +97,24 @@ void WxImageVList::Swap(int i0, int i1)
 	Refresh(true);
 }
 
+void WxImageVList::Traverse(std::function<bool(const WxLibraryItem&)> func) const
+{
+	for (auto& item : m_items) {
+		if (!func(*item)) {
+			break;
+		}
+	}
+}
+
+std::shared_ptr<WxLibraryItem> WxImageVList::GetItemByIndex(int idx)
+{
+	if (idx >= 0 && idx < m_items.size()) {
+		return m_items[idx];
+	} else {
+		return nullptr;
+	}
+}
+
 std::shared_ptr<WxLibraryItem> WxImageVList::GetSelected() const
 {
 	int idx = -1;
@@ -115,6 +133,10 @@ std::shared_ptr<WxLibraryItem> WxImageVList::GetSelected() const
 
 void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 {
+	if (m_items[n]->IsHide()) {
+		return;
+	}
+
 	bool is_selected;
 	if (HasMultipleSelection()) {
 		std::set<int> selected;
@@ -185,6 +207,10 @@ void WxImageVList::OnDrawSeparator(wxDC& dc, wxRect& rect, size_t n) const
 
 wxCoord WxImageVList::OnMeasureItem(size_t n) const
 {
+	if (m_items[n]->IsHide()) {
+		return 0;
+	}
+
 	if (m_compact) {
 		return COMPACT_HEIGHT;
 	} else {
