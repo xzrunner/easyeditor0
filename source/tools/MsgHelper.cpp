@@ -100,4 +100,16 @@ bool MsgHelper::SetEditorDirty(SubjectMgr& sub_mgr, bool dirty)
 	return sub_mgr.NotifyObservers(MSG_SET_EDITOR_DIRTY, vars);
 }
 
+void MsgHelper::AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>& aop)
+{
+	VariantSet vars;
+
+	Variant var;
+	var.m_type = VT_PVOID;
+	var.m_val.pv = &std::const_pointer_cast<AtomicOP>(aop);
+	vars.SetVariant("aop", var);
+
+	sub_mgr.NotifyObservers(MSG_ATOMIC_OP_ADD, vars);
+}
+
 }

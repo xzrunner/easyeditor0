@@ -42,13 +42,12 @@ void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 
 	if (GetKeyState(WXK_CONTROL) && key_code == 'Z') 
 	{
-		bool dirty = m_edit_record.Undo();
-		MsgHelper::SetEditorDirty(*m_sub_mgr, dirty);	
+		m_sub_mgr->NotifyObservers(ee0::MSG_EDIT_OP_UNDO);
 	} 
-	else if (GetKeyState(WXK_CONTROL) && key_code == 'Y') 
+	else if (GetKeyState(WXK_CONTROL) && key_code == 'Y' 
+		  || GetKeyState(WXK_CONTROL) && GetKeyState(WXK_SHIFT) && key_code == 'Y') 
 	{
-		bool dirty = m_edit_record.Redo();
-		MsgHelper::SetEditorDirty(*m_sub_mgr, dirty);
+		m_sub_mgr->NotifyObservers(ee0::MSG_EDIT_OP_REDO);
 	}
 
 	switch (key_code)

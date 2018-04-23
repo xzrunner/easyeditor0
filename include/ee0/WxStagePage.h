@@ -4,6 +4,7 @@
 #include "ee0/WxEditPanel.h"
 #include "ee0/SelectionSet.h"
 #include "ee0/NodeContainer.h"
+#include "ee0/EditRecord.h"
 #include "ee0/typedef.h"
 #include "ee0/Config.h"
 
@@ -35,17 +36,25 @@ public:
 
 	bool IsEditDirty() const { return m_edit_dirty; }
 
+	EditRecord& GetEditRecord() { return m_edit_record; }
+
 private:
 	void SelectionInsert(const VariantSet& variants);
 	void SelectionDelete(const VariantSet& variants);
 
 	void SetEditorDirty(const ee0::VariantSet& variants);
 
+	void AddAtomicOp(const ee0::VariantSet& variants);
+	void OnEditOpUndo();
+	void OnEditOpRedo();
+
 protected:
 	SelectionSet<GameObjWithPos> m_selection;
 
 private:
 	bool m_edit_dirty;
+
+	EditRecord m_edit_record;
 
 }; // WxStagePage
 
