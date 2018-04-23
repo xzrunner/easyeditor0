@@ -28,6 +28,7 @@ namespace ee0
 WxStagePage::WxStagePage(wxWindow* parent)
 	: WxEditPanel(parent, nullptr)
 	, m_edit_dirty(false)
+	, m_next_obj_id(0)
 {
 	for (auto& msg : MESSAGES) {
 		m_sub_mgr->RegisterObserver(msg, this);

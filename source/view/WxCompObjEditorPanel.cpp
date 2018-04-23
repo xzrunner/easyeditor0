@@ -75,7 +75,7 @@ void WxCompObjEditorPanel::InitLayout()
 
 		pane_sizer->Add(sizer);
 	}
-	// name
+	// name & id
 	{
 		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
@@ -90,9 +90,17 @@ void WxCompObjEditorPanel::InitLayout()
 		}
 #endif // GAME_OBJ_ECS
 		sizer->Add(m_name = new wxTextCtrl(win, wxID_ANY, name, 
-			wxDefaultPosition, wxSize(-1, 20), wxTE_PROCESS_ENTER));
+			wxDefaultPosition, wxSize(80, 20), wxTE_PROCESS_ENTER));
 		Connect(m_name->GetId(), wxEVT_COMMAND_TEXT_ENTER,
 			wxCommandEventHandler(WxCompObjEditorPanel::EnterNameValue));
+
+#ifndef GAME_OBJ_ECS
+		sizer->AddSpacer(10);
+		sizer->Add(new wxStaticText(win, wxID_ANY, wxT("ID ")));
+		sizer->Add(new wxTextCtrl(win, wxID_ANY, std::to_string(ceditor.GetID()),
+			wxDefaultPosition, wxSize(50, 20), wxTE_READONLY));
+#endif // GAME_OBJ_ECS
+
 		pane_sizer->Add(sizer);
 	}
 	// visible, editable

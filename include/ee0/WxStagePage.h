@@ -38,6 +38,8 @@ public:
 
 	EditRecord& GetEditRecord() { return m_edit_record; }
 
+	uint32_t FetchObjID() { return m_next_obj_id++; }
+
 private:
 	void SelectionInsert(const VariantSet& variants);
 	void SelectionDelete(const VariantSet& variants);
@@ -55,6 +57,8 @@ private:
 	bool m_edit_dirty;
 
 	EditRecord m_edit_record;
+
+	uint32_t m_next_obj_id;
 
 }; // WxStagePage
 
