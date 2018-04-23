@@ -1,6 +1,6 @@
 #pragma once
 
-#define GAME_OBJ_ECS
+//#define GAME_OBJ_ECS
 
 #ifdef GAME_OBJ_ECS
 #define ECS_WORLD_DECL        namespace e0 { class World; }
