@@ -220,6 +220,9 @@
     <ClInclude Include="..\..\..\include\ee0\WxCompObjEditorPanel.h">
       <Filter>view\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxCodeCtrl.h">
+      <Filter>gui</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -326,6 +329,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxCompObjEditorPanel.cpp">
       <Filter>view\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxCodeCtrl.cpp">
+      <Filter>gui</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

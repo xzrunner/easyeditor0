@@ -1,6 +1,6 @@
 #include "ee0/WxCodeCtrl.h"
 
-namespace eone
+namespace ee0
 {
 
 WxCodeCtrl::WxCodeCtrl(wxWindow* parent, const std::string& name)

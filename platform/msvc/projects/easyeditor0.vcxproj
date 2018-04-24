@@ -35,6 +35,7 @@
     <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h" />
     <ClInclude Include="..\..\..\include\ee0\SliderItem.h" />
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxCodeCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompObjEditorPanel.h" />
@@ -74,6 +75,7 @@
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
     <ClCompile Include="..\..\..\source\editop\NodeSelectOP.cpp" />
     <ClCompile Include="..\..\..\source\gui\GuiCallback.cpp" />
+    <ClCompile Include="..\..\..\source\gui\WxCodeCtrl.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxColorGradientDlg.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxImagePanel.cpp" />
