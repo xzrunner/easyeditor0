@@ -15,10 +15,11 @@ public:
 
 	const std::string& getName() const;
 
+	bool InitializePrefs(const std::string& filename);
+
 protected:
 	//! language/lexer
 	wxString DeterminePrefs (const wxString& filename);
-	bool InitializePrefs (const std::string& filename);
 
 private:
 	std::string m_name;

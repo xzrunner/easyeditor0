@@ -3,6 +3,10 @@
 #include "ee0/MsgHelper.h"
 
 #include <guard/check.h>
+#include <moon/Blackboard.h>
+#include <moon/Context.h>
+#include <moon/ModuleMgr.h>
+#include <moon/SceneGraph.h>
 
 namespace
 {
@@ -54,8 +58,7 @@ void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 		SelectionDelete(variants);
 		break;
 	case MSG_NODE_SELECTION_CLEAR:
-		m_selection.Clear();
-		m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
+		SelectionClear();
 		break;
 
 	case MSG_SET_EDITOR_DIRTY:
@@ -113,6 +116,8 @@ void WxStagePage::SelectionInsert(const VariantSet& variants)
 	m_selection.Add(obj);
 #endif // GAME_OBJ_ECS
 
+	UpdateMoonSelection();
+
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
@@ -128,6 +133,17 @@ void WxStagePage::SelectionDelete(const VariantSet& variants)
 #else
 	m_selection.Remove(*obj);
 #endif // GAME_OBJ_ECS
+
+	UpdateMoonSelection();
+
+	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
+}
+
+void WxStagePage::SelectionClear()
+{
+	m_selection.Clear();
+
+	UpdateMoonSelection();
 
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
@@ -161,6 +177,22 @@ void WxStagePage::OnEditOpRedo()
 	if (dirty) {
 		MsgHelper::SetEditorDirty(*m_sub_mgr, true);
 	}
+}
+
+void WxStagePage::UpdateMoonSelection() const
+{
+#ifndef GAME_OBJ_ECS
+	std::vector<n0::SceneNodePtr> selection;
+	selection.reserve(m_selection.Size());
+	m_selection.Traverse([&](const ee0::GameObjWithPos& opw)->bool {
+		selection.push_back(opw.GetNode());
+		return true;
+	});
+
+	auto scene = moon::Blackboard::Instance()->GetContext()->GetModuleMgr().
+		GetModule<moon::SceneGraph>(moon::Module::M_SCENE_GRAPH);
+	scene->SetSelection(selection);
+#endif // GAME_OBJ_ECS
 }
 
 }

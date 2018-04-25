@@ -6,7 +6,7 @@ namespace ee0
 WxCodeCtrl::WxCodeCtrl(wxWindow* parent, const std::string& name)
 	: wxStyledTextCtrl(parent), m_name(name) 
 {
-	m_LineNrID = 0;
+	m_LineNrID  = 0;
 	m_DividerID = 1;
 	m_FoldingID = 2;
 
@@ -47,29 +47,6 @@ WxCodeCtrl::WxCodeCtrl(wxWindow* parent, const std::string& name)
 const std::string& WxCodeCtrl::getName() const 
 { 
 	return m_name; 
-}
-
-wxString WxCodeCtrl::DeterminePrefs (const wxString& filename) 
-{
-	LanguageInfo const* curInfo;
-
-	// determine language from filepatterns
-	int languageNr;
-	for (languageNr = 0; languageNr < g_LanguagePrefsSize; languageNr++) {
-		curInfo = &g_LanguagePrefs [languageNr];
-		wxString filepattern = curInfo->filepattern;
-		filepattern.Lower();
-		while (!filepattern.empty()) {
-			wxString cur = filepattern.BeforeFirst (';');
-			if ((cur == filename) ||
-				(cur == (filename.BeforeLast ('.') + wxT(".*"))) ||
-				(cur == (wxT("*.") + filename.AfterLast ('.')))) {
-					return curInfo->name;
-			}
-			filepattern = filepattern.AfterFirst (';');
-		}
-	}
-	return wxEmptyString;
 }
 
 bool WxCodeCtrl::InitializePrefs (const std::string &name) 
@@ -196,6 +173,29 @@ wxSTC_WS_VISIBLEALWAYS: wxSTC_WS_INVISIBLE);
 wxSTC_WRAP_WORD: wxSTC_WRAP_NONE);
 
 	return true;
+}
+
+wxString WxCodeCtrl::DeterminePrefs (const wxString& filename) 
+{
+	LanguageInfo const* curInfo;
+
+	// determine language from filepatterns
+	int languageNr;
+	for (languageNr = 0; languageNr < g_LanguagePrefsSize; languageNr++) {
+		curInfo = &g_LanguagePrefs [languageNr];
+		wxString filepattern = curInfo->filepattern;
+		filepattern.Lower();
+		while (!filepattern.empty()) {
+			wxString cur = filepattern.BeforeFirst (';');
+			if ((cur == filename) ||
+				(cur == (filename.BeforeLast ('.') + wxT(".*"))) ||
+				(cur == (wxT("*.") + filename.AfterLast ('.')))) {
+					return curInfo->name;
+			}
+			filepattern = filepattern.AfterFirst (';');
+		}
+	}
+	return wxEmptyString;
 }
 
 }

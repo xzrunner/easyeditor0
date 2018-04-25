@@ -43,12 +43,15 @@ public:
 private:
 	void SelectionInsert(const VariantSet& variants);
 	void SelectionDelete(const VariantSet& variants);
+	void SelectionClear();
 
 	void SetEditorDirty(const ee0::VariantSet& variants);
 
 	void AddAtomicOp(const ee0::VariantSet& variants);
 	void OnEditOpUndo();
 	void OnEditOpRedo();
+
+	void UpdateMoonSelection() const;
 
 protected:
 	SelectionSet<GameObjWithPos> m_selection;

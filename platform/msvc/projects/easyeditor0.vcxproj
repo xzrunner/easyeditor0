@@ -19,6 +19,7 @@
     <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h" />
     <ClInclude Include="..\..\..\include\ee0\Config.h" />
     <ClInclude Include="..\..\..\include\ee0\ConfigFile.h" />
+    <ClInclude Include="..\..\..\include\ee0\defsext.h" />
     <ClInclude Include="..\..\..\include\ee0\EditOP.h" />
     <ClInclude Include="..\..\..\include\ee0\EditOpState.h" />
     <ClInclude Include="..\..\..\include\ee0\EditPanelImpl.h" />
@@ -29,6 +30,7 @@
     <ClInclude Include="..\..\..\include\ee0\KeyType.h" />
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\NodeContainer.h" />
+    <ClInclude Include="..\..\..\include\ee0\prefs.h" />
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
     <ClInclude Include="..\..\..\include\ee0\SettingCfg.h" />
@@ -74,7 +76,7 @@
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
     <ClCompile Include="..\..\..\source\editop\NodeSelectOP.cpp" />
-    <ClCompile Include="..\..\..\source\gui\GuiCallback.cpp" />
+    <ClCompile Include="..\..\..\source\gui\prefs.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxCodeCtrl.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxColorGradientDlg.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp" />

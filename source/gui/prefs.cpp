@@ -30,8 +30,8 @@
 //! wxWidgets/contrib headers
 
 //! application headers
-#include "defsext.h"     // Additional definitions
-#include "prefs.h"       // Preferences
+#include "ee0/defsext.h"     // Additional definitions
+#include "ee0/prefs.h"       // Preferences
 
 
 //============================================================================

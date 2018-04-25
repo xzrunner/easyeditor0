@@ -55,6 +55,9 @@
     <Filter Include="data\comp">
       <UniqueIdentifier>{3dc2683f-e8d5-43bc-be2c-bd8c3f541262}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gui\code">
+      <UniqueIdentifier>{7601a2cd-9bfd-4435-a49a-7fbc87e7dafe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -221,7 +224,13 @@
       <Filter>view\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxCodeCtrl.h">
-      <Filter>gui</Filter>
+      <Filter>gui\code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\defsext.h">
+      <Filter>gui\code</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\prefs.h">
+      <Filter>gui\code</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -315,9 +324,6 @@
     <ClCompile Include="..\..\..\source\gui\WxSliderTwoCtrl.cpp">
       <Filter>gui\slider</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\gui\GuiCallback.cpp">
-      <Filter>gui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxImagePanel.cpp">
       <Filter>gui</Filter>
     </ClCompile>
@@ -331,7 +337,10 @@
       <Filter>view\detail</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxCodeCtrl.cpp">
-      <Filter>gui</Filter>
+      <Filter>gui\code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\prefs.cpp">
+      <Filter>gui\code</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
