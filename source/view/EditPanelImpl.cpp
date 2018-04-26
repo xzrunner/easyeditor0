@@ -8,8 +8,9 @@
 namespace ee0
 {
 
-EditPanelImpl::EditPanelImpl(const SubjectMgrPtr& sub_mgr)
+EditPanelImpl::EditPanelImpl(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 	: m_sub_mgr(sub_mgr)
+	, m_popup(parent, this)
 {
 }
 
@@ -84,6 +85,13 @@ void EditPanelImpl::OnChar(wxKeyEvent& event)
 
 void EditPanelImpl::OnMouseWheelRotation(int x, int y, int direction)
 {
+}
+
+void EditPanelImpl::OnRightPopupMenu(wxCommandEvent& event)
+{
+	if (m_edit_op) {
+		m_edit_op->OnPopMenuSelected(event.GetId());
+	}
 }
 
 void EditPanelImpl::OnSize(wxSizeEvent& event)

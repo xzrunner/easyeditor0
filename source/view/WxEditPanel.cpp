@@ -19,7 +19,7 @@ WxEditPanel::WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 	if (!m_sub_mgr) {
 		m_sub_mgr = std::make_shared<SubjectMgr>();
 	}
-	m_impl = std::make_unique<EditPanelImpl>(m_sub_mgr);
+	m_impl = std::make_unique<EditPanelImpl>(parent, m_sub_mgr);
 
 	m_moon_ctx = std::make_shared<moon::Context>();
 	moon::Blackboard::Instance()->SetContext(m_moon_ctx);
