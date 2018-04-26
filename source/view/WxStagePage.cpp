@@ -37,6 +37,8 @@ WxStagePage::WxStagePage(wxWindow* parent)
 	for (auto& msg : MESSAGES) {
 		m_sub_mgr->RegisterObserver(msg, this);
 	}
+
+	RegisterMoonCallback();
 }
 
 // todo
@@ -75,6 +77,36 @@ void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 		OnEditOpRedo();
 		break;
 	}
+}
+
+void WxStagePage::RegisterMoonCallback()
+{
+	auto scene = moon::Blackboard::Instance()->GetContext()->GetModuleMgr().
+		GetModule<moon::SceneGraph>(moon::Module::M_SCENE_GRAPH);
+
+	scene->SetTraverseAllNodesFunc([&](std::function<bool(const n0::SceneNodePtr&)> func) {
+		Traverse([&](const ee0::GameObj& obj)->bool {
+			return func(obj);
+		});
+	});
+
+	scene->SetTraverseSelectionFunc([&](std::function<bool(const n0::SceneNodePtr&)> func) {
+		m_selection.Traverse([&](const ee0::GameObjWithPos& opw)->bool {
+			return func(opw.GetNode());
+		});
+	});
+
+	scene->SetSetSelectionFunc([&](const std::vector<n0::SceneNodePtr>& nodes)
+	{
+		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
+
+		std::vector<ee0::GameObjWithPos> objs;
+		objs.reserve(nodes.size());
+		for (auto& node : nodes) {
+			objs.push_back(n0::NodeWithPos(node, node, 0));
+		}
+		ee0::MsgHelper::InsertSelection(*m_sub_mgr, objs);
+	});
 }
 
 void WxStagePage::SelectionInsert(const VariantSet& variants)
@@ -116,8 +148,6 @@ void WxStagePage::SelectionInsert(const VariantSet& variants)
 	m_selection.Add(obj);
 #endif // GAME_OBJ_ECS
 
-	UpdateMoonSelection();
-
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
@@ -134,16 +164,12 @@ void WxStagePage::SelectionDelete(const VariantSet& variants)
 	m_selection.Remove(*obj);
 #endif // GAME_OBJ_ECS
 
-	UpdateMoonSelection();
-
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::SelectionClear()
 {
 	m_selection.Clear();
-
-	UpdateMoonSelection();
 
 	m_sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
 }
@@ -177,22 +203,6 @@ void WxStagePage::OnEditOpRedo()
 	if (dirty) {
 		MsgHelper::SetEditorDirty(*m_sub_mgr, true);
 	}
-}
-
-void WxStagePage::UpdateMoonSelection() const
-{
-#ifndef GAME_OBJ_ECS
-	std::vector<n0::SceneNodePtr> selection;
-	selection.reserve(m_selection.Size());
-	m_selection.Traverse([&](const ee0::GameObjWithPos& opw)->bool {
-		selection.push_back(opw.GetNode());
-		return true;
-	});
-
-	auto scene = moon::Blackboard::Instance()->GetContext()->GetModuleMgr().
-		GetModule<moon::SceneGraph>(moon::Module::M_SCENE_GRAPH);
-	scene->SetSelection(selection);
-#endif // GAME_OBJ_ECS
 }
 
 }

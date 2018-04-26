@@ -41,6 +41,8 @@ public:
 	uint32_t FetchObjID() { return m_next_obj_id++; }
 
 private:
+	void RegisterMoonCallback();
+
 	void SelectionInsert(const VariantSet& variants);
 	void SelectionDelete(const VariantSet& variants);
 	void SelectionClear();
@@ -50,8 +52,6 @@ private:
 	void AddAtomicOp(const ee0::VariantSet& variants);
 	void OnEditOpUndo();
 	void OnEditOpRedo();
-
-	void UpdateMoonSelection() const;
 
 protected:
 	SelectionSet<GameObjWithPos> m_selection;
