@@ -2,6 +2,8 @@
 #include "ee0/WxLibraryList.h"
 #include "ee0/WxLibraryItem.h"
 
+#include <boost/filesystem.hpp>
+
 namespace ee0
 {
 
@@ -29,8 +31,10 @@ void WxLibraryPage::OnAddPress(wxCommandEvent& event)
 	{
 		wxArrayString filenames;
 		dlg.GetPaths(filenames);
-		for (auto& filename : filenames) {
-			m_list->Insert(std::make_shared<WxLibraryItem>(filename.ToStdString()));
+		for (auto& filename : filenames) 
+		{
+			auto path = boost::filesystem::path(filename).generic_string();
+			m_list->Insert(std::make_shared<WxLibraryItem>(path));
 		}
 	}
 }
