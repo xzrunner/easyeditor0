@@ -4,6 +4,7 @@
 #include <SM_Vector.h>
 #include <node0/SceneNode.h>
 #include <painting2/Color.h>
+#include <sx/StringHelper.h>
 
 #include <wx/wx.h>
 #include <wx/propgrid/propgrid.h>
@@ -205,7 +206,61 @@ void WxCompCustomProperties::InitProperties()
 
 void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 {
+	wxPGProperty* property = event.GetProperty();
+	auto key = property->GetName().ToStdString();
+	wxAny val = property->GetValue();
+	
+	auto& props = m_cprop.GetAllProp();
+	for (auto& prop : props)
+	{
+		if (prop.dis_name == key)
+		{
+			switch (prop.type)
+			{
+			case CompCustomProperties::PROP_BOOL:
+				prop.var.m_val.bl = wxANY_AS(val, bool);
+				break;
+			case CompCustomProperties::PROP_INT:
+				prop.var.m_val.l = wxANY_AS(val, int);
+				break;
+			case CompCustomProperties::PROP_FLOAT:
+				prop.var.m_val.flt = wxANY_AS(val, float);
+				break;
+			case CompCustomProperties::PROP_STRING:
+				{
+					delete[] prop.var.m_val.pc;
+					auto str = wxANY_AS(val, wxString).ToStdString();
+					char* tmp = new char[str.size() + 1];
+					strcpy(tmp, str.c_str());
+					prop.var.m_val.pc = tmp;
+				}
+				break;
+			case CompCustomProperties::PROP_VEC2:
+				{
+					std::vector<std::string> tokens;
+					auto str = wxANY_AS(val, wxString).ToStdString();
+					sx::StringHelper::Split(str, ";", tokens);
+					GD_ASSERT(tokens.size() == 2, "err prop str");
 
+					auto pvec2 = static_cast<sm::vec2*>(prop.var.m_val.pv);
+					pvec2->x = std::stof(tokens[0]);
+					pvec2->y = std::stof(tokens[1]);
+				}
+				break;
+			case CompCustomProperties::PROP_COLOR:
+				{
+					wxColour col = wxANY_AS(val, wxColour);
+					
+					auto pcol = static_cast<pt2::Color*>(prop.var.m_val.pv);
+					pcol->r = col.Red();
+					pcol->g = col.Green();
+					pcol->b = col.Blue();
+					pcol->a = col.Alpha();
+				}
+				break;
+			}
+		}
+	}
 }
 
 void WxCompCustomProperties::OnAddPress(wxCommandEvent& event)
@@ -241,6 +296,7 @@ void WxCompCustomProperties::OnAddPress(wxCommandEvent& event)
 	case CompCustomProperties::PROP_STRING:
 		m_pg->Append(new wxStringProperty(dis_name, wxPG_LABEL));
 		prop.var.m_type = VT_PCHAR;
+		prop.var.m_val.pc = nullptr;
 		break;
 	case CompCustomProperties::PROP_VEC2:
 		{
@@ -254,13 +310,16 @@ void WxCompCustomProperties::OnAddPress(wxCommandEvent& event)
 			m_pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL));
 			m_pg->SetPropertyAttribute(str_y.c_str(), wxPG_ATTR_UNITS, wxT("pixels"));
 			m_pg->SetPropertyAttribute(str_y.c_str(), "Precision", 1);
+
+			prop.var.m_type = VT_PVOID;
+			prop.var.m_val.pv = new sm::vec2(0, 0);
 		}
-		prop.var.m_type = VT_PVOID;
 		break;
 	case CompCustomProperties::PROP_COLOR:
-		m_pg->Append(new wxColourProperty(dis_name, wxPG_LABEL));
+		m_pg->Append(new wxColourProperty(dis_name, wxPG_LABEL, wxColour(255, 255, 255)));
 		m_pg->SetPropertyAttribute(dis_name.c_str(), "HasAlpha", true);
 		prop.var.m_type = VT_PVOID;
+		prop.var.m_val.pv = new pt2::Color(255, 255, 255);
 		break;
 	}
 

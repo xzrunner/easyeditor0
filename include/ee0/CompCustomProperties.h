@@ -45,6 +45,7 @@ public:
 	void Remove(const std::string& name);
 
 	auto& GetAllProp() const { return m_props; }
+	auto& GetAllProp() { return m_props; }
 
 	static const char* const TYPE_NAME;
 

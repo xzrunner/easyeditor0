@@ -52,8 +52,8 @@ std::unique_ptr<n0::NodeUniqueComp> CompCustomProperties::Clone(const n0::SceneN
 void CompCustomProperties::Add(const Property& prop)
 {
 	// already exist
-	for (auto& prop : m_props) {
-		if (prop.dis_name == prop.dis_name) {
+	for (auto& pp : m_props) {
+		if (pp.dis_name == prop.dis_name) {
 			return;
 		}
 	}
