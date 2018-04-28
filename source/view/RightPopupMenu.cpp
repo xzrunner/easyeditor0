@@ -47,7 +47,6 @@ void RightPopupMenu::OnRightPopupMenu(int id)
 	auto L = moon::Blackboard::Instance()->GetContext()->GetState();
 	auto path = boost::filesystem::absolute(itr->second, CFG_DIR);
 	auto err = moon::ScriptHelper::DoFile(L, path.string().c_str());
-	int zz = 0;
 }
 
 void RightPopupMenu::LoadMenu(wxMenu& parent, const rapidjson::Value& children)
