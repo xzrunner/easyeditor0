@@ -15,6 +15,7 @@
     <ClInclude Include="..\..\..\include\ee0\AtomicOP.h" />
     <ClInclude Include="..\..\..\include\ee0\CameraHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\color_config.h" />
+    <ClInclude Include="..\..\..\include\ee0\CompCustomProperties.h" />
     <ClInclude Include="..\..\..\include\ee0\CompEntityEditor.h" />
     <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h" />
     <ClInclude Include="..\..\..\include\ee0\Config.h" />
@@ -41,6 +42,7 @@
     <ClInclude Include="..\..\..\include\ee0\WxCodeCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxCompCustomProperties.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompObjEditorPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropData.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropTarget.h" />
@@ -72,6 +74,7 @@
     <ClInclude Include="..\..\..\include\ee0\WxStageCanvas.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\source\data\CompCustomProperties.cpp" />
     <ClCompile Include="..\..\..\source\data\CompNodeEditor.cpp" />
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
@@ -95,6 +98,7 @@
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
     <ClCompile Include="..\..\..\source\view\RightPopupMenu.cpp" />
+    <ClCompile Include="..\..\..\source\view\WxCompCustomProperties.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompObjEditorPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxDropData.cpp" />
     <ClCompile Include="..\..\..\source\view\WxDropTarget.cpp" />

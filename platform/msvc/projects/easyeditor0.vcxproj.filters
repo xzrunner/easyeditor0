@@ -244,6 +244,12 @@
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h">
       <Filter>gui\spin</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\CompCustomProperties.h">
+      <Filter>data\comp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxCompCustomProperties.h">
+      <Filter>view\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -356,6 +362,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp">
       <Filter>gui\spin</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\data\CompCustomProperties.cpp">
+      <Filter>data\comp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\WxCompCustomProperties.cpp">
+      <Filter>view\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
