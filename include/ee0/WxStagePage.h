@@ -39,6 +39,7 @@ public:
 	EditRecord& GetEditRecord() { return m_edit_record; }
 
 	uint32_t FetchObjID() { return m_next_obj_id++; }
+	void SetNextObjID(uint32_t id) { m_next_obj_id = id; }
 
 private:
 	void RegisterMoonCallback();
