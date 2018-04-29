@@ -22,24 +22,24 @@ std::unique_ptr<n0::NodeUniqueComp> CompCustomProperties::Clone(const n0::SceneN
 		{
 		case PROP_STRING:
 			{
-				auto str = itr.var.m_val.pc;
+				auto str = itr.val.m_val.pc;
 				char* tmp = new char[strlen(str) + 1];
 				strcpy(tmp, str);
-				itr.var.m_val.pc = tmp;
+				itr.val.m_val.pc = tmp;
 			}
 			break;
 		case PROP_VEC2:
 			{
-				auto& vec2 = *static_cast<sm::vec2*>(itr.var.m_val.pv);
+				auto& vec2 = *static_cast<sm::vec2*>(itr.val.m_val.pv);
 				auto tmp = new sm::vec2(vec2);
-				itr.var.m_val.pv = tmp;
+				itr.val.m_val.pv = tmp;
 			}
 			break;
 		case PROP_COLOR:
 			{
-				auto& col = *static_cast<pt2::Color*>(itr.var.m_val.pv);
+				auto& col = *static_cast<pt2::Color*>(itr.val.m_val.pv);
 				auto tmp = new pt2::Color(col);
-				itr.var.m_val.pv = tmp;
+				itr.val.m_val.pv = tmp;
 			}
 			break;
 		default:
@@ -53,7 +53,7 @@ void CompCustomProperties::Add(const Property& prop)
 {
 	// already exist
 	for (auto& pp : m_props) {
-		if (pp.dis_name == prop.dis_name) {
+		if (pp.key == prop.key) {
 			return;
 		}
 	}
@@ -64,7 +64,7 @@ void CompCustomProperties::Add(const Property& prop)
 void CompCustomProperties::Remove(const std::string& name)
 {
 	for (auto itr = m_props.begin(); itr != m_props.end(); ++itr) {
-		if (itr->dis_name == name) {
+		if (itr->key == name) {
 			m_props.erase(itr);
 			break;
 		}

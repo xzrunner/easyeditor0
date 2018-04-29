@@ -28,9 +28,7 @@ public:
 
 	int GetType() const { return m_type->GetSelection(); }
 
-	std::string GetVarName() const { return m_var_name->GetValue().ToStdString(); }
-
-	std::string GetDisName() const { return m_dis_name->GetValue().ToStdString(); }
+	std::string GetKey() const { return m_key->GetValue().ToStdString(); }
 
 private:
 	void InitLayout()
@@ -56,24 +54,12 @@ private:
 
 		top_sizer->AddSpacer(10);
 
-		// variable name
+		// key
 		{
 			wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 			sizer->Add(new wxStaticText(this, wxID_ANY, "Variable name:"));
 			sizer->AddSpacer(25);
-			sizer->Add(m_var_name = new wxTextCtrl(this, wxID_ANY,
-				wxEmptyString, wxDefaultPosition, wxSize(200, -1)));
-			top_sizer->Add(sizer);
-		}
-
-		top_sizer->AddSpacer(10);
-
-		// display name
-		{
-			wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
-			sizer->Add(new wxStaticText(this, wxID_ANY, "Display name:"));
-			sizer->AddSpacer(30);
-			sizer->Add(m_dis_name = new wxTextCtrl(this, wxID_ANY, 
+			sizer->Add(m_key = new wxTextCtrl(this, wxID_ANY,
 				wxEmptyString, wxDefaultPosition, wxSize(200, -1)));
 			top_sizer->Add(sizer);
 		}
@@ -94,8 +80,7 @@ private:
 
 private:
 	wxChoice*   m_type;
-	wxTextCtrl* m_var_name;
-	wxTextCtrl* m_dis_name;
+	wxTextCtrl* m_key;
 
 }; // WxCustomPropertyDlg
 
@@ -161,29 +146,29 @@ void WxCompCustomProperties::InitProperties()
 	auto& props = m_cprop.GetAllProp();
 	for (auto& prop : props)
 	{
-		auto& dis_name = prop.dis_name;
+		auto& name = prop.key;
 		switch (prop.type)
 		{
 		case CompCustomProperties::PROP_BOOL:
-			m_pg->Append(new wxBoolProperty(dis_name, wxPG_LABEL, prop.var.m_val.bl));
-			m_pg->SetPropertyAttribute(dis_name.c_str(), wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+			m_pg->Append(new wxBoolProperty(name, wxPG_LABEL, prop.val.m_val.bl));
+			m_pg->SetPropertyAttribute(name.c_str(), wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 			break;
 		case CompCustomProperties::PROP_INT:
-			m_pg->Append(new wxIntProperty(dis_name, wxPG_LABEL, prop.var.m_val.l));
+			m_pg->Append(new wxIntProperty(name, wxPG_LABEL, prop.val.m_val.l));
 			break;
 		case CompCustomProperties::PROP_FLOAT:
-			m_pg->Append(new wxFloatProperty(dis_name, wxPG_LABEL, prop.var.m_val.flt));
+			m_pg->Append(new wxFloatProperty(name, wxPG_LABEL, prop.val.m_val.flt));
 			break;
 		case CompCustomProperties::PROP_STRING:
-			m_pg->Append(new wxStringProperty(dis_name, wxPG_LABEL, prop.var.m_val.pc));
+			m_pg->Append(new wxStringProperty(name, wxPG_LABEL, prop.val.m_val.pc));
 			break;
 		case CompCustomProperties::PROP_VEC2:
 			{
-				wxPGProperty* pos_prop = m_pg->Append(new wxStringProperty(dis_name, wxPG_LABEL, wxT("<composed>")));
+				wxPGProperty* pos_prop = m_pg->Append(new wxStringProperty(name, wxPG_LABEL, wxT("<composed>")));
 				pos_prop->SetExpanded(false);
-				auto str_x = dis_name + ".X";
-				auto str_y = dis_name + ".Y";
-				sm::vec2* vec2 = static_cast<sm::vec2*>(prop.var.m_val.pv);
+				auto str_x = name + ".X";
+				auto str_y = name + ".Y";
+				sm::vec2* vec2 = static_cast<sm::vec2*>(prop.val.m_val.pv);
 				m_pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, vec2->x));
 				m_pg->SetPropertyAttribute(str_x.c_str(), wxPG_ATTR_UNITS, wxT("pixels"));
 				m_pg->SetPropertyAttribute(str_x.c_str(), "Precision", 1);
@@ -194,10 +179,10 @@ void WxCompCustomProperties::InitProperties()
 			break;
 		case CompCustomProperties::PROP_COLOR:
 			{
-				auto pcol = static_cast<pt2::Color*>(prop.var.m_val.pv);
+				auto pcol = static_cast<pt2::Color*>(prop.val.m_val.pv);
 				wxColour col = wxColour(pcol->r, pcol->g, pcol->b, pcol->a);
-				m_pg->Append(new wxColourProperty(dis_name, wxPG_LABEL, col));
-				m_pg->SetPropertyAttribute(dis_name.c_str(), "HasAlpha", true);
+				m_pg->Append(new wxColourProperty(name, wxPG_LABEL, col));
+				m_pg->SetPropertyAttribute(name.c_str(), "HasAlpha", true);
 			}
 			break;
 		}
@@ -213,26 +198,26 @@ void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 	auto& props = m_cprop.GetAllProp();
 	for (auto& prop : props)
 	{
-		if (prop.dis_name == key)
+		if (prop.key == key)
 		{
 			switch (prop.type)
 			{
 			case CompCustomProperties::PROP_BOOL:
-				prop.var.m_val.bl = wxANY_AS(val, bool);
+				prop.val.m_val.bl = wxANY_AS(val, bool);
 				break;
 			case CompCustomProperties::PROP_INT:
-				prop.var.m_val.l = wxANY_AS(val, int);
+				prop.val.m_val.l = wxANY_AS(val, int);
 				break;
 			case CompCustomProperties::PROP_FLOAT:
-				prop.var.m_val.flt = wxANY_AS(val, float);
+				prop.val.m_val.flt = wxANY_AS(val, float);
 				break;
 			case CompCustomProperties::PROP_STRING:
 				{
-					delete[] prop.var.m_val.pc;
+					delete[] prop.val.m_val.pc;
 					auto str = wxANY_AS(val, wxString).ToStdString();
 					char* tmp = new char[str.size() + 1];
 					strcpy(tmp, str.c_str());
-					prop.var.m_val.pc = tmp;
+					prop.val.m_val.pc = tmp;
 				}
 				break;
 			case CompCustomProperties::PROP_VEC2:
@@ -242,7 +227,7 @@ void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 					sx::StringHelper::Split(str, ";", tokens);
 					GD_ASSERT(tokens.size() == 2, "err prop str");
 
-					auto pvec2 = static_cast<sm::vec2*>(prop.var.m_val.pv);
+					auto pvec2 = static_cast<sm::vec2*>(prop.val.m_val.pv);
 					pvec2->x = std::stof(tokens[0]);
 					pvec2->y = std::stof(tokens[1]);
 				}
@@ -251,7 +236,7 @@ void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 				{
 					wxColour col = wxANY_AS(val, wxColour);
 					
-					auto pcol = static_cast<pt2::Color*>(prop.var.m_val.pv);
+					auto pcol = static_cast<pt2::Color*>(prop.val.m_val.pv);
 					pcol->r = col.Red();
 					pcol->g = col.Green();
 					pcol->b = col.Blue();
@@ -272,38 +257,36 @@ void WxCompCustomProperties::OnAddPress(wxCommandEvent& event)
 
 	CompCustomProperties::Property prop;
 
-	std::string dis_name = dlg.GetDisName();
-	std::string var_name = dlg.GetVarName();
-	prop.dis_name = dis_name;
-	prop.var_name = var_name;
+	std::string key = dlg.GetKey();
+	prop.key  = key;
 	prop.type = static_cast<CompCustomProperties::PropertyType>(dlg.GetType());
 
 	switch (dlg.GetType())
 	{
 	case CompCustomProperties::PROP_BOOL:
-		m_pg->Append(new wxBoolProperty(dis_name, wxPG_LABEL));
-		m_pg->SetPropertyAttribute(dis_name.c_str(), wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-		prop.var.m_type = VT_BOOL;
+		m_pg->Append(new wxBoolProperty(key, wxPG_LABEL));
+		m_pg->SetPropertyAttribute(key.c_str(), wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+		prop.val.m_type = VT_BOOL;
 		break;
 	case CompCustomProperties::PROP_INT:
-		m_pg->Append(new wxIntProperty(dis_name, wxPG_LABEL));
-		prop.var.m_type = VT_LONG;
+		m_pg->Append(new wxIntProperty(key, wxPG_LABEL));
+		prop.val.m_type = VT_LONG;
 		break;
 	case CompCustomProperties::PROP_FLOAT:
-		m_pg->Append(new wxFloatProperty(dis_name, wxPG_LABEL));
-		prop.var.m_type = VT_FLOAT;
+		m_pg->Append(new wxFloatProperty(key, wxPG_LABEL));
+		prop.val.m_type = VT_FLOAT;
 		break;
 	case CompCustomProperties::PROP_STRING:
-		m_pg->Append(new wxStringProperty(dis_name, wxPG_LABEL));
-		prop.var.m_type = VT_PCHAR;
-		prop.var.m_val.pc = nullptr;
+		m_pg->Append(new wxStringProperty(key, wxPG_LABEL));
+		prop.val.m_type = VT_PCHAR;
+		prop.val.m_val.pc = nullptr;
 		break;
 	case CompCustomProperties::PROP_VEC2:
 		{
-			wxPGProperty* pos_prop = m_pg->Append(new wxStringProperty(dis_name, wxPG_LABEL, wxT("<composed>")));
+			wxPGProperty* pos_prop = m_pg->Append(new wxStringProperty(key, wxPG_LABEL, wxT("<composed>")));
 			pos_prop->SetExpanded(false);
-			auto str_x = dis_name + ".X";
-			auto str_y = dis_name + ".Y";
+			auto str_x = key + ".X";
+			auto str_y = key + ".Y";
 			m_pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL));
 			m_pg->SetPropertyAttribute(str_x.c_str(), wxPG_ATTR_UNITS, wxT("pixels"));
 			m_pg->SetPropertyAttribute(str_x.c_str(), "Precision", 1);
@@ -311,15 +294,15 @@ void WxCompCustomProperties::OnAddPress(wxCommandEvent& event)
 			m_pg->SetPropertyAttribute(str_y.c_str(), wxPG_ATTR_UNITS, wxT("pixels"));
 			m_pg->SetPropertyAttribute(str_y.c_str(), "Precision", 1);
 
-			prop.var.m_type = VT_PVOID;
-			prop.var.m_val.pv = new sm::vec2(0, 0);
+			prop.val.m_type = VT_PVOID;
+			prop.val.m_val.pv = new sm::vec2(0, 0);
 		}
 		break;
 	case CompCustomProperties::PROP_COLOR:
-		m_pg->Append(new wxColourProperty(dis_name, wxPG_LABEL, wxColour(255, 255, 255)));
-		m_pg->SetPropertyAttribute(dis_name.c_str(), "HasAlpha", true);
-		prop.var.m_type = VT_PVOID;
-		prop.var.m_val.pv = new pt2::Color(255, 255, 255);
+		m_pg->Append(new wxColourProperty(key, wxPG_LABEL, wxColour(255, 255, 255)));
+		m_pg->SetPropertyAttribute(key.c_str(), "HasAlpha", true);
+		prop.val.m_type = VT_PVOID;
+		prop.val.m_val.pv = new pt2::Color(255, 255, 255);
 		break;
 	}
 

@@ -26,10 +26,8 @@ public:
 	struct Property
 	{
 		PropertyType type;
-		Variant      var;
-		
-		std::string  var_name;	// short name for script
-		std::string  dis_name;	// display name
+		Variant      val;
+		std::string  key;
 	};
 
 public:
