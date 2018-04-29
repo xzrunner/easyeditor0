@@ -32,9 +32,9 @@ void RightPopupMenu::SetRightPopupMenu(wxMenu& menu, int x, int y)
 	m_id2path.clear();
 
 	rapidjson::Document doc;
-	js::RapidJsonHelper::ReadFromFile(CFG_PATH, doc);
-
-	LoadMenu(menu, doc["children"]);
+	if (js::RapidJsonHelper::ReadFromFile(CFG_PATH, doc)) {
+		LoadMenu(menu, doc["children"]);
+	}
 }
 
 void RightPopupMenu::OnRightPopupMenu(int id)
