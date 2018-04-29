@@ -1,9 +1,13 @@
 #pragma once
 
+#include <SM_Rect.h>
+
 #include <wx/bitmap.h>
 
 #include <string>
 #include <memory>
+
+namespace n0 { class CompAsset; }
 
 namespace ee0
 {

@@ -125,7 +125,7 @@ bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
 		return false;
 	}
 
-	auto bounding = casset->GetBounding();
+	auto bounding = pt2::Callback::GetBounding(*casset);
 	if (!bounding.IsValid()) {
 		return false;
 	}
