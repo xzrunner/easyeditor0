@@ -50,48 +50,55 @@ bool WxBitmap::LoadFromFile(const std::string& filepath)
 
 bool WxBitmap::LoadFromImageFile(const std::string& filepath)
 {
-	wxImage image;
-
 	int width, height, format;
 	uint8_t* pixels = gimg_import(filepath.c_str(), &width, &height, &format);
+	if (!pixels) {
+		return false;
+	}
+
+	// todo
 	//if (format == GPF_RGBA8 && gum::Config::Instance()->GetPreMulAlpha()) {
 	//	gimg_pre_mul_alpha(pixels, width, height);
 	//}
-	if (format != GPF_RGBA8) {
-		image.LoadFile(filepath.c_str());
-		return true;
-	}
 
 	if (CanLoadFromWX(filepath))
 	{
 		wxImage wx_img;
 		bool succ = wx_img.LoadFile(filepath.c_str());
+		if (!succ) {
+			return false;
+		}
 
-		pimg::Condense cd(pixels, width, height);
-		pimg::Rect r = cd.GetRegion();
+		// condense transparent edge
+		if (format == GPF_RGBA8 || format == GPF_RGBA4 || format == GPF_BGRA_EXT)
+		{
+			pimg::Condense cd(pixels, width, height);
+			pimg::Rect r = cd.GetRegion();
 
-		wxRect wx_rect;
-		int h = height;
-		wx_rect.SetLeft(r.xmin);
-		wx_rect.SetRight(r.xmax - 1);
-		wx_rect.SetTop(h - r.ymax);
-		wx_rect.SetBottom(h - r.ymin - 1);
+			wxRect wx_rect;
+			int h = height;
+			wx_rect.SetLeft(r.xmin);
+			wx_rect.SetRight(r.xmax - 1);
+			wx_rect.SetTop(h - r.ymax);
+			wx_rect.SetBottom(h - r.ymin - 1);
 
-		image = wx_img.GetSubImage(wx_rect);
-		LoadFromImage(image, true);
+			auto sub_img = wx_img.GetSubImage(wx_rect);
+			LoadFromImage(sub_img, true);
 
-		return true;
+			return true;
+		}
+		else
+		{
+			LoadFromImage(wx_img, true);
+			return true;
+		}
 	}
 	else
 	{
 		uint8_t* rgb = gimg_rgba2rgb(pixels, width, height);
-		bool succ = image.Create(wxSize(width, height), rgb);
-		if (succ) {
-			LoadFromImage(image, true);
-			return true;
-		} else {
-			return false;
-		}
+		wxImage wx_img(width, height, rgb);
+		LoadFromImage(wx_img, true);
+		return true;
 	}
 }
 
@@ -102,7 +109,7 @@ void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 			  h = image.GetHeight();
 		float scale = 1;
 		if (need_scale) {
-			scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE; 
+			scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE;
 		}
 		w = std::max(1.0f, w * scale);
 		h = std::max(1.0f, h * scale);
@@ -132,7 +139,7 @@ bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
 
 	float w = std::max(1.0f, bounding.Size().x),
 		  h = std::max(1.0f, bounding.Size().y);
-	float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE; 
+	float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE;
 	w *= scale;
 	h *= scale;
 	w = std::max(1.0f, w);
@@ -146,12 +153,12 @@ bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
  	if (!rgba) {
  		return false;
  	}
- 
+
  	uint8_t* rgb = gimg_rgba2rgb(rgba, w, h);
- 
+
  	wxImage image(w, h, rgb, true);
 	LoadFromImage(image, false);
- 
+
  	free(rgb);
  	delete[] rgba;
 
