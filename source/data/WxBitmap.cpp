@@ -38,10 +38,10 @@ bool WxBitmap::LoadFromFile(const std::string& filepath)
 	auto type = sx::ResFileHelper::Type(filepath);
 	switch (type)
 	{
-	case sx::FILE_IMAGE:
+	case sx::RES_FILE_IMAGE:
 		ret = LoadFromImageFile(filepath);
 		break;
-	case sx::FILE_JSON:
+	case sx::RES_FILE_JSON:
 		ret = LoadFromJsonFile(filepath);
 		break;
 	}
