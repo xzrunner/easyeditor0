@@ -16,10 +16,10 @@ class wxCheckBox;
 namespace ee0
 {
 
-class WxCompObjEditorPanel : public WxCompPanel
+class WxCompEditorPanel : public WxCompPanel
 {
 public:
-	WxCompObjEditorPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr, 
+	WxCompEditorPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr,
 		ECS_WORLD_PARAM const GameObj& obj);
 
 	virtual void RefreshNodeComp() override;
@@ -27,7 +27,6 @@ public:
 private:
 	void InitLayout();
 
-	void EnterNameValue(wxCommandEvent& event);
 	void UpdateVisibleValue(wxCommandEvent& event);
 	void UpdateEditableValue(wxCommandEvent& event);
 
@@ -36,10 +35,8 @@ private:
 	ECS_WORLD_SELF_DEF
 	GameObj            m_obj;
 
-	wxTextCtrl* m_filepath;
-	wxTextCtrl* m_name;
 	wxCheckBox *m_visible, *m_editable;
 
-}; // WxCompObjEditorPanel
+}; // WxCompEditorPanel
 
 }
