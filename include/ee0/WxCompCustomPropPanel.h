@@ -8,13 +8,13 @@ class wxPropertyGridEvent;
 namespace ee0
 {
 
-class CompCustomProperties;
+class CompCustomProp;
 
-class WxCompCustomProperties : public WxCompPanel
+class WxCompCustomPropPanel : public WxCompPanel
 {
 public:
-	WxCompCustomProperties(wxWindow* parent, 
-		CompCustomProperties& cprop);
+	WxCompCustomPropPanel(wxWindow* parent,
+		CompCustomProp& cprop);
 
 	virtual void RefreshNodeComp() override;
 
@@ -29,12 +29,12 @@ private:
 	void OnAddPress(wxCommandEvent& event);
 
 private:
-	CompCustomProperties& m_cprop;
+	CompCustomProp& m_cprop;
 
 	wxPropertyGrid* m_pg;
 
 	wxButton* m_add_btn;
 
-}; // WxCompCustomProperties
+}; // WxCompCustomPropPanel
 
 }

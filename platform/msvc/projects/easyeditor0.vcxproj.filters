@@ -238,17 +238,23 @@
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h">
       <Filter>gui\spin</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\CompCustomProperties.h">
-      <Filter>data\comp</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\WxCompCustomProperties.h">
-      <Filter>view\detail</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxCompIdPanel.h">
       <Filter>view\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxCompFlagPanel.h">
       <Filter>view\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\NSCompCustomProp.h">
+      <Filter>data\comp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\CompCustomProp.h">
+      <Filter>data\comp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxCompCustomPropPanel.h">
+      <Filter>view\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\Callback.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -357,17 +363,23 @@
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp">
       <Filter>gui\spin</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\data\CompCustomProperties.cpp">
-      <Filter>data\comp</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\view\WxCompCustomProperties.cpp">
-      <Filter>view\detail</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxCompIdPanel.cpp">
       <Filter>view\detail</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxCompFlagPanel.cpp">
       <Filter>view\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\data\NSCompCustomProp.cpp">
+      <Filter>data\comp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\data\CompCustomProp.cpp">
+      <Filter>data\comp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\WxCompCustomPropPanel.cpp">
+      <Filter>view\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\Callback.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

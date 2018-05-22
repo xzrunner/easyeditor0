@@ -1,5 +1,5 @@
-#include "ee0/WxCompCustomProperties.h"
-#include "ee0/CompCustomProperties.h"
+#include "ee0/WxCompCustomPropPanel.h"
+#include "ee0/CompCustomProp.h"
 
 #include <SM_Vector.h>
 #include <node0/SceneNode.h>
@@ -89,8 +89,8 @@ private:
 namespace ee0
 {
 
-WxCompCustomProperties::WxCompCustomProperties(wxWindow* parent, 
-	                                           CompCustomProperties& cprop)
+WxCompCustomPropPanel::WxCompCustomPropPanel(wxWindow* parent, 
+	                                           CompCustomProp& cprop)
 	: WxCompPanel(parent, "CustomProperties")
 	, m_cprop(cprop)
 {
@@ -98,11 +98,11 @@ WxCompCustomProperties::WxCompCustomProperties(wxWindow* parent,
 	Expand();
 }
 
-void WxCompCustomProperties::RefreshNodeComp()
+void WxCompCustomPropPanel::RefreshNodeComp()
 {
 }
 
-void WxCompCustomProperties::InitLayout()
+void WxCompCustomPropPanel::InitLayout()
 {
 	wxWindow* win = GetPane();
 
@@ -114,19 +114,19 @@ void WxCompCustomProperties::InitLayout()
 	pane_sizer->SetSizeHints(win);
 }
 
-void WxCompCustomProperties::InitHeader(wxWindow* win, wxSizer* pane_sizer)
+void WxCompCustomPropPanel::InitHeader(wxWindow* win, wxSizer* pane_sizer)
 {
 	wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
 	m_add_btn = new wxButton(win, wxID_ANY, "+", wxDefaultPosition, wxSize(20, 20));
 	Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
-		wxCommandEventHandler(WxCompCustomProperties::OnAddPress));
+		wxCommandEventHandler(WxCompCustomPropPanel::OnAddPress));
 	sizer->Add(m_add_btn, 0, wxLEFT | wxRIGHT, 5);
 
 	pane_sizer->Add(sizer);
 }
 
-void WxCompCustomProperties::InitPropertyGrid(wxWindow* win, wxSizer* pane_sizer)
+void WxCompCustomPropPanel::InitPropertyGrid(wxWindow* win, wxSizer* pane_sizer)
 {
 	m_pg = new wxPropertyGrid(win,
 		-1,
@@ -135,13 +135,13 @@ void WxCompCustomProperties::InitPropertyGrid(wxWindow* win, wxSizer* pane_sizer
 		wxPG_SPLITTER_AUTO_CENTER | wxPG_BOLD_MODIFIED
 	);
 	Connect(m_pg->GetId(), wxEVT_PG_CHANGED, wxPropertyGridEventHandler(
-		WxCompCustomProperties::OnPropertyGridChange));
+		WxCompCustomPropPanel::OnPropertyGridChange));
 	pane_sizer->Add(m_pg, 1, wxEXPAND);
 
 	InitProperties();
 }
 
-void WxCompCustomProperties::InitProperties()
+void WxCompCustomPropPanel::InitProperties()
 {
 	auto& props = m_cprop.GetAllProp();
 	for (auto& prop : props)
@@ -149,20 +149,20 @@ void WxCompCustomProperties::InitProperties()
 		auto& name = prop.key;
 		switch (prop.type)
 		{
-		case CompCustomProperties::PROP_BOOL:
+		case CompCustomProp::PROP_BOOL:
 			m_pg->Append(new wxBoolProperty(name, wxPG_LABEL, prop.val.m_val.bl));
 			m_pg->SetPropertyAttribute(name.c_str(), wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 			break;
-		case CompCustomProperties::PROP_INT:
+		case CompCustomProp::PROP_INT:
 			m_pg->Append(new wxIntProperty(name, wxPG_LABEL, prop.val.m_val.l));
 			break;
-		case CompCustomProperties::PROP_FLOAT:
+		case CompCustomProp::PROP_FLOAT:
 			m_pg->Append(new wxFloatProperty(name, wxPG_LABEL, prop.val.m_val.flt));
 			break;
-		case CompCustomProperties::PROP_STRING:
+		case CompCustomProp::PROP_STRING:
 			m_pg->Append(new wxStringProperty(name, wxPG_LABEL, prop.val.m_val.pc));
 			break;
-		case CompCustomProperties::PROP_VEC2:
+		case CompCustomProp::PROP_VEC2:
 			{
 				wxPGProperty* pos_prop = m_pg->Append(new wxStringProperty(name, wxPG_LABEL, wxT("<composed>")));
 				pos_prop->SetExpanded(false);
@@ -177,7 +177,7 @@ void WxCompCustomProperties::InitProperties()
 				m_pg->SetPropertyAttribute(str_y.c_str(), "Precision", 1);
 			}
 			break;
-		case CompCustomProperties::PROP_COLOR:
+		case CompCustomProp::PROP_COLOR:
 			{
 				auto pcol = static_cast<pt2::Color*>(prop.val.m_val.pv);
 				wxColour col = wxColour(pcol->r, pcol->g, pcol->b, pcol->a);
@@ -189,7 +189,7 @@ void WxCompCustomProperties::InitProperties()
 	}
 }
 
-void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
+void WxCompCustomPropPanel::OnPropertyGridChange(wxPropertyGridEvent& event)
 {
 	wxPGProperty* property = event.GetProperty();
 	auto key = property->GetName().ToStdString();
@@ -202,16 +202,16 @@ void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 		{
 			switch (prop.type)
 			{
-			case CompCustomProperties::PROP_BOOL:
+			case CompCustomProp::PROP_BOOL:
 				prop.val.m_val.bl = wxANY_AS(val, bool);
 				break;
-			case CompCustomProperties::PROP_INT:
+			case CompCustomProp::PROP_INT:
 				prop.val.m_val.l = wxANY_AS(val, int);
 				break;
-			case CompCustomProperties::PROP_FLOAT:
+			case CompCustomProp::PROP_FLOAT:
 				prop.val.m_val.flt = wxANY_AS(val, float);
 				break;
-			case CompCustomProperties::PROP_STRING:
+			case CompCustomProp::PROP_STRING:
 				{
 					delete[] prop.val.m_val.pc;
 					auto str = wxANY_AS(val, wxString).ToStdString();
@@ -220,7 +220,7 @@ void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 					prop.val.m_val.pc = tmp;
 				}
 				break;
-			case CompCustomProperties::PROP_VEC2:
+			case CompCustomProp::PROP_VEC2:
 				{
 					std::vector<std::string> tokens;
 					auto str = wxANY_AS(val, wxString).ToStdString();
@@ -232,7 +232,7 @@ void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 					pvec2->y = std::stof(tokens[1]);
 				}
 				break;
-			case CompCustomProperties::PROP_COLOR:
+			case CompCustomProp::PROP_COLOR:
 				{
 					wxColour col = wxANY_AS(val, wxColour);
 					
@@ -248,40 +248,40 @@ void WxCompCustomProperties::OnPropertyGridChange(wxPropertyGridEvent& event)
 	}
 }
 
-void WxCompCustomProperties::OnAddPress(wxCommandEvent& event)
+void WxCompCustomPropPanel::OnAddPress(wxCommandEvent& event)
 {
 	WxCustomPropertyDlg dlg(this, m_add_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
 
-	CompCustomProperties::Property prop;
+	CompCustomProp::Property prop;
 
 	std::string key = dlg.GetKey();
 	prop.key  = key;
-	prop.type = static_cast<CompCustomProperties::PropertyType>(dlg.GetType());
+	prop.type = static_cast<CompCustomProp::PropertyType>(dlg.GetType());
 
 	switch (dlg.GetType())
 	{
-	case CompCustomProperties::PROP_BOOL:
+	case CompCustomProp::PROP_BOOL:
 		m_pg->Append(new wxBoolProperty(key, wxPG_LABEL));
 		m_pg->SetPropertyAttribute(key.c_str(), wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 		prop.val.m_type = VT_BOOL;
 		break;
-	case CompCustomProperties::PROP_INT:
+	case CompCustomProp::PROP_INT:
 		m_pg->Append(new wxIntProperty(key, wxPG_LABEL));
 		prop.val.m_type = VT_LONG;
 		break;
-	case CompCustomProperties::PROP_FLOAT:
+	case CompCustomProp::PROP_FLOAT:
 		m_pg->Append(new wxFloatProperty(key, wxPG_LABEL));
 		prop.val.m_type = VT_FLOAT;
 		break;
-	case CompCustomProperties::PROP_STRING:
+	case CompCustomProp::PROP_STRING:
 		m_pg->Append(new wxStringProperty(key, wxPG_LABEL));
 		prop.val.m_type = VT_PCHAR;
 		prop.val.m_val.pc = nullptr;
 		break;
-	case CompCustomProperties::PROP_VEC2:
+	case CompCustomProp::PROP_VEC2:
 		{
 			wxPGProperty* pos_prop = m_pg->Append(new wxStringProperty(key, wxPG_LABEL, wxT("<composed>")));
 			pos_prop->SetExpanded(false);
@@ -298,7 +298,7 @@ void WxCompCustomProperties::OnAddPress(wxCommandEvent& event)
 			prop.val.m_val.pv = new sm::vec2(0, 0);
 		}
 		break;
-	case CompCustomProperties::PROP_COLOR:
+	case CompCustomProp::PROP_COLOR:
 		m_pg->Append(new wxColourProperty(key, wxPG_LABEL, wxColour(255, 255, 255)));
 		m_pg->SetPropertyAttribute(key.c_str(), "HasAlpha", true);
 		prop.val.m_type = VT_PVOID;

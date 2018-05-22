@@ -10,7 +10,7 @@
 namespace ee0
 {
 
-class CompCustomProperties : public n0::NodeUniqueComp
+class CompCustomProp : public n0::NodeUniqueComp
 {
 public:
 	enum PropertyType
@@ -31,11 +31,11 @@ public:
 	};
 
 public:
-	CompCustomProperties();
+	CompCustomProp();
 
 	virtual const char* Type() const override { return TYPE_NAME; }
 	virtual n0::UniqueCompID TypeID() const override {
-		return n0::GetUniqueCompTypeID<CompCustomProperties>();
+		return n0::GetUniqueCompTypeID<CompCustomProp>();
 	}
 	virtual std::unique_ptr<n0::NodeUniqueComp> Clone(const n0::SceneNode& obj) const override;
 
@@ -50,6 +50,6 @@ public:
 private:
 	std::vector<Property> m_props;
 
-}; // CompCustomProperties
+}; // CompCustomProp
 
 }

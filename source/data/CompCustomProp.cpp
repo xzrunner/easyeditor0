@@ -1,4 +1,4 @@
-#include "ee0/CompCustomProperties.h"
+#include "ee0/CompCustomProp.h"
 
 #include <SM_Vector.h>
 #include <painting2/Color.h>
@@ -6,15 +6,15 @@
 namespace ee0
 {
 
-const char* const CompCustomProperties::TYPE_NAME = "ee0_custom_properties";
+const char* const CompCustomProp::TYPE_NAME = "ee0_custom_properties";
 
-CompCustomProperties::CompCustomProperties()
+CompCustomProp::CompCustomProp()
 {
 }
 
-std::unique_ptr<n0::NodeUniqueComp> CompCustomProperties::Clone(const n0::SceneNode& obj) const
+std::unique_ptr<n0::NodeUniqueComp> CompCustomProp::Clone(const n0::SceneNode& obj) const
 {
-	auto comp = std::make_unique<CompCustomProperties>();
+	auto comp = std::make_unique<CompCustomProp>();
 	comp->m_props = m_props;
 	for (auto& itr : comp->m_props)
 	{
@@ -49,7 +49,7 @@ std::unique_ptr<n0::NodeUniqueComp> CompCustomProperties::Clone(const n0::SceneN
 	return comp;
 }
 
-void CompCustomProperties::Add(const Property& prop)
+void CompCustomProp::Add(const Property& prop)
 {
 	// already exist
 	for (auto& pp : m_props) {
@@ -61,7 +61,7 @@ void CompCustomProperties::Add(const Property& prop)
 	m_props.push_back(prop);
 }
 
-void CompCustomProperties::Remove(const std::string& name)
+void CompCustomProp::Remove(const std::string& name)
 {
 	for (auto itr = m_props.begin(); itr != m_props.end(); ++itr) {
 		if (itr->key == name) {

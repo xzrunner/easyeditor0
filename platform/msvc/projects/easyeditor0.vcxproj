@@ -13,9 +13,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Application.h" />
     <ClInclude Include="..\..\..\include\ee0\AtomicOP.h" />
+    <ClInclude Include="..\..\..\include\ee0\Callback.h" />
     <ClInclude Include="..\..\..\include\ee0\CameraHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\color_config.h" />
-    <ClInclude Include="..\..\..\include\ee0\CompCustomProperties.h" />
+    <ClInclude Include="..\..\..\include\ee0\CompCustomProp.h" />
     <ClInclude Include="..\..\..\include\ee0\CompEntityEditor.h" />
     <ClInclude Include="..\..\..\include\ee0\Config.h" />
     <ClInclude Include="..\..\..\include\ee0\ConfigFile.h" />
@@ -24,6 +25,7 @@
     <ClInclude Include="..\..\..\include\ee0\EditOpState.h" />
     <ClInclude Include="..\..\..\include\ee0\EditPanelImpl.h" />
     <ClInclude Include="..\..\..\include\ee0\EditRecord.h" />
+    <ClInclude Include="..\..\..\include\ee0\NSCompCustomProp.h" />
     <ClInclude Include="..\..\..\include\ee0\GameObj.h" />
     <ClInclude Include="..\..\..\include\ee0\GuiCallback.h" />
     <ClInclude Include="..\..\..\include\ee0\KeysState.h" />
@@ -41,7 +43,7 @@
     <ClInclude Include="..\..\..\include\ee0\WxCodeCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
-    <ClInclude Include="..\..\..\include\ee0\WxCompCustomProperties.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxCompCustomPropPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompFlagPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompIdPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropData.h" />
@@ -74,7 +76,8 @@
     <ClInclude Include="..\..\..\include\ee0\WxStageCanvas.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\source\data\CompCustomProperties.cpp" />
+    <ClCompile Include="..\..\..\source\data\CompCustomProp.cpp" />
+    <ClCompile Include="..\..\..\source\data\NSCompCustomProp.cpp" />
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
@@ -89,6 +92,7 @@
     <ClCompile Include="..\..\..\source\gui\WxSliderTwoCtrl.cpp" />
     <ClCompile Include="..\..\..\source\msg\Subject.cpp" />
     <ClCompile Include="..\..\..\source\msg\SubjectMgr.cpp" />
+    <ClCompile Include="..\..\..\source\tools\Callback.cpp" />
     <ClCompile Include="..\..\..\source\tools\CameraHelper.cpp" />
     <ClCompile Include="..\..\..\source\tools\ConfigFile.cpp" />
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp" />
@@ -97,7 +101,7 @@
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
     <ClCompile Include="..\..\..\source\view\RightPopupMenu.cpp" />
-    <ClCompile Include="..\..\..\source\view\WxCompCustomProperties.cpp" />
+    <ClCompile Include="..\..\..\source\view\WxCompCustomPropPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompIdPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompFlagPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxDropData.cpp" />
