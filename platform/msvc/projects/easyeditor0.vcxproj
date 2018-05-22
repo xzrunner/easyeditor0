@@ -17,7 +17,6 @@
     <ClInclude Include="..\..\..\include\ee0\color_config.h" />
     <ClInclude Include="..\..\..\include\ee0\CompCustomProperties.h" />
     <ClInclude Include="..\..\..\include\ee0\CompEntityEditor.h" />
-    <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h" />
     <ClInclude Include="..\..\..\include\ee0\Config.h" />
     <ClInclude Include="..\..\..\include\ee0\ConfigFile.h" />
     <ClInclude Include="..\..\..\include\ee0\defsext.h" />
@@ -43,7 +42,7 @@
     <ClInclude Include="..\..\..\include\ee0\WxColorGradientDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxColorSpinCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompCustomProperties.h" />
-    <ClInclude Include="..\..\..\include\ee0\WxCompEditorPanel.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxCompFlagPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCompIdPanel.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropData.h" />
     <ClInclude Include="..\..\..\include\ee0\WxDropTarget.h" />
@@ -76,7 +75,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\data\CompCustomProperties.cpp" />
-    <ClCompile Include="..\..\..\source\data\CompNodeEditor.cpp" />
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
@@ -101,7 +99,7 @@
     <ClCompile Include="..\..\..\source\view\RightPopupMenu.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompCustomProperties.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompIdPanel.cpp" />
-    <ClCompile Include="..\..\..\source\view\WxCompEditorPanel.cpp" />
+    <ClCompile Include="..\..\..\source\view\WxCompFlagPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxDropData.cpp" />
     <ClCompile Include="..\..\..\source\view\WxDropTarget.cpp" />
     <ClCompile Include="..\..\..\source\view\WxEditPanel.cpp" />

@@ -1,10 +1,12 @@
-#include "ee0/WxCompEditorPanel.h"
+#include "ee0/WxCompFlagPanel.h"
 #include "ee0/SubjectMgr.h"
 #include "ee0/MessageID.h"
-#include "ee0/CompNodeEditor.h"
 
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
+#include <node0/CompFlags.h>
+#include <node0/NodeFlags.h>
+#include <node0/NodeFlagsHelper.h>
 #else
 #include <entity0/World.h>
 #endif // GAME_OBJ_ECS
@@ -17,8 +19,8 @@
 namespace ee0
 {
 
-WxCompEditorPanel::WxCompEditorPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr,
-	                                       ECS_WORLD_PARAM const GameObj& obj)
+WxCompFlagPanel::WxCompFlagPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr,
+	                             ECS_WORLD_PARAM const GameObj& obj)
 	: WxCompPanel(parent, "NodeEditor")
 	, m_sub_mgr(sub_mgr)
 	ECS_WORLD_SELF_ASSIGN
@@ -28,12 +30,17 @@ WxCompEditorPanel::WxCompEditorPanel(wxWindow* parent, const SubjectMgrPtr& sub_
 	Expand();
 }
 
-void WxCompEditorPanel::RefreshNodeComp()
+void WxCompFlagPanel::RefreshNodeComp()
 {
 #ifndef GAME_OBJ_ECS
-	auto& ceditor = m_obj->GetUniqueComp<CompNodeEditor>();
-	m_visible->SetValue(ceditor.IsVisible());
-	m_editable->SetValue(ceditor.IsEditable());
+	if (m_obj->HasUniqueComp<n0::CompFlags>()) {
+		auto& cflags = m_obj->GetUniqueComp<n0::CompFlags>();
+		m_visible->SetValue(!cflags.GetFlag<n0::NodeNotVisible>());
+		m_editable->SetValue(!cflags.GetFlag<n0::NodeNotEditable>());
+	} else {
+		m_visible->SetValue(true);
+		m_editable->SetValue(true);
+	}
 #else
 	auto& cid = m_world.GetComponent<ee0::CompEntityEditor>(m_obj);
 
@@ -46,7 +53,7 @@ void WxCompEditorPanel::RefreshNodeComp()
 #endif // GAME_OBJ_ECS
 }
 
-void WxCompEditorPanel::InitLayout()
+void WxCompFlagPanel::InitLayout()
 {
 	wxWindow* win = GetPane();
 	wxSizer* pane_sizer = new wxBoxSizer(wxVERTICAL);
@@ -54,34 +61,33 @@ void WxCompEditorPanel::InitLayout()
 	// visible, editable
 	{
 #ifndef GAME_OBJ_ECS
-		auto& ceditor = m_obj->GetUniqueComp<CompNodeEditor>();
+		bool visible = true;
+		bool editable = true;
+		if (m_obj->HasUniqueComp<n0::CompFlags>())
+		{
+			auto& cflags = m_obj->GetUniqueComp<n0::CompFlags>();
+			visible = !cflags.GetFlag<n0::NodeNotVisible>();
+			editable = !cflags.GetFlag<n0::NodeNotEditable>();
+		}
 #else
 		auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(m_obj);
+		bool visible = ceditor.visible;
+		bool editable = ceditor.editable;
 #endif // GAME_OBJ_ECS
 
 		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		{
 			sizer->Add(m_visible = new wxCheckBox(win, wxID_ANY, "visible"));
-#ifndef GAME_OBJ_ECS
-			auto visible = ceditor.IsVisible();
-#else
-			auto visible = ceditor.visible;
-#endif // GAME_OBJ_ECS
 			m_visible->SetValue(visible);
 			Connect(m_visible->GetId(), wxEVT_COMMAND_CHECKBOX_CLICKED,
-				wxCommandEventHandler(WxCompEditorPanel::UpdateVisibleValue));
+				wxCommandEventHandler(WxCompFlagPanel::UpdateVisibleValue));
 		}
 		pane_sizer->AddSpacer(10);
 		{
 			sizer->Add(m_editable = new wxCheckBox(win, wxID_ANY, "editable"));
-#ifndef GAME_OBJ_ECS
-			auto editable = ceditor.IsEditable();
-#else
-			auto editable = ceditor.editable;
-#endif // GAME_OBJ_ECS
 			m_editable->SetValue(editable);
 			Connect(m_editable->GetId(), wxEVT_COMMAND_CHECKBOX_CLICKED,
-				wxCommandEventHandler(WxCompEditorPanel::UpdateEditableValue));
+				wxCommandEventHandler(WxCompFlagPanel::UpdateEditableValue));
 		}
 		pane_sizer->Add(sizer);
 	}
@@ -90,22 +96,20 @@ void WxCompEditorPanel::InitLayout()
 	pane_sizer->SetSizeHints(win);
 }
 
-void WxCompEditorPanel::UpdateVisibleValue(wxCommandEvent& event)
+void WxCompFlagPanel::UpdateVisibleValue(wxCommandEvent& event)
 {
 #ifndef GAME_OBJ_ECS
-	auto& ceditor = m_obj->GetUniqueComp<CompNodeEditor>();
-	ceditor.SetVisible(event.IsChecked());
+	n0::NodeFlagsHelper::SetFlag<n0::NodeNotVisible>(*m_obj, !event.IsChecked());
 #else
 	auto& cid = m_world.GetComponent<ee0::CompEntityEditor>(m_obj);
 	cid.visible = event.IsChecked();
 #endif // GAME_OBJ_ECS
 }
 
-void WxCompEditorPanel::UpdateEditableValue(wxCommandEvent& event)
+void WxCompFlagPanel::UpdateEditableValue(wxCommandEvent& event)
 {
 #ifndef GAME_OBJ_ECS
-	auto& ceditor = m_obj->GetUniqueComp<CompNodeEditor>();
-	ceditor.SetEditable(event.IsChecked());
+	n0::NodeFlagsHelper::SetFlag<n0::NodeNotEditable>(*m_obj, !event.IsChecked());
 #else
 	auto& cid = m_world.GetComponent<ee0::CompEntityEditor>(m_obj);
 	cid.editable = event.IsChecked();

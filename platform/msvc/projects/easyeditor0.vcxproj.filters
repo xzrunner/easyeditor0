@@ -103,9 +103,6 @@
     <ClInclude Include="..\..\..\include\ee0\EditOP.h">
       <Filter>edit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\CompNodeEditor.h">
-      <Filter>data\comp</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxBitmap.h">
       <Filter>data</Filter>
     </ClInclude>
@@ -250,7 +247,7 @@
     <ClInclude Include="..\..\..\include\ee0\WxCompIdPanel.h">
       <Filter>view\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\WxCompEditorPanel.h">
+    <ClInclude Include="..\..\..\include\ee0\WxCompFlagPanel.h">
       <Filter>view\detail</Filter>
     </ClInclude>
   </ItemGroup>
@@ -269,9 +266,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp">
       <Filter>edit</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\data\CompNodeEditor.cpp">
-      <Filter>data\comp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp">
       <Filter>data</Filter>
@@ -372,7 +366,7 @@
     <ClCompile Include="..\..\..\source\view\WxCompIdPanel.cpp">
       <Filter>view\detail</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\view\WxCompEditorPanel.cpp">
+    <ClCompile Include="..\..\..\source\view\WxCompFlagPanel.cpp">
       <Filter>view\detail</Filter>
     </ClCompile>
   </ItemGroup>
