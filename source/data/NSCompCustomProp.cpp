@@ -1,5 +1,7 @@
 #include "ee0/NSCompCustomProp.h"
 
+#include <bs/ExportStream.h>
+#include <bs/ImportStream.h>
 #include <SM_Vector.h>
 #include <painting2/Color.h>
 #include <guard/check.h>
@@ -9,15 +11,146 @@ namespace ee0
 
 size_t NSCompCustomProp::GetBinSize(const std::string& dir) const
 {
-	return 0;
+	size_t sz = 0;
+
+	sz += sizeof(uint8_t);		// num
+	for (auto& prop : m_props)
+	{
+		sz += sizeof(uint8_t);		// type
+
+		sz += bs::pack_size_str(prop.key.c_str());
+
+		switch (prop.type)
+		{
+		case ee0::CompCustomProp::PROP_BOOL:
+			sz += sizeof(uint8_t);
+			break;
+		case ee0::CompCustomProp::PROP_INT:
+			sz += sizeof(uint32_t);
+			break;
+		case ee0::CompCustomProp::PROP_FLOAT:
+			sz += sizeof(uint32_t);
+			break;
+		case ee0::CompCustomProp::PROP_STRING:
+			sz += bs::pack_size_str(prop.val.m_val.pc);
+			break;
+		case ee0::CompCustomProp::PROP_VEC2:
+			sz += sizeof(uint32_t) * 2;
+			break;
+		case ee0::CompCustomProp::PROP_COLOR:
+			sz += sizeof(uint32_t);
+			break;
+		}
+	}
+
+	return sz;
 }
 
 void NSCompCustomProp::StoreToBin(const std::string& dir, bs::ExportStream& es) const
 {
+	GD_ASSERT(m_props.size() < std::numeric_limits<uint8_t>::max(), "overflow");
+	es.Write(static_cast<uint8_t>(m_props.size()));
+	for (auto& prop : m_props)
+	{
+		es.Write(static_cast<uint8_t>(prop.type));
+
+		es.Write(prop.key);
+
+		switch (prop.type)
+		{
+		case ee0::CompCustomProp::PROP_BOOL:
+			es.Write(static_cast<uint8_t>(prop.val.m_val.bl));
+			break;
+		case ee0::CompCustomProp::PROP_INT:
+			es.Write(static_cast<uint32_t>(prop.val.m_val.l));
+			break;
+		case ee0::CompCustomProp::PROP_FLOAT:
+			es.Write(static_cast<uint32_t>(prop.val.m_val.flt));
+			break;
+		case ee0::CompCustomProp::PROP_STRING:
+			es.Write(prop.val.m_val.pc);
+			break;
+		case ee0::CompCustomProp::PROP_VEC2:
+			{
+				auto& vec2 = *static_cast<sm::vec2*>(prop.val.m_val.pv);
+				es.Write(static_cast<uint32_t>(vec2.x));
+				es.Write(static_cast<uint32_t>(vec2.y));
+			}
+			break;
+		case ee0::CompCustomProp::PROP_COLOR:
+			{
+				auto& col = *static_cast<pt2::Color*>(prop.val.m_val.pv);
+				es.Write(static_cast<uint32_t>(col.ToRGBA()));
+			}
+			break;
+		}
+	}
 }
 
-void NSCompCustomProp::LoadFromBin(mm::LinearAllocator& alloc, const std::string& dir, bs::ImportStream& is)
+void NSCompCustomProp::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 {
+	size_t num = is.UInt8();
+	m_props.resize(num);
+	for (size_t i = 0; i < num; ++i)
+	{
+		auto& prop = m_props[i];
+
+		prop.key = is.String();
+
+		prop.type = static_cast<ee0::CompCustomProp::PropertyType>(is.UInt8());
+		switch (prop.type)
+		{
+		case ee0::CompCustomProp::PROP_BOOL:
+			prop.type = ee0::CompCustomProp::PROP_BOOL;
+			prop.val.m_type = ee0::VT_BOOL;
+			prop.val.m_val.bl = is.UInt8();
+			break;
+		case ee0::CompCustomProp::PROP_INT:
+			prop.type = ee0::CompCustomProp::PROP_INT;
+			prop.val.m_type = ee0::VT_LONG;
+			prop.val.m_val.l = is.UInt32();
+			break;
+		case ee0::CompCustomProp::PROP_FLOAT:
+			prop.type = ee0::CompCustomProp::PROP_FLOAT;
+			prop.val.m_type = ee0::VT_FLOAT;
+			prop.val.m_val.flt = is.Float();
+			break;
+		case ee0::CompCustomProp::PROP_STRING:
+			{
+				prop.type = ee0::CompCustomProp::PROP_STRING;
+				prop.val.m_type = ee0::VT_PCHAR;
+
+				auto str = is.String();
+				char* tmp = new char[str.size() + 1];
+				strcpy(tmp, str.c_str());
+				tmp[str.size()] = '\0';
+				prop.val.m_val.pc = tmp;
+			}
+			break;
+		case ee0::CompCustomProp::PROP_VEC2:
+			{
+				prop.type = ee0::CompCustomProp::PROP_VEC2;
+				prop.val.m_type = ee0::VT_PVOID;
+
+				auto x = is.Float();
+				auto y = is.Float();
+				auto tmp = new sm::vec2(x, y);
+				prop.val.m_val.pv = tmp;
+			}
+			break;
+		case ee0::CompCustomProp::PROP_COLOR:
+			{
+				prop.type = ee0::CompCustomProp::PROP_COLOR;
+				prop.val.m_type = ee0::VT_PVOID;
+
+				uint32_t rgba = is.UInt32();
+				auto tmp = new pt2::Color();
+				tmp->FromRGBA(rgba);
+				prop.val.m_val.pv = tmp;
+			}
+			break;
+		}
+	}
 }
 
 void NSCompCustomProp::StoreToJson(const std::string& dir, rapidjson::Value& val, rapidjson::MemoryPoolAllocator<>& alloc) const

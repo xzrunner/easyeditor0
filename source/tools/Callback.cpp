@@ -9,6 +9,7 @@ namespace ee0
 
 void Callback::RegisterCallback()
 {
+	ns::CompSerializer::Instance()->AddExtTypeToIndex(CompCustomProp::TYPE_NAME, ns::CompSerializer::COMP_MAX);
 	ns::RegistCallback::AddUniqueCB<CompCustomProp, NSCompCustomProp>();
 }
 
