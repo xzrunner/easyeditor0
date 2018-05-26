@@ -12,7 +12,7 @@ CompCustomProp::CompCustomProp()
 {
 }
 
-std::unique_ptr<n0::NodeUniqueComp> CompCustomProp::Clone(const n0::SceneNode& obj) const
+std::unique_ptr<n0::NodeComp> CompCustomProp::Clone(const n0::SceneNode& obj) const
 {
 	auto comp = std::make_unique<CompCustomProp>();
 	comp->m_props = m_props;

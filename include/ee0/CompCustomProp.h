@@ -2,7 +2,7 @@
 
 #include "ee0/Variant.h"
 
-#include <node0/NodeUniqueComp.h>
+#include <node0/NodeComp.h>
 
 #include <string>
 #include <vector>
@@ -10,7 +10,7 @@
 namespace ee0
 {
 
-class CompCustomProp : public n0::NodeUniqueComp
+class CompCustomProp : public n0::NodeComp
 {
 public:
 	enum PropertyType
@@ -34,10 +34,10 @@ public:
 	CompCustomProp();
 
 	virtual const char* Type() const override { return TYPE_NAME; }
-	virtual n0::UniqueCompID TypeID() const override {
-		return n0::GetUniqueCompTypeID<CompCustomProp>();
+	virtual n0::CompID TypeID() const override {
+		return n0::GetCompTypeID<CompCustomProp>();
 	}
-	virtual std::unique_ptr<n0::NodeUniqueComp> Clone(const n0::SceneNode& obj) const override;
+	virtual std::unique_ptr<n0::NodeComp> Clone(const n0::SceneNode& obj) const override;
 
 	void Add(const Property& prop);
 	void Remove(const std::string& name);
