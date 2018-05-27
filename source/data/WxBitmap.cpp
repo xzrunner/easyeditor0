@@ -5,7 +5,7 @@
 #include <gimg_import.h>
 #include <pimg/Condense.h>
 #include <pimg/Rect.h>
-#include <ns/NodeFactory.h>
+#include <ns/CompFactory.h>
 #include <node0/CompAsset.h>
 #include <node2/RenderSystem.h>
 #include <painting2/DrawRT.h>
@@ -127,7 +127,7 @@ void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 
 bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
 {
-	auto casset = ns::NodeFactory::CreateAssetComp(filepath);
+	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
 	if (!casset) {
 		return false;
 	}

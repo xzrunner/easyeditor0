@@ -3,13 +3,14 @@
 #include "ee0/NSCompCustomProp.h"
 
 #include <ns/RegistCallback.h>
+#include <ns/CompIdxMgr.h>
 
 namespace ee0
 {
 
 void Callback::RegisterCallback()
 {
-	ns::CompSerializer::Instance()->AddExtTypeToIndex(CompCustomProp::TYPE_NAME, ns::CompSerializer::COMP_MAX);
+	ns::CompIdxMgr::Instance()->AddExtTypeToIdx(CompCustomProp::TYPE_NAME, ns::CompIdx::COMP_MAX);
 	ns::RegistCallback::AddUniqueCB<CompCustomProp, NSCompCustomProp>();
 }
 
