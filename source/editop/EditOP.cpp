@@ -120,6 +120,15 @@ bool EditOP::OnDraw() const
 	}
 }
 
+bool EditOP::Update(float dt)
+{
+	if (m_prev_op && m_prev_op->Update(dt)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 bool EditOP::Clear()
 {
 	if (m_prev_op && m_prev_op->Clear()) {

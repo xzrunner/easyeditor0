@@ -2,6 +2,7 @@
 #include "ee0/EditPanelImpl.h"
 #include "ee0/RenderContext.h"
 #include "ee0/WindowContext.h"
+#include "ee0/EditOP.h"
 
 #include <guard/check.h>
 #include <unirender/RenderContext.h>
@@ -226,6 +227,10 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 	facade::DTex::Instance()->Flush();
 
 	facade::Facade::Update(dt);
+
+	if (auto& op = m_stage.GetEditOP()) {
+		op->Update(dt);
+	}
 
 	if (OnUpdate()) {
 		m_dirty = true;

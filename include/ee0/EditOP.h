@@ -26,6 +26,7 @@ public:
 	virtual bool OnPopMenuSelected(int type);
 
 	virtual bool OnDraw() const;
+	virtual bool Update(float dt);
 	virtual bool Clear();
 
 	void SetPrevEditOP(const std::shared_ptr<EditOP>& op) { m_prev_op = op; }
