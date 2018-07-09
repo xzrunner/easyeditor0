@@ -18,7 +18,7 @@ class WxStageCanvas : public wxGLCanvas
 public:
 	static const uint32_t HAS_2D            = 0x00000001;
 	static const uint32_t HAS_3D            = 0x00000002;
-	
+
 public:
 	WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 		const RenderContext* rc = nullptr, const WindowContext* wc = nullptr,
@@ -80,6 +80,7 @@ private:
 	WindowContext m_wc;
 
 	wxTimer m_timer;
+	clock_t m_last_time;
 
 	bool m_dirty;
 

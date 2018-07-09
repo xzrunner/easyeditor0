@@ -47,13 +47,14 @@ static const int GL_ATTRIB[20] = {WX_GL_RGBA, WX_GL_MIN_RED, 1, WX_GL_MIN_GREEN,
 static const float FPS = 30;
 
 WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
-	                         const RenderContext* rc, 
+	                         const RenderContext* rc,
 	                         const WindowContext* wc,
 	                         uint32_t flag)
 	: wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB, wxDefaultPosition, wxDefaultSize, wxWANTS_CHARS)
 	, m_flag(flag)
 	, m_stage(stage)
 	, m_timer(this)
+	, m_last_time(0)
 	, m_dirty(false)
 {
 	InitRender(rc);
@@ -70,7 +71,7 @@ WxStageCanvas::~WxStageCanvas()
 
 	SetCurrentCanvas();
 
-	//if (m_flag & HAS_2D) 
+	//if (m_flag & HAS_2D)
 	//{
 	//	auto& wc_mgr = pt2::Blackboard::Instance()->GetWndCtxMgr();
 	//	wc_mgr.Pop();
@@ -144,7 +145,7 @@ void WxStageCanvas::OnSize(wxSizeEvent& event)
 	wxSize size = event.GetSize();
 	int w = size.GetWidth();
 	int h = size.GetHeight();
-	if (w != 0 && h != 0) 
+	if (w != 0 && h != 0)
 	{
 		SetCurrentCanvas();
 		OnSize(w, h);
@@ -154,7 +155,7 @@ void WxStageCanvas::OnSize(wxSizeEvent& event)
 
 void WxStageCanvas::OnPaint(wxPaintEvent& event)
 {
-	// Makes the OpenGL state that is represented by the OpenGL rendering 
+	// Makes the OpenGL state that is represented by the OpenGL rendering
 	// context context current
 	SetCurrentCanvas();
 
@@ -180,7 +181,7 @@ void WxStageCanvas::OnMouse(wxMouseEvent& event)
 
 	OnMouseImpl(event);
 
-	// The handler of this event should normally call event.Skip() to allow the default processing 
+	// The handler of this event should normally call event.Skip() to allow the default processing
 	// to take place as otherwise the window under mouse wouldn't get the focus.
 	if (event.LeftDown()) {
 		event.Skip();
@@ -218,11 +219,10 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 
 	float dt = 0.166f;
 	clock_t curr_time = clock();
-	static clock_t last_time = 0;
-	if (last_time != 0) {
-		dt = (float)(curr_time - last_time) / CLOCKS_PER_SEC;
+	if (m_last_time != 0) {
+		dt = (float)(curr_time - m_last_time) / CLOCKS_PER_SEC;
 	}
-	last_time = curr_time;
+	m_last_time = curr_time;
 
 	facade::DTex::Instance()->Flush();
 
