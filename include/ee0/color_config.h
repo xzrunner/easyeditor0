@@ -21,7 +21,7 @@ static pt2::Color BLACK				(0, 0, 0, 255);
 static pt2::Color WHITE				(255, 255, 255, 255);
 static pt2::Color RED				(255, 0, 0, 255);
 static pt2::Color GREEN				(0, 255, 0, 255);
-static pt2::Color BLUE				(255, 0, 255, 255);
+static pt2::Color BLUE				(0, 0, 255, 255);
 
 static pt2::Color SELECT_RED		(191, 0, 0, 255);
 
