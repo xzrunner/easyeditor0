@@ -41,12 +41,16 @@ void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 	int key_code = event.GetKeyCode();
 	m_keys_state.OnKeyDown(key_code);
 
-	if (GetKeyState(WXK_CONTROL) && key_code == 'Z') 
+	if (m_on_key_down_func) {
+		m_on_key_down_func(key_code);
+	}
+
+	if (GetKeyState(WXK_CONTROL) && key_code == 'Z')
 	{
 		m_sub_mgr->NotifyObservers(ee0::MSG_EDIT_OP_UNDO);
-	} 
-	else if (GetKeyState(WXK_CONTROL) && key_code == 'Y' 
-		  || GetKeyState(WXK_CONTROL) && GetKeyState(WXK_SHIFT) && key_code == 'Y') 
+	}
+	else if (GetKeyState(WXK_CONTROL) && key_code == 'Y'
+		  || GetKeyState(WXK_CONTROL) && GetKeyState(WXK_SHIFT) && key_code == 'Y')
 	{
 		m_sub_mgr->NotifyObservers(ee0::MSG_EDIT_OP_REDO);
 	}

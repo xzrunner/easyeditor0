@@ -41,6 +41,10 @@ public:
 
 	void OnSize(wxSizeEvent& event);
 
+	void SetOnKeyDownFunc(std::function<void(int)> func) {
+		m_on_key_down_func = func;
+	}
+
 private:
 	SubjectMgrPtr m_sub_mgr;
 
@@ -51,6 +55,8 @@ private:
 	KeysState m_keys_state;
 
 	RightPopupMenu m_popup;
+
+	std::function<void(int)> m_on_key_down_func = nullptr;
 
 }; // EditPanelImpl
 
