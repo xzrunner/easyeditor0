@@ -14,6 +14,17 @@ EditPanelImpl::EditPanelImpl(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 {
 }
 
+void EditPanelImpl::SetEditOP(const std::shared_ptr<EditOP>& op)
+{
+	if (m_edit_op == op) {
+		return;
+	}
+
+	m_edit_op = op;
+
+	m_edit_op->OnActive();
+}
+
 void EditPanelImpl::OnMouse(wxMouseEvent& event)
 {
 	if (!m_edit_op) return;

@@ -111,6 +111,15 @@ bool EditOP::OnPopMenuSelected(int type)
 	}
 }
 
+bool EditOP::OnActive()
+{
+	if (m_prev_op && m_prev_op->OnActive()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 bool EditOP::OnDraw() const
 {
 	if (m_prev_op && m_prev_op->OnDraw()) {

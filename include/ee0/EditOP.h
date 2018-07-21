@@ -25,6 +25,7 @@ public:
 
 	virtual bool OnPopMenuSelected(int type);
 
+	virtual bool OnActive();
 	virtual bool OnDraw() const;
 	virtual bool Update(float dt);
 	virtual bool Clear();

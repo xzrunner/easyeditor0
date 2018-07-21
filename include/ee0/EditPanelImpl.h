@@ -21,7 +21,7 @@ public:
 
 	const std::shared_ptr<EditOP>& GetEditOP() const { return m_edit_op; }
 	std::shared_ptr<EditOP>& GetEditOP() { return m_edit_op; }
-	void SetEditOP(const std::shared_ptr<EditOP>& op) { m_edit_op = op; }
+	void SetEditOP(const std::shared_ptr<EditOP>& op);
 
 	const std::shared_ptr<WxStageCanvas>& GetCanvas() const { return m_canvas; }
 	std::shared_ptr<WxStageCanvas>& GetCanvas() { return m_canvas; }
