@@ -7,7 +7,7 @@ class EditOpState
 {
 public:
 	virtual ~EditOpState() {}
-	
+
 	virtual void Bind() {}
 	virtual void UnBind() {}
 
@@ -20,6 +20,7 @@ public:
 
 	virtual bool OnMouseWheelRotation(int x, int y, int direction) { return false; }
 
+	virtual bool OnActive() { return false; };
 	virtual bool OnDraw() const { return false; };
 	virtual bool Clear() { return false; }
 
