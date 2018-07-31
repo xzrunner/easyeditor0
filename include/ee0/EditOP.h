@@ -30,7 +30,10 @@ public:
 	virtual bool Update(float dt);
 	virtual bool Clear();
 
-	void SetPrevEditOP(const std::shared_ptr<EditOP>& op) { m_prev_op = op; }
+	auto& SetPrevEditOP(const std::shared_ptr<EditOP>& op) {
+		m_prev_op = op;
+		return op;
+	}
 
 private:
 	std::shared_ptr<EditOP> m_prev_op = nullptr;
