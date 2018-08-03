@@ -147,4 +147,40 @@ bool EditOP::Clear()
 	}
 }
 
+void EditOP::SetCamera(const std::shared_ptr<pt0::Camera>& camera)
+{
+	if (m_camera == camera) {
+		return;
+	}
+
+	m_camera = camera;
+
+	auto prev = m_prev_op;
+	while (prev) {
+		prev->SetCamera(camera);
+		prev = prev->m_prev_op;
+	}
+
+	if (m_op_state) {
+		m_op_state->SetCamera(camera);
+	}
+}
+
+void EditOP::ChangeEditOpState(const std::shared_ptr<EditOpState>& state)
+{
+	if (m_op_state == state) {
+		return;
+	}
+
+	if (m_op_state) {
+		m_op_state->UnBind();
+	}
+	m_op_state = state;
+	if (m_op_state) {
+		m_op_state->Bind();
+	}
+
+	m_op_state->SetCamera(m_camera);
+}
+
 }

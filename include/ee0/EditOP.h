@@ -1,13 +1,21 @@
 #pragma once
 
+#include "ee0/EditOpState.h"
+
 #include <memory>
 
 namespace ee0
 {
 
+class EditOpState;
+
 class EditOP
 {
 public:
+	EditOP(const std::shared_ptr<pt0::Camera>& camera)
+		: m_camera(camera) 
+	{
+	}
 	virtual ~EditOP() {}
 
 	virtual bool OnKeyDown(int key_code);
@@ -30,10 +38,20 @@ public:
 	virtual bool Update(float dt);
 	virtual bool Clear();
 
+	virtual void SetCamera(const std::shared_ptr<pt0::Camera>& camera);
+
 	auto& SetPrevEditOP(const std::shared_ptr<EditOP>& op) {
 		m_prev_op = op;
 		return op;
 	}
+
+protected:
+	void ChangeEditOpState(const std::shared_ptr<EditOpState>& state);
+
+protected:
+	std::shared_ptr<pt0::Camera> m_camera = nullptr;
+
+	std::shared_ptr<EditOpState> m_op_state = nullptr;
 
 private:
 	std::shared_ptr<EditOP> m_prev_op = nullptr;

@@ -47,10 +47,12 @@ static const int GL_ATTRIB[20] = {WX_GL_RGBA, WX_GL_MIN_RED, 1, WX_GL_MIN_GREEN,
 static const float FPS = 30;
 
 WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
+	                         const pt0::CameraPtr& camera,
 	                         const RenderContext* rc,
 	                         const WindowContext* wc,
 	                         uint32_t flag)
 	: wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB, wxDefaultPosition, wxDefaultSize, wxWANTS_CHARS)
+	, m_camera(camera)
 	, m_flag(flag)
 	, m_stage(stage)
 	, m_timer(this)

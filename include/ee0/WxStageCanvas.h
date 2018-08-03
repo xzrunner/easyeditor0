@@ -3,6 +3,8 @@
 #include "ee0/RenderContext.h"
 #include "ee0/WindowContext.h"
 
+#include <painting0/Camera.h>
+
 #include <wx/glcanvas.h>
 #include <wx/timer.h>
 
@@ -20,13 +22,17 @@ public:
 	static const uint32_t HAS_3D            = 0x00000002;
 
 public:
-	WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
+	WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage, const pt0::CameraPtr& camera,
 		const RenderContext* rc = nullptr, const WindowContext* wc = nullptr,
 		uint32_t flag = HAS_2D);
 	virtual ~WxStageCanvas();
 
 	const RenderContext& GetRenderContext() const { return m_rc; }
 	const WindowContext& GetWidnowContext() const { return m_wc; }
+
+	pt0::CameraPtr& GetCamera() { return m_camera; }
+	const pt0::CameraPtr& GetCamera() const { return m_camera; }
+	void SetCamera(const pt0::CameraPtr& camera) { m_camera = camera; }
 
 	void SetDirty() { m_dirty = true; }
 
@@ -68,6 +74,9 @@ private:
 	void InitWindow(const WindowContext* wc);
 
 	void BindRenderContext();
+
+protected:
+	pt0::CameraPtr m_camera = nullptr;
 
 private:
 	uint32_t m_flag;

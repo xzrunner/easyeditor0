@@ -1,11 +1,17 @@
 #pragma once
 
+#include <memory>
+
+namespace pt0 { class Camera; }
+
 namespace ee0
 {
 
 class EditOpState
 {
 public:
+	EditOpState(const std::shared_ptr<pt0::Camera>& camera)
+		: m_camera(camera) {}
 	virtual ~EditOpState() {}
 
 	virtual void Bind() {}
@@ -23,6 +29,13 @@ public:
 	virtual bool OnActive() { return false; };
 	virtual bool OnDraw() const { return false; };
 	virtual bool Clear() { return false; }
+
+	void SetCamera(const std::shared_ptr<pt0::Camera>& camera) {
+		m_camera = camera;
+	}
+
+protected:
+	std::shared_ptr<pt0::Camera> m_camera = nullptr;
 
 }; // EditOpState
 

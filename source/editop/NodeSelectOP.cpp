@@ -9,8 +9,10 @@
 namespace ee0
 {
 
-NodeSelectOP::NodeSelectOP(WxStagePage& stage)
-	: m_stage(stage)
+NodeSelectOP::NodeSelectOP(const std::shared_ptr<pt0::Camera>& cam, 
+	                       WxStagePage& stage)
+	: EditOP(cam)
+	, m_stage(stage)
 {
 	m_last_pos.MakeInvalid();
 }
