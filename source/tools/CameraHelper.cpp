@@ -7,9 +7,9 @@
 namespace ee0
 {
 
-sm::vec2 CameraHelper::TransPosScreenToProject(const pt2::Camera& cam, int screen_x, int screen_y)
+sm::vec2 CameraHelper::TransPosScreenToProject(const pt0::Camera& cam, int screen_x, int screen_y)
 {
-	if (cam.Type() != pt2::CAM_ORTHO2D) {
+	if (cam.TypeID() != pt0::GetCamTypeID<pt2::OrthoCamera>()) {
 		return sm::vec2(0, 0);
 	}
 
@@ -19,9 +19,9 @@ sm::vec2 CameraHelper::TransPosScreenToProject(const pt2::Camera& cam, int scree
 		screen_x, screen_y, wc->GetScreenWidth(), wc->GetScreenHeight());
 }
 
-sm::vec2 CameraHelper::TransPosProjectToScreen(const pt2::Camera& cam, const sm::vec2& project)
+sm::vec2 CameraHelper::TransPosProjectToScreen(const pt0::Camera& cam, const sm::vec2& project)
 {
-	if (cam.Type() != pt2::CAM_ORTHO2D) {
+	if (cam.TypeID() != pt0::GetCamTypeID<pt2::OrthoCamera>()) {
 		return sm::vec2(0, 0);
 	}
 
