@@ -17,6 +17,8 @@ public:
 	virtual void Bind() {}
 	virtual void UnBind() {}
 
+	virtual bool OnKeyPress(int key_code) { return false; }
+	virtual bool OnKeyRelease(int key_code) { return false; }
 	virtual bool OnMousePress(int x, int y) { return false; }
 	virtual bool OnMouseRelease(int x, int y) { return false; }
 	virtual bool OnMouseMove(int x, int y) { return false; }
