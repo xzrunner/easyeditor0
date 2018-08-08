@@ -147,7 +147,7 @@ bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
 
 	pt2::DrawRT rt;
 	rt.Draw<n0::CompAsset>(*casset, [](const n0::CompAsset& casset, const sm::Matrix2D& mt) {
-		n2::RenderSystem::Draw(casset, mt);
+		n2::RenderSystem::Instance()->Draw(casset, mt);
 	}, true, scale);
  	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
  	if (!rgba) {
