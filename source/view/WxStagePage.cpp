@@ -81,8 +81,7 @@ void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 
 void WxStagePage::RegisterMoonCallback()
 {
-	auto scene = moon::Blackboard::Instance()->GetContext()->GetModuleMgr().
-		GetModule<moon::SceneGraph>(moon::Module::M_SCENE_GRAPH);
+	auto scene = moon::Blackboard::Instance()->GetContext()->GetModuleMgr().GetModule<moon::SceneGraph>();
 
 	scene->SetTraverseAllNodesFunc([&](std::function<bool(const n0::SceneNodePtr&)> func) {
 		Traverse([&](const ee0::GameObj& obj)->bool {
