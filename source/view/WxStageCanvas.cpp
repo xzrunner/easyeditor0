@@ -228,7 +228,7 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 
 	facade::DTex::Instance()->Flush();
 
-	facade::Facade::Update(dt);
+	facade::Facade::Instance()->Update(dt);
 
 	if (auto& op = m_stage.GetEditOP()) {
 		op->Update(dt);
