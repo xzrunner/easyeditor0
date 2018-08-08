@@ -47,6 +47,9 @@ void RightPopupMenu::OnRightPopupMenu(int id)
 	auto L = moon::Blackboard::Instance()->GetContext()->GetState();
 	auto path = boost::filesystem::absolute(itr->second, CFG_DIR);
 	auto err = moon::ScriptHelper::DoFile(L, path.string().c_str());
+	if (err) {
+		printf("lua err: %s\n", err);
+	}
 }
 
 void RightPopupMenu::LoadMenu(wxMenu& parent, const rapidjson::Value& children)
