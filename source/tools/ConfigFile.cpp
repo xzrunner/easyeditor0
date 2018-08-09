@@ -11,9 +11,11 @@ namespace ee0
 
 CU_SINGLETON_DEFINITION(ConfigFile)
 
-static const char* FILENAME = "config.json";
+static const char* FILENAME = "assets/config.json";
 
 ConfigFile::ConfigFile()
+	: m_debug_draw(false)
+	, m_draw_stat(false)
 {
 	auto curr_path = boost::filesystem::current_path().string();
 	auto cfg_path = boost::filesystem::absolute(FILENAME, curr_path);
@@ -27,18 +29,28 @@ void ConfigFile::LoadFromFile(const std::string& filepath)
 	rapidjson::Document doc;
 	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
+	auto& dir = boost::filesystem::path(filepath).parent_path();
 	for (auto& val : doc["font"].GetArray()) 
 	{
 		std::string name = val["name"].GetString();
 		std::string filepath = val["filepath"].GetString();
-		m_fonts.push_back(std::make_pair(name, filepath));
+		auto full_path = boost::filesystem::absolute(filepath, dir);
+		m_fonts.push_back(std::make_pair(name, full_path.string()));
 	}
 
 	for (auto& val : doc["user_font"].GetArray())
 	{
 		std::string name = val["name"].GetString();
 		std::string filepath = val["filepath"].GetString();
-		m_user_fonts.push_back(std::make_pair(name, filepath));
+		auto full_path = boost::filesystem::absolute(filepath, dir);
+		m_user_fonts.push_back(std::make_pair(name, full_path.string()));
+	}
+
+	if (doc.HasMember("debug_draw")) {
+		m_debug_draw = doc["debug_draw"].GetBool();
+	}
+	if (doc.HasMember("draw_stat")) {
+		m_draw_stat = doc["draw_stat"].GetBool();
 	}
 }
 

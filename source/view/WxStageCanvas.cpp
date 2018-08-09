@@ -3,6 +3,7 @@
 #include "ee0/RenderContext.h"
 #include "ee0/WindowContext.h"
 #include "ee0/EditOP.h"
+#include "ee0/ConfigFile.h"
 
 #include <guard/check.h>
 #include <unirender/RenderContext.h>
@@ -139,7 +140,9 @@ void WxStageCanvas::OnDrawWhole() const
 
 	OnDrawSprites();
 
-	DebugDraw();
+	if (ConfigFile::Instance()->GetDebugDraw()) {
+		DebugDraw();
+	}
 }
 
 void WxStageCanvas::OnSize(wxSizeEvent& event)
