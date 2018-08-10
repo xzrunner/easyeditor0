@@ -52,6 +52,20 @@ bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj)
 	return sub_mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
 }
 
+bool MsgHelper::SendNodeMsg(SubjectMgr& sub_mgr, const GameObj& obj, MessageID msg)
+{
+	ee0::VariantSet vars;
+	ee0::Variant var;
+	var.m_type = ee0::VT_PVOID;
+#ifndef GAME_OBJ_ECS
+	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj);
+#else
+	var.m_val.pv = &const_cast<GameObj&>(obj);
+#endif // GAME_OBJ_ECS
+	vars.SetVariant("obj", var);
+	return sub_mgr.NotifyObservers(msg, vars);
+}
+
 void MsgHelper::InsertSelection(SubjectMgr& sub_mgr, const std::vector<GameObjWithPos>& objs)
 {
 	for (auto& obj : objs)
