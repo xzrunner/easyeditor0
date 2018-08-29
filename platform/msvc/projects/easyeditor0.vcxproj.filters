@@ -67,6 +67,9 @@
     <Filter Include="gui\spin">
       <UniqueIdentifier>{4c04afb7-19ad-4337-8996-35a0adbca5cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="view\canvas">
+      <UniqueIdentifier>{7d178635-1770-415e-b936-9f9557770069}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -181,9 +184,6 @@
     <ClInclude Include="..\..\..\include\ee0\EditRecord.h">
       <Filter>edit</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h">
-      <Filter>tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxSliderCtrl.h">
       <Filter>gui\slider</Filter>
     </ClInclude>
@@ -256,6 +256,9 @@
     <ClInclude Include="..\..\..\include\ee0\Callback.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxSimpleCanvas.h">
+      <Filter>view\canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -327,9 +330,6 @@
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp">
       <Filter>edit</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxSliderOneCtrl.cpp">
       <Filter>gui\slider</Filter>
     </ClCompile>
@@ -380,6 +380,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\Callback.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\WxSimpleCanvas.cpp">
+      <Filter>view\canvas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

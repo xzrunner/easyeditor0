@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ee0/SimpleGLCanvas.h"
+#include "ee0/WxSimpleCanvas.h"
 
 #include <painting2/GradientColor.h>
 
@@ -29,7 +29,7 @@ private:
 		void OnSize(wxSizeEvent& event);
 
 	private:
-		class Canvas : public SimpleGLCanvas
+		class Canvas : public WxSimpleCanvas
 		{
 		public:
 			Canvas(wxWindow* parent, pt2::GradientColor& col);

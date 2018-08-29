@@ -37,7 +37,6 @@
     <ClInclude Include="..\..\..\include\ee0\RightPopupMenu.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
     <ClInclude Include="..\..\..\include\ee0\SettingCfg.h" />
-    <ClInclude Include="..\..\..\include\ee0\SimpleGLCanvas.h" />
     <ClInclude Include="..\..\..\include\ee0\SliderItem.h" />
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h" />
     <ClInclude Include="..\..\..\include\ee0\WxCodeCtrl.h" />
@@ -58,6 +57,7 @@
     <ClInclude Include="..\..\..\include\ee0\NodeSelectOP.h" />
     <ClInclude Include="..\..\..\include\ee0\Observer.h" />
     <ClInclude Include="..\..\..\include\ee0\WxListSelectDlg.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxSimpleCanvas.h" />
     <ClInclude Include="..\..\..\include\ee0\WxSliderCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxSliderOneCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxSliderTwoCtrl.h" />
@@ -97,7 +97,6 @@
     <ClCompile Include="..\..\..\source\tools\ConfigFile.cpp" />
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp" />
     <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp" />
-    <ClCompile Include="..\..\..\source\tools\SimpleGLCanvas.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
     <ClCompile Include="..\..\..\source\view\RightPopupMenu.cpp" />
@@ -111,6 +110,7 @@
     <ClCompile Include="..\..\..\source\view\WxLibraryImagePage.cpp" />
     <ClCompile Include="..\..\..\source\view\WxLibraryItem.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompPanel.cpp" />
+    <ClCompile Include="..\..\..\source\view\WxSimpleCanvas.cpp" />
     <ClCompile Include="..\..\..\source\view\WxStagePage.cpp" />
     <ClCompile Include="..\..\..\source\view\WxImageVList.cpp" />
     <ClCompile Include="..\..\..\source\view\WxLibraryList.cpp" />

@@ -101,7 +101,7 @@ void WxColorGradientDlg::ColorPreview::OnSize(wxSizeEvent& event)
 
 WxColorGradientDlg::ColorPreview::Canvas::
 Canvas(wxWindow* parent, pt2::GradientColor& col)
-	: SimpleGLCanvas(parent)
+	: WxSimpleCanvas(parent)
 	, m_col(col)
 {
 }

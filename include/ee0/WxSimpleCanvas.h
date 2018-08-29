@@ -7,10 +7,10 @@
 namespace ee0
 {
 
-class SimpleGLCanvas : public wxGLCanvas
+class WxSimpleCanvas : public wxGLCanvas
 {
 public:
-	SimpleGLCanvas(wxWindow* parent);
+	WxSimpleCanvas(wxWindow* parent);
 
 protected:
 	virtual void OnDraw() const = 0;
@@ -24,6 +24,6 @@ private:
 
 	DECLARE_EVENT_TABLE()
 
-}; // SimpleGLCanvas
+}; // WxSimpleCanvas
 
 }
