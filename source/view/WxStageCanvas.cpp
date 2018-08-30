@@ -164,6 +164,8 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	// context context current
 	SetCurrentCanvas();
 
+	m_camera->Bind();
+
 	OnDrawWhole();
 	m_dirty = false;
 
