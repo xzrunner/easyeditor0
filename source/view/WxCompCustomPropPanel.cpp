@@ -4,7 +4,7 @@
 #include <SM_Vector.h>
 #include <node0/SceneNode.h>
 #include <painting2/Color.h>
-#include <sx/StringHelper.h>
+#include <cpputil/StringHelper.h>
 
 #include <wx/wx.h>
 #include <wx/propgrid/propgrid.h>
@@ -224,7 +224,7 @@ void WxCompCustomPropPanel::OnPropertyGridChange(wxPropertyGridEvent& event)
 				{
 					std::vector<std::string> tokens;
 					auto str = wxANY_AS(val, wxString).ToStdString();
-					sx::StringHelper::Split(str, ";", tokens);
+					cpputil::StringHelper::Split(str, ";", tokens);
 					GD_ASSERT(tokens.size() == 2, "err prop str");
 
 					auto pvec2 = static_cast<sm::vec2*>(prop.val.m_val.pv);

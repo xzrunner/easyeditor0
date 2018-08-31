@@ -4,7 +4,7 @@
 #include "ee0/GuiCallback.h"
 
 #include <guard/check.h>
-#include <sx/StringHelper.h>
+#include <cpputil/StringHelper.h>
 
 #include <wx/statbox.h>
 #include <wx/sizer.h>
@@ -86,8 +86,8 @@ void WxSliderTwoCtrl::LoadFromCB()
 		ival1 = (int)(fval1 / m_scale_slider2text);
 	m_item0.slider->SetValue(ival0);
 	m_item1.slider->SetValue(ival1);
-	m_item0.text->SetValue(sx::StringHelper::ToString(fval0));
-	m_item1.text->SetValue(sx::StringHelper::ToString(fval1));
+	m_item0.text->SetValue(cpputil::StringHelper::ToString(fval0));
+	m_item1.text->SetValue(cpputil::StringHelper::ToString(fval1));
 }
 
 void WxSliderTwoCtrl::StoreToCB()
@@ -101,8 +101,8 @@ void WxSliderTwoCtrl::OnSetValue(wxScrollEvent& event)
 		ival1 = m_item1.slider->GetValue();
 	float fval0 = ival0 * m_scale_slider2text,
 		  fval1 = ival1 * m_scale_slider2text;
-	m_item0.text->SetValue(sx::StringHelper::ToString(fval0));
-	m_item1.text->SetValue(sx::StringHelper::ToString(fval1));
+	m_item0.text->SetValue(cpputil::StringHelper::ToString(fval0));
+	m_item1.text->SetValue(cpputil::StringHelper::ToString(fval1));
 
 	VariantSet variants;
 
