@@ -70,6 +70,9 @@
     <Filter Include="view\canvas">
       <UniqueIdentifier>{7d178635-1770-415e-b936-9f9557770069}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gui\prop">
+      <UniqueIdentifier>{3f54c4ad-4e95-4a37-befd-baa79bbfce95}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -259,6 +262,9 @@
     <ClInclude Include="..\..\..\include\ee0\WxSimpleCanvas.h">
       <Filter>view\canvas</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxOpenFileProp.h">
+      <Filter>gui\prop</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -383,6 +389,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxSimpleCanvas.cpp">
       <Filter>view\canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxOpenFileProp.cpp">
+      <Filter>gui\prop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
