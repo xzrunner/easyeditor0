@@ -10,7 +10,7 @@ namespace ee0
 
 void Callback::RegisterCallback()
 {
-	ns::CompIdxMgr::Instance()->AddExtTypeToIdx(CompCustomProp::TYPE_NAME, ns::CompIdx::COMP_MAX);
+	ns::CompIdxMgr::Instance()->AddExtTypeToIdx(CompCustomProp::TYPE_NAME, ns::COMP_INVALID);
 	ns::RegistCallback::AddUniqueCB<CompCustomProp, NSCompCustomProp>();
 }
 
