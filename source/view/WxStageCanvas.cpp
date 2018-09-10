@@ -164,6 +164,11 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	// context context current
 	SetCurrentCanvas();
 
+	for (auto& task : m_tasks) {
+		task();
+	}
+	m_tasks.clear();
+
 	m_camera->Bind();
 
 	OnDrawWhole();
