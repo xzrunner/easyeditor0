@@ -63,7 +63,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	InitRender(rc);
 	InitWindow(wc);
 
-	Bind(wxEVT_TIMER, &WxStageCanvas::OnTimer, this, m_timer.GetId());
+	EnableInitiativeUpdate(true);
 
 	m_timer.Start(1000 / FPS);
 }
@@ -91,6 +91,15 @@ WxStageCanvas::~WxStageCanvas()
 	facade::Blackboard::Instance()->SetRenderContext(nullptr);
 	if (m_new_rc) {
 		m_rc.facade_rc->Unbind();
+	}
+}
+
+void WxStageCanvas::EnableInitiativeUpdate(bool enable)
+{
+	if (enable) {
+		Bind(wxEVT_TIMER, &WxStageCanvas::OnTimer, this, m_timer.GetId());
+	} else {
+		Unbind(wxEVT_TIMER, &WxStageCanvas::OnTimer, this, m_timer.GetId());
 	}
 }
 

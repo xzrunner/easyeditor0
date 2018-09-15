@@ -39,6 +39,8 @@ public:
 
 	void AddUpdateTask(std::function<void()> task) { m_tasks.push_back(task); }
 
+	void EnableInitiativeUpdate(bool enable);
+
 	static wxGLCanvas* CreateWxGLCanvas(wxWindow* wnd);
 	static void CreateRenderContext(RenderContext& rc, wxGLCanvas* canvas);
 	static void CreateWindowContext(WindowContext& wc, bool has2d, bool has3d);
