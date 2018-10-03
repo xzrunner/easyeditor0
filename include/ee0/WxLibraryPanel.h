@@ -17,6 +17,7 @@ public:
 	WxLibraryPanel(wxWindow* parent);
 
 	void AddPage(WxLibraryPage* page, const char* name = nullptr);
+	void ClearPages();
 
 	wxWindow* GetNotebook() { return m_notebook; }
 

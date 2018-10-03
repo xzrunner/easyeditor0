@@ -25,6 +25,13 @@ void WxLibraryPanel::AddPage(WxLibraryPage* page, const char* name)
 	m_pages.push_back(page);
 }
 
+void WxLibraryPanel::ClearPages()
+{
+	m_pages.clear();
+	m_selected = nullptr;
+	m_notebook->DeleteAllPages();
+}
+
 std::shared_ptr<WxLibraryItem> WxLibraryPanel::GetItem(int idx) const
 {
 	if (m_selected) {
@@ -39,9 +46,9 @@ void WxLibraryPanel::InitLayout()
 	wxBoxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
 	m_notebook = new wxNotebook(this, wxID_ANY);
-	Connect(m_notebook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED, 
+	Connect(m_notebook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED,
 		wxBookCtrlEventHandler(WxLibraryPanel::OnPageChanged));
-	Connect(m_notebook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING, 
+	Connect(m_notebook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING,
 		wxBookCtrlEventHandler(WxLibraryPanel::OnPageChanging));
 
 	sizer->Add(m_notebook, 1, wxEXPAND);
