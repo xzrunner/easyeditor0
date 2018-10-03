@@ -24,7 +24,7 @@ BEGIN_EVENT_TABLE(WxImageVList, wxVListBox)
 	EVT_MOUSE_EVENTS(WxImageVList::OnMouseWrap)
 END_EVENT_TABLE()
 
-WxImageVList::WxImageVList(wxWindow* parent, 
+WxImageVList::WxImageVList(wxWindow* parent,
 									 const std::string& name,
 									 bool draggable /*= true*/,
 									 bool compact/* = false*/,
@@ -110,7 +110,7 @@ void WxImageVList::Traverse(std::function<bool(const WxLibraryItem&)> func) cons
 
 std::shared_ptr<WxLibraryItem> WxImageVList::GetItemByIndex(int idx)
 {
-	if (idx >= 0 && idx < m_items.size()) {
+	if (idx >= 0 && idx < static_cast<int>(m_items.size())) {
 		return m_items[idx];
 	} else {
 		return nullptr;
@@ -154,8 +154,8 @@ void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 		is_selected = n == GetSelection();
 	}
 
-	auto name = boost::filesystem::path(item->GetFilepath()).filename().string();
-	if (m_compact) 
+	auto& name = item->GetName();
+	if (m_compact)
 	{
 		// bmp
 		if (auto& bmp = item->GetBitmap()) {
@@ -172,8 +172,8 @@ void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 		int x = rect.x + COMPACT_SPACE_LEFT + COMPACT_HEIGHT * 2;
 		int y = rect.y + COMPACT_SPACE_UP;
 		dc.DrawText(name.c_str(), x, y);
-	} 
-	else 
+	}
+	else
 	{
 		int y = rect.y + NORMAL_SPACE_UP;
 		if (auto bmp = item->GetBitmap()) {
@@ -252,7 +252,7 @@ void WxImageVList::OnMouseWrap(wxMouseEvent& event)
 {
 	OnMouse(event);
 
-	// The handler of this event should normally call event.Skip() to allow the default processing 
+	// The handler of this event should normally call event.Skip() to allow the default processing
 	// to take place as otherwise the window under mouse wouldn't get the focus.
 	if (event.LeftDown()) {
 		event.Skip();
