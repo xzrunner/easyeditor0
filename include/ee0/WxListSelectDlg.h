@@ -12,21 +12,19 @@ class WxListSelectDlg : public wxDialog
 {
 public:
 	WxListSelectDlg(wxWindow* parent, const std::string& title,
-		const std::vector<std::pair<uint32_t, std::string>>& list,
+		const std::vector<std::pair<std::string, wxTreeItemData*>>& list,
 		const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize);
 
-	uint32_t GetSelectedID() const;
+	wxTreeItemData* GetSelected() const;
 
 private:
-	void InitLayout(const std::vector<std::pair<uint32_t, std::string>>& list);
-	
+	void InitLayout(const std::vector<std::pair<std::string, wxTreeItemData*>>& list);
+
 	void OnSelChanged(wxTreeEvent& event);
 	void OnDoubleClick(wxTreeEvent& event);
 
 private:
 	wxTreeCtrl* m_tree;
-
-	std::map<std::string, uint32_t> m_name2id;
 
 }; // WxListSelectDlg
 

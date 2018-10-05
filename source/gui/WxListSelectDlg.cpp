@@ -9,26 +9,19 @@ namespace ee0
 {
 
 WxListSelectDlg::WxListSelectDlg(wxWindow* parent, const std::string& title,
-	                             const std::vector<std::pair<uint32_t, std::string>>& list,
+	                             const std::vector<std::pair<std::string, wxTreeItemData*>>& list,
 	                             const wxPoint& pos, const wxSize& size)
 	: wxDialog(parent, wxID_ANY, title, pos, size)
 {
 	InitLayout(list);
-
-	for (auto& item : list) {
-		m_name2id.insert(std::make_pair(item.second, item.first));
-	}
 }
 
-uint32_t WxListSelectDlg::GetSelectedID() const
+wxTreeItemData* WxListSelectDlg::GetSelected() const
 {
-	auto name = m_tree->GetItemText(m_tree->GetSelection()).ToStdString();
-	auto itr = m_name2id.find(name);
-	GD_ASSERT(itr != m_name2id.end(), "err name");
-	return itr->second;
+	return m_tree->GetItemData(m_tree->GetSelection());
 }
 
-void WxListSelectDlg::InitLayout(const std::vector<std::pair<uint32_t, std::string>>& list)
+void WxListSelectDlg::InitLayout(const std::vector<std::pair<std::string, wxTreeItemData*>>& list)
 {
 	wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
@@ -38,8 +31,9 @@ void WxListSelectDlg::InitLayout(const std::vector<std::pair<uint32_t, std::stri
 	Bind(wxEVT_TREE_ITEM_ACTIVATED, &WxListSelectDlg::OnDoubleClick, this, m_tree->GetId());
 
 	auto root = m_tree->AddRoot("ROOT");
-	for (auto& item : list) {
-		m_tree->InsertItem(root, -1, item.second);
+	for (auto& itr : list) {
+		auto item = m_tree->InsertItem(root, -1, itr.first);
+		m_tree->SetItemData(item, itr.second);
 	}
 
 	sizer->Add(m_tree);
