@@ -33,6 +33,7 @@
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\NodeContainer.h" />
     <ClInclude Include="..\..\..\include\ee0\prefs.h" />
+    <ClInclude Include="..\..\..\include\ee0\ReflectPropTypes.h" />
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h" />
     <ClInclude Include="..\..\..\include\ee0\RightPopupMenu.h" />
     <ClInclude Include="..\..\..\include\ee0\SelectionSet.h" />
@@ -58,6 +59,7 @@
     <ClInclude Include="..\..\..\include\ee0\Observer.h" />
     <ClInclude Include="..\..\..\include\ee0\WxListSelectDlg.h" />
     <ClInclude Include="..\..\..\include\ee0\WxOpenFileProp.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxPropHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\WxSimpleCanvas.h" />
     <ClInclude Include="..\..\..\include\ee0\WxSliderCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxSliderOneCtrl.h" />
@@ -79,6 +81,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\source\data\CompCustomProp.cpp" />
     <ClCompile Include="..\..\..\source\data\NSCompCustomProp.cpp" />
+    <ClCompile Include="..\..\..\source\data\ReflectPropTypes.cpp" />
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
@@ -112,6 +115,7 @@
     <ClCompile Include="..\..\..\source\view\WxLibraryImagePage.cpp" />
     <ClCompile Include="..\..\..\source\view\WxLibraryItem.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompPanel.cpp" />
+    <ClCompile Include="..\..\..\source\view\WxPropHelper.cpp" />
     <ClCompile Include="..\..\..\source\view\WxSimpleCanvas.cpp" />
     <ClCompile Include="..\..\..\source\view\WxStagePage.cpp" />
     <ClCompile Include="..\..\..\source\view\WxImageVList.cpp" />
@@ -166,7 +170,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\cpputil\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\entity0\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\cpputil\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\entity0\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;..\..\..\..\external\rttr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -180,7 +184,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\cpputil\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\entity0\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\include;..\..\..\..\cu\src;..\..\..\..\ds\src\ds;..\..\..\..\sm\src\sm;..\..\..\..\gimg\src\gimg;..\..\..\..\pimg\include;..\..\..\..\guard\include;..\..\..\..\node0\include;..\..\..\..\node2\include;..\..\..\..\node3\include;..\..\..\..\sprite2\include;..\..\..\..\dtex2\include;..\..\..\..\unirender\include;..\..\..\..\shaderlab\include;..\..\..\..\painting0\include;..\..\..\..\painting2\include;..\..\..\..\painting3\include;..\..\..\..\facade\include;..\..\..\..\s2loader\include;..\..\..\..\nserializer\include;..\..\..\..\serializerx\include;..\..\..\..\memmgr\include;..\..\..\..\moon\include;..\..\..\..\anim\include;..\..\..\..\cpputil\include;..\..\..\..\bs\include;..\..\..\..\js\include;..\..\..\..\entity0\include;..\..\..\..\external-editor\wx\include;..\..\..\..\external\rapidjson\include;..\..\..\..\external\boost\include;..\..\..\..\external\json\include;..\..\..\..\external\rttr\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>

@@ -10,9 +10,6 @@
     <Filter Include="view">
       <UniqueIdentifier>{a6d5b45d-c8fa-450f-855e-e5dbe1462e92}</UniqueIdentifier>
     </Filter>
-    <Filter Include="data">
-      <UniqueIdentifier>{798ab8fe-104a-4ee4-bb73-51d7bd2fd31a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="tools">
       <UniqueIdentifier>{c3023874-474b-4af4-a2ce-d5374fecc933}</UniqueIdentifier>
     </Filter>
@@ -52,9 +49,6 @@
     <Filter Include="tools\config">
       <UniqueIdentifier>{d77a0c37-07fc-4829-a354-b4f1543537cf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="data\comp">
-      <UniqueIdentifier>{3dc2683f-e8d5-43bc-be2c-bd8c3f541262}</UniqueIdentifier>
-    </Filter>
     <Filter Include="gui\code">
       <UniqueIdentifier>{7601a2cd-9bfd-4435-a49a-7fbc87e7dafe}</UniqueIdentifier>
     </Filter>
@@ -72,6 +66,15 @@
     </Filter>
     <Filter Include="gui\prop">
       <UniqueIdentifier>{3f54c4ad-4e95-4a37-befd-baa79bbfce95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data">
+      <UniqueIdentifier>{798ab8fe-104a-4ee4-bb73-51d7bd2fd31a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data\comp">
+      <UniqueIdentifier>{3dc2683f-e8d5-43bc-be2c-bd8c3f541262}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="view\property">
+      <UniqueIdentifier>{70cf4648-6446-4cc6-8721-e267357b1eac}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +268,12 @@
     <ClInclude Include="..\..\..\include\ee0\WxOpenFileProp.h">
       <Filter>gui\prop</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\ReflectPropTypes.h">
+      <Filter>data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxPropHelper.h">
+      <Filter>view\property</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -392,6 +401,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxOpenFileProp.cpp">
       <Filter>gui\prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\data\ReflectPropTypes.cpp">
+      <Filter>data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\WxPropHelper.cpp">
+      <Filter>view\property</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
