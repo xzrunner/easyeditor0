@@ -402,9 +402,6 @@
     <ClCompile Include="..\..\..\source\gui\WxOpenFileProp.cpp">
       <Filter>gui\prop</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\source\data\ReflectPropTypes.cpp">
-      <Filter>data</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxPropHelper.cpp">
       <Filter>view\property</Filter>
     </ClCompile>

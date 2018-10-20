@@ -81,7 +81,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\source\data\CompCustomProp.cpp" />
     <ClCompile Include="..\..\..\source\data\NSCompCustomProp.cpp" />
-    <ClCompile Include="..\..\..\source\data\ReflectPropTypes.cpp" />
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
