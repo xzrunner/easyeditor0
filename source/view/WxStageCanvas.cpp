@@ -10,6 +10,7 @@
 #include <painting2/Blackboard.h>
 #include <painting2/RenderContext.h>
 #include <painting2/WindowContext.h>
+#include <painting2/RenderSystem.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
 #include <facade/Blackboard.h>
@@ -148,6 +149,8 @@ void WxStageCanvas::OnDrawWhole() const
 	m_rc.facade_rc->GetUrRc().Clear(0x88888888);
 
 	OnDrawSprites();
+
+	pt2::RenderSystem::Instance()->FlushPainter();
 
 	if (ConfigFile::Instance()->GetDebugDraw()) {
 		DebugDraw();
