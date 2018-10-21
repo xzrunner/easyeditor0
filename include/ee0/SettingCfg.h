@@ -19,7 +19,7 @@ class SettingCfg
 public:
 	int GetEditOpType() const { return m_edit_op_type; }
 	void SetEditOpType(int type) { m_edit_op_type = type; }
-	
+
 private:
 	int m_edit_op_type;
 

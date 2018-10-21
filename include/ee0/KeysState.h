@@ -13,8 +13,8 @@ public:
 
 	void Reset();
 
-	bool GetKeyState(int key) const { 
-		return m_keys_state[key]; 
+	bool GetKeyState(int key) const {
+		return m_keys_state[key];
 	}
 
 private:

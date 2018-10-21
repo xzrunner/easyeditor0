@@ -25,13 +25,13 @@ std::shared_ptr<WxLibraryItem> WxLibraryPage::GetItem(int idx) const
 
 void WxLibraryPage::OnAddPress(wxCommandEvent& event)
 {
-	wxFileDialog dlg(this, wxT("Choose file"), wxEmptyString, wxEmptyString, 
+	wxFileDialog dlg(this, wxT("Choose file"), wxEmptyString, wxEmptyString,
 		wxFileSelectorDefaultWildcardStr, wxFD_OPEN | wxFD_MULTIPLE);
 	if (dlg.ShowModal() == wxID_OK)
 	{
 		wxArrayString filenames;
 		dlg.GetPaths(filenames);
-		for (auto& filename : filenames) 
+		for (auto& filename : filenames)
 		{
 			auto path = boost::filesystem::path(filename).generic_string();
 			m_list->Insert(std::make_shared<WxLibraryItem>(path));

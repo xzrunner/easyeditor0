@@ -4,7 +4,7 @@ namespace ee0
 {
 
 WxCodeCtrl::WxCodeCtrl(wxWindow* parent, const std::string& name)
-	: wxStyledTextCtrl(parent), m_name(name) 
+	: wxStyledTextCtrl(parent), m_name(name)
 {
 	m_LineNrID  = 0;
 	m_DividerID = 1;
@@ -44,12 +44,12 @@ WxCodeCtrl::WxCodeCtrl(wxWindow* parent, const std::string& name)
 	SetLayoutCache (wxSTC_CACHE_PAGE);
 }
 
-const std::string& WxCodeCtrl::getName() const 
-{ 
-	return m_name; 
+const std::string& WxCodeCtrl::getName() const
+{
+	return m_name;
 }
 
-bool WxCodeCtrl::InitializePrefs (const std::string &name) 
+bool WxCodeCtrl::InitializePrefs (const std::string &name)
 {
 	// initialize styles
 	StyleClearAll();
@@ -175,7 +175,7 @@ wxSTC_WRAP_WORD: wxSTC_WRAP_NONE);
 	return true;
 }
 
-wxString WxCodeCtrl::DeterminePrefs (const wxString& filename) 
+wxString WxCodeCtrl::DeterminePrefs (const wxString& filename)
 {
 	LanguageInfo const* curInfo;
 

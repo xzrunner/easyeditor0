@@ -13,7 +13,7 @@ class EditOP
 {
 public:
 	EditOP(const std::shared_ptr<pt0::Camera>& camera)
-		: m_camera(camera) 
+		: m_camera(camera)
 	{
 	}
 	virtual ~EditOP() {}

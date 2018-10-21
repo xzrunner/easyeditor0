@@ -66,7 +66,7 @@ void RightPopupMenu::LoadMenu(wxMenu& parent, const rapidjson::Value& children)
 		else if (strcmp(type, "action") == 0)
 		{
 			int id = MENU_ID_START + m_id2path.size();
-			m_parent->Bind(wxEVT_COMMAND_MENU_SELECTED, 
+			m_parent->Bind(wxEVT_COMMAND_MENU_SELECTED,
 				&EditPanelImpl::OnRightPopupMenu, m_stage, id);
 			parent.Append(id, child["name"].GetString(), child["desc"].GetString());
 			m_id2path.insert(std::make_pair(id, child["file"].GetString()));

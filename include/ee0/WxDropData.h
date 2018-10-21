@@ -23,6 +23,6 @@ private:
 
 	wxDECLARE_NO_COPY_CLASS(WxDropData);
 
-}; // WxDropData 
+}; // WxDropData
 
 }

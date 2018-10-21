@@ -18,7 +18,7 @@ public:
 
 	bool GetDebugDraw() const { return m_debug_draw; }
 
-private:	
+private:
 	void LoadFromFile(const std::string& filepath);
 
 private:

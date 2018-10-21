@@ -12,7 +12,7 @@ namespace ee0
 class WxColorSpinCtrl : public wxPanel
 {
 public:
-	WxColorSpinCtrl(wxWindow* parent, pt2::Color& col, 
+	WxColorSpinCtrl(wxWindow* parent, pt2::Color& col,
 		const std::string& title, const SubjectMgrPtr& sub_mgr);
 
 	void Refresh();

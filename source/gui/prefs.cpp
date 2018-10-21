@@ -97,14 +97,14 @@ const char* PythonWordlist2 =
 "STRINGTABLE STYLE TEXTINCLUDE VALUE VERSION VERSIONINFO VIRTKEY";
 
 // Lua
-const char* LuaWordlist1 = 
+const char* LuaWordlist1 =
 "and break do else elseif"
 "end false for function if"
 "in local nil not or"
 "repeat return then true until while";
 
 // Java
-const char* JavaWordlist1 = 
+const char* JavaWordlist1 =
 "abstract continue for new switch"
 "assert	default	goto package synchronized"
 "boolean do if private this"

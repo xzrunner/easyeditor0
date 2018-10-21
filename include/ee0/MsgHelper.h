@@ -18,13 +18,13 @@ public:
 	static bool DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj);
 
 	static bool SendNodeMsg(SubjectMgr& sub_mgr, const GameObj& obj, MessageID msg);
-	
+
 	static void InsertSelection(SubjectMgr& sub_mgr, const std::vector<GameObjWithPos>& objs);
 
 	static bool SetEditorDirty(SubjectMgr& sub_mgr, bool dirty);
 
 	static void AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>& aop);
-	
+
 }; // MsgHelper
 
 }

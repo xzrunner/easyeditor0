@@ -13,7 +13,7 @@ WxLibraryImagePage::WxLibraryImagePage(wxWindow* parent)
 void WxLibraryImagePage::OnAddPress(wxCommandEvent& event)
 {
 	std::string formatFilter = "*.png;*.jpg;*.bmp;*.pvr;*.pkm";
-	wxFileDialog dlg(this, wxT("Choose images"), wxEmptyString, 
+	wxFileDialog dlg(this, wxT("Choose images"), wxEmptyString,
 		wxEmptyString, formatFilter, wxFD_OPEN | wxFD_MULTIPLE);
 	if (dlg.ShowModal() == wxID_OK)
 	{

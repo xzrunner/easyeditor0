@@ -17,7 +17,7 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_
 
 	bool insert = sub_mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
 
-	if (select_new) 
+	if (select_new)
 	{
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
@@ -31,8 +31,8 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_
 
 		bool select = sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 		return insert && select;
-	} 
-	else 
+	}
+	else
 	{
 		return insert;
 	}

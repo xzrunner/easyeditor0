@@ -40,7 +40,7 @@ void WxFrame::OnOpen(wxCommandEvent& event)
 
 void WxFrame::OnSave(wxCommandEvent& event)
 {
-	wxMessageDialog dlg(NULL, wxT("Are you sure to save?"), 
+	wxMessageDialog dlg(NULL, wxT("Are you sure to save?"),
 		wxT("Question"), wxYES_NO | wxNO_DEFAULT | wxICON_QUESTION);
 	if (dlg.ShowModal() == wxID_YES) {
 		m_app->StoreToFile("");

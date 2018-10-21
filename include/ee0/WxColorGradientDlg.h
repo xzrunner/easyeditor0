@@ -62,7 +62,7 @@ private:
 		void OnMouse(wxMouseEvent& event);
 
 		void SelectByPos(int x);
-		
+
 	private:
 		static const int HALF_WIDTH = 5;
 

@@ -15,7 +15,7 @@ public:
 	void RegisterObserver(uint32_t msg, Observer* o);
 	bool UnregisterObserver(uint32_t msg, Observer* o);
 
-	bool NotifyObservers(uint32_t msg, 
+	bool NotifyObservers(uint32_t msg,
 		const VariantSet& variants = VariantSet());
 
 private:

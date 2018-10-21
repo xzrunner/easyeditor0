@@ -31,13 +31,13 @@ WxSliderOneCtrl::WxSliderOneCtrl(wxPanel* parent, const char* title, const char*
 
 	m_slider = new wxSlider(this, wxID_ANY, item.val, item.min, item.max,
 		wxDefaultPosition, wxSize(200, -1));
-	Connect(m_slider->GetId(), wxEVT_SCROLL_THUMBTRACK, 
+	Connect(m_slider->GetId(), wxEVT_SCROLL_THUMBTRACK,
 		wxScrollEventHandler(WxSliderOneCtrl::OnSetValue));
 	sizer->Add(m_slider);
 
-	m_text = new wxTextCtrl(this, wxID_ANY, std::to_string(item.val), 
+	m_text = new wxTextCtrl(this, wxID_ANY, std::to_string(item.val),
 		wxDefaultPosition, wxSize(50, -1), wxTE_PROCESS_ENTER);
-	Connect(m_text->GetId(), wxEVT_COMMAND_TEXT_ENTER, 
+	Connect(m_text->GetId(), wxEVT_COMMAND_TEXT_ENTER,
 		wxCommandEventHandler(WxSliderOneCtrl::OnSetValue));
 	sizer->Add(m_text);
 

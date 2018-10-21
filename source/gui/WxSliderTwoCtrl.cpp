@@ -16,7 +16,7 @@ namespace ee0
 {
 
 WxSliderTwoCtrl::WxSliderTwoCtrl(wxPanel* parent, const char* title, const char* name,
-	                             GuiCallback& cb, int key, const SliderItem& item0, 
+	                             GuiCallback& cb, int key, const SliderItem& item0,
 	                             const SliderItem& item1, float scale_slider2text)
 	: WxSliderCtrl(parent)
 	, m_name(name)
@@ -30,15 +30,15 @@ WxSliderTwoCtrl::WxSliderTwoCtrl(wxPanel* parent, const char* title, const char*
 		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		sizer->Add(new wxStaticText(this, wxID_ANY, item0.title, wxDefaultPosition, wxSize(40, -1)));
 
-		m_item0.slider = new wxSlider(this, wxID_ANY, item0.val, item0.min, item0.max, 
+		m_item0.slider = new wxSlider(this, wxID_ANY, item0.val, item0.min, item0.max,
 			wxDefaultPosition, wxSize(160, -1));
-		Connect(m_item0.slider->GetId(), wxEVT_SCROLL_THUMBTRACK, 
+		Connect(m_item0.slider->GetId(), wxEVT_SCROLL_THUMBTRACK,
 			wxScrollEventHandler(WxSliderTwoCtrl::OnSetValue));
 		sizer->Add(m_item0.slider);
 
-		m_item0.text = new wxTextCtrl(this, wxID_ANY, std::to_string(item0.val), 
+		m_item0.text = new wxTextCtrl(this, wxID_ANY, std::to_string(item0.val),
 			wxDefaultPosition, wxSize(50, -1), wxTE_PROCESS_ENTER);
-		Connect(m_item0.text->GetId(), wxEVT_COMMAND_TEXT_ENTER, 
+		Connect(m_item0.text->GetId(), wxEVT_COMMAND_TEXT_ENTER,
 			wxCommandEventHandler(WxSliderTwoCtrl::OnSetValue));
 		sizer->Add(m_item0.text);
 
@@ -50,15 +50,15 @@ WxSliderTwoCtrl::WxSliderTwoCtrl(wxPanel* parent, const char* title, const char*
 		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 		sizer->Add(new wxStaticText(this, wxID_ANY, item1.title, wxDefaultPosition, wxSize(40, -1)));
 
-		m_item1.slider = new wxSlider(this, wxID_ANY, item1.val, item1.min, item1.max, 
+		m_item1.slider = new wxSlider(this, wxID_ANY, item1.val, item1.min, item1.max,
 			wxDefaultPosition, wxSize(160, -1));
-		Connect(m_item1.slider->GetId(), wxEVT_SCROLL_THUMBTRACK, 
+		Connect(m_item1.slider->GetId(), wxEVT_SCROLL_THUMBTRACK,
 			wxScrollEventHandler(WxSliderTwoCtrl::OnSetValue));
 		sizer->Add(m_item1.slider);
 
-		m_item1.text = new wxTextCtrl(this, wxID_ANY, std::to_string(item1.val), 
+		m_item1.text = new wxTextCtrl(this, wxID_ANY, std::to_string(item1.val),
 			wxDefaultPosition, wxSize(50, -1), wxTE_PROCESS_ENTER);
-		Connect(m_item1.text->GetId(), wxEVT_COMMAND_TEXT_ENTER, 
+		Connect(m_item1.text->GetId(), wxEVT_COMMAND_TEXT_ENTER,
 			wxCommandEventHandler(WxSliderTwoCtrl::OnSetValue));
 		sizer->Add(m_item1.text);
 

@@ -22,7 +22,7 @@ private:
 private:
 	wxImage m_image;
 	wxBitmap m_resized;
-	
+
 	DECLARE_EVENT_TABLE()
 
 }; // WxImagePanel

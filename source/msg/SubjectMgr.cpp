@@ -13,7 +13,7 @@ void SubjectMgr::RegisterObserver(uint32_t msg, Observer* o)
 		auto sub_ptr = std::make_unique<Subject>(msg);
 		sub = sub_ptr.get();
 		m_subjects.insert(std::make_pair(msg, std::move(sub_ptr)));
-	} 
+	}
 
 	sub->RegisterObserver(o);
 }

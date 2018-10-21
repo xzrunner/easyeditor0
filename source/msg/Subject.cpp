@@ -6,11 +6,11 @@ namespace ee0
 {
 
 Subject::Subject(uint32_t id)
-	: m_id(id) 
+	: m_id(id)
 {
 }
 
-void Subject::RegisterObserver(Observer* o) 
+void Subject::RegisterObserver(Observer* o)
 {
 	m_observers.insert(o);
 }
@@ -20,7 +20,7 @@ void Subject::UnregisterObserver(Observer* o)
 	m_observers.erase(o);
 }
 
-void Subject::NotifyObservers(const VariantSet& variants) 
+void Subject::NotifyObservers(const VariantSet& variants)
 {
 	Observer* skip = nullptr;
 	auto var = variants.GetVariant("skip_observer");

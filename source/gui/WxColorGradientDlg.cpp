@@ -70,7 +70,7 @@ void WxColorGradientDlg::InitLayout()
 
 void WxColorGradientDlg::SpinEventHandler(wxSpinEvent& event)
 {
-	if (event.GetId() == m_angle->GetId()) 
+	if (event.GetId() == m_angle->GetId())
 	{
 		m_col.angle = m_angle->GetValue() * SM_DEG_TO_RAD;
 	}
@@ -114,7 +114,7 @@ OnDraw() const
 	}
 
 	glBegin(GL_TRIANGLE_STRIP);
-	
+
 	DrawItem(m_col.items.front().col, 0);
 	for (auto& item : m_col.items) {
 		if (item.pos < 0) {
@@ -150,7 +150,7 @@ ColorSlider(wxWindow* parent, wxSize size, pt2::GradientColor& col)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, size, wxBORDER_DEFAULT)
 	, m_col(col)
 	, m_selected(-1)
-{	
+{
 }
 
 void WxColorGradientDlg::ColorSlider::
@@ -180,14 +180,14 @@ OnMouse(wxMouseEvent& event)
 		if (m_selected == -1)
 		{
 			float pos = static_cast<float>(x) / w;
-			if (pos < m_col.items.front().pos) 
+			if (pos < m_col.items.front().pos)
 			{
 				m_col.items.insert(m_col.items.begin(), pt2::GradientColor::Item(pos));
 				m_selected = 0;
-			} 
-			else 
-			{				
-				for (int i = m_col.items.size() - 1; i >= 0; --i) 
+			}
+			else
+			{
+				for (int i = m_col.items.size() - 1; i >= 0; --i)
 				{
 					if (pos > m_col.items[i].pos) {
 						m_col.items.insert(m_col.items.begin() + i + 1, pt2::GradientColor::Item(pos));
@@ -203,7 +203,7 @@ OnMouse(wxMouseEvent& event)
 	else if (event.RightDown())
 	{
 		SelectByPos(x);
-		if (m_selected != -1) 
+		if (m_selected != -1)
 		{
 			m_col.items.erase(m_col.items.begin() + m_selected);
 			m_parent->Refresh();

@@ -15,7 +15,7 @@ public:
 	int min;
 	int max;
 
-	SliderItem(const char* title, const char* name, int val , int min, int max) 
+	SliderItem(const char* title, const char* name, int val , int min, int max)
 		: title(title), name(name), val(val), min(min), max(max) {}
 
 }; // SliderItem

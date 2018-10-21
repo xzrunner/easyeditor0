@@ -30,7 +30,7 @@ void ConfigFile::LoadFromFile(const std::string& filepath)
 	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
 	auto& dir = boost::filesystem::path(filepath).parent_path();
-	for (auto& val : doc["font"].GetArray()) 
+	for (auto& val : doc["font"].GetArray())
 	{
 		std::string name = val["name"].GetString();
 		std::string filepath = val["filepath"].GetString();

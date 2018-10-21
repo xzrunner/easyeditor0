@@ -14,8 +14,8 @@ class WxStagePage;
 
 class NodeSelectOP : public EditOP
 {
-public:	
-	NodeSelectOP(const std::shared_ptr<pt0::Camera>& cam, 
+public:
+	NodeSelectOP(const std::shared_ptr<pt0::Camera>& cam,
 		WxStagePage& stage);
 
 	virtual bool OnKeyDown(int key_code) override;

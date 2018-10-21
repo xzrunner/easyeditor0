@@ -13,8 +13,8 @@
 namespace
 {
 
-const wxString TYPE_LABELS[] = { 
-	"bool", "int", "float", "string", "vec2", "color" 
+const wxString TYPE_LABELS[] = {
+	"bool", "int", "float", "string", "vec2", "color"
 };
 
 class WxCustomPropertyDlg : public wxDialog
@@ -89,7 +89,7 @@ private:
 namespace ee0
 {
 
-WxCompCustomPropPanel::WxCompCustomPropPanel(wxWindow* parent, 
+WxCompCustomPropPanel::WxCompCustomPropPanel(wxWindow* parent,
 	                                           CompCustomProp& cprop)
 	: WxCompPanel(parent, "CustomProperties")
 	, m_cprop(cprop)
@@ -194,7 +194,7 @@ void WxCompCustomPropPanel::OnPropertyGridChange(wxPropertyGridEvent& event)
 	wxPGProperty* property = event.GetProperty();
 	auto key = property->GetName().ToStdString();
 	wxAny val = property->GetValue();
-	
+
 	auto& props = m_cprop.GetAllProp();
 	for (auto& prop : props)
 	{
@@ -235,7 +235,7 @@ void WxCompCustomPropPanel::OnPropertyGridChange(wxPropertyGridEvent& event)
 			case CompCustomProp::PROP_COLOR:
 				{
 					wxColour col = wxANY_AS(val, wxColour);
-					
+
 					auto pcol = static_cast<pt2::Color*>(prop.val.m_val.pv);
 					pcol->r = col.Red();
 					pcol->g = col.Green();
