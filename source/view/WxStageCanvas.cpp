@@ -17,6 +17,7 @@
 #include <facade/RenderContext.h>
 #include <facade/Facade.h>
 #include <facade/DTex.h>
+#include <rendergraph/RenderMgr.h>
 
 #include <shaderlab/ShaderMgr.h>
 #include <shaderlab/RenderContext.h>
@@ -150,8 +151,6 @@ void WxStageCanvas::OnDrawWhole() const
 
 	OnDrawSprites();
 
-	pt2::RenderSystem::Instance()->FlushPainter();
-
 	if (ConfigFile::Instance()->GetDebugDraw()) {
 		DebugDraw();
 	}
@@ -182,6 +181,7 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	m_dirty = false;
 
 	m_rc.facade_rc->GetSlRc().GetShaderMgr().FlushShader();
+	rg::RenderMgr::Instance()->Flush();
 
 	glFlush();
 	SwapBuffers();
