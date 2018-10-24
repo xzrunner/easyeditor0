@@ -19,17 +19,6 @@
 #include <facade/DTex.h>
 #include <rendergraph/RenderMgr.h>
 
-#include <shaderlab/ShaderMgr.h>
-#include <shaderlab/RenderContext.h>
-#include <shaderlab/Shape2Shader.h>
-#include <shaderlab/Shape3Shader.h>
-#include <shaderlab/Sprite2Shader.h>
-#include <shaderlab/Sprite3Shader.h>
-#include <shaderlab/BlendShader.h>
-#include <shaderlab/FilterShader.h>
-#include <shaderlab/MaskShader.h>
-#include <shaderlab/Model3Shader.h>
-
 namespace ee0
 {
 
@@ -116,17 +105,6 @@ void WxStageCanvas::CreateRenderContext(RenderContext& rc, wxGLCanvas* canvas)
 	canvas->SetCurrent(*rc.gl_ctx);
 
 	rc.facade_rc = std::make_shared<facade::RenderContext>();
-	auto& sl_rc = rc.facade_rc->GetSlRc();
-	auto& shader_mgr = sl_rc.GetShaderMgr();
-
-	shader_mgr.CreateShader(sl::SHAPE2, new sl::Shape2Shader(sl_rc));
-	shader_mgr.CreateShader(sl::SHAPE3, new sl::Shape3Shader(sl_rc));
-	shader_mgr.CreateShader(sl::SPRITE2, new sl::Sprite2Shader(sl_rc));
-	shader_mgr.CreateShader(sl::SPRITE3, new sl::Sprite3Shader(sl_rc));
-	shader_mgr.CreateShader(sl::BLEND, new sl::BlendShader(sl_rc));
-	shader_mgr.CreateShader(sl::FILTER, new sl::FilterShader(sl_rc));
-	shader_mgr.CreateShader(sl::MASK, new sl::MaskShader(sl_rc));
-	shader_mgr.CreateShader(sl::MODEL3, new sl::Model3Shader(sl_rc));
 }
 
 void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3d)
@@ -147,8 +125,6 @@ void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3
 
 void WxStageCanvas::OnDrawWhole() const
 {
-	m_rc.facade_rc->GetUrRc().Clear(0x88888888);
-
 	OnDrawSprites();
 
 	if (ConfigFile::Instance()->GetDebugDraw()) {
@@ -180,7 +156,6 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	OnDrawWhole();
 	m_dirty = false;
 
-	m_rc.facade_rc->GetSlRc().GetShaderMgr().FlushShader();
 	rg::RenderMgr::Instance()->Flush();
 
 	glFlush();
