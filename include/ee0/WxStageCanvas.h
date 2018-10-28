@@ -35,7 +35,7 @@ public:
 	const pt0::CameraPtr& GetCamera() const { return m_camera; }
 	void SetCamera(const pt0::CameraPtr& camera) { m_camera = camera; }
 
-	void SetDirty() { m_dirty = true; }
+	void SetDirty() const { m_dirty = true; }
 
 	void AddUpdateTask(std::function<void()> task) { m_tasks.push_back(task); }
 
@@ -96,7 +96,7 @@ private:
 	wxTimer m_timer;
 	clock_t m_last_time;
 
-	bool m_dirty;
+	mutable bool m_dirty;
 
 	std::vector<std::function<void()>> m_tasks;
 
