@@ -4,6 +4,11 @@
 #include "ee0/SubjectMgr.h"
 #include "ee0/MsgHelper.h"
 #include "ee0/MessageID.h"
+#include "ee0/CameraHelper.h"
+
+#include <easygui/InputEvent.h>
+#include <easygui/Utility.h>
+#include <facade/EasyGUI.h>
 
 namespace ee0
 {
@@ -27,24 +32,57 @@ void EditPanelImpl::SetEditOP(const std::shared_ptr<EditOP>& op)
 
 void EditPanelImpl::OnMouse(wxMouseEvent& event)
 {
-	if (!m_edit_op) return;
+	if (!m_edit_op) {
+		return;
+	}
 
+	auto& egui_st = facade::EasyGUI::Instance()->state;
+	const int x = event.GetX();
+	const int y = event.GetY();
+	auto proj = CameraHelper::TransPosScreenToProject(*GetCanvas()->GetCamera(), x, y);
 	if (event.LeftDown())
-		m_edit_op->OnMouseLeftDown(event.GetX(), event.GetY());
+	{
+		m_edit_op->OnMouseLeftDown(x, y);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_LEFT_DOWN, proj.x, proj.y));
+	}
 	else if (event.LeftUp())
-		m_edit_op->OnMouseLeftUp(event.GetX(), event.GetY());
+	{
+		m_edit_op->OnMouseLeftUp(x, y);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_LEFT_UP, proj.x, proj.y));
+	}
 	else if (event.RightDown())
-		m_edit_op->OnMouseRightDown(event.GetX(), event.GetY());
+	{
+		m_edit_op->OnMouseRightDown(x, y);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_RIGHT_DOWN, proj.x, proj.y));
+	}
 	else if (event.RightUp())
-		m_edit_op->OnMouseRightUp(event.GetX(), event.GetY());
+	{
+		m_edit_op->OnMouseRightUp(x, y);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_RIGHT_UP, proj.x, proj.y));
+	}
 	else if (event.Moving())
-		m_edit_op->OnMouseMove(event.GetX(), event.GetY());
+	{
+		m_edit_op->OnMouseMove(x, y);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_MOVE, proj.x, proj.y));
+	}
 	else if (event.Dragging())
-		m_edit_op->OnMouseDrag(event.GetX(), event.GetY());
+	{
+		m_edit_op->OnMouseDrag(x, y);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_DRAG, proj.x, proj.y));
+	}
 	else if (event.LeftDClick())
-		m_edit_op->OnMouseLeftDClick(event.GetX(), event.GetY());
+	{
+		m_edit_op->OnMouseLeftDClick(x, y);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_LEFT_DCLICK, proj.x, proj.y));
+	}
 	else if (event.GetWheelRotation())
-		m_edit_op->OnMouseWheelRotation(event.GetX(), event.GetY(), event.GetWheelRotation());
+	{
+		int dir = event.GetWheelRotation();
+		m_edit_op->OnMouseWheelRotation(x, y, dir);
+		egui::feed_event(egui_st, egui::InputEvent(egui::InputType::MOUSE_WHEEL_ROTATION, proj.x, proj.y, dir));
+	}
+
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
