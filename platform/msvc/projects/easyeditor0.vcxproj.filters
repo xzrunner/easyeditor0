@@ -169,9 +169,6 @@
     <ClInclude Include="..\..\..\include\ee0\Application.h">
       <Filter>view\frame</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\RenderContext.h">
-      <Filter>view\stage</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WindowContext.h">
       <Filter>view\stage</Filter>
     </ClInclude>
@@ -273,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\WxPropHelper.h">
       <Filter>view\property</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\RenderContext.h">
+      <Filter>tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -404,6 +404,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\view\WxPropHelper.cpp">
       <Filter>view\property</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\RenderContext.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
