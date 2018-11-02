@@ -15,6 +15,9 @@ public:
 	std::shared_ptr<wxGLContext>           gl_ctx = nullptr;
 	std::shared_ptr<facade::RenderContext> facade_rc = nullptr;
 
+	static void Reset2D(bool clear = false);
+	static void Reset3D(bool clear = false);
+
 }; // RenderContext
 
 }

@@ -100,6 +100,7 @@
     <ClCompile Include="..\..\..\source\tools\CameraHelper.cpp" />
     <ClCompile Include="..\..\..\source\tools\ConfigFile.cpp" />
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp" />
+    <ClCompile Include="..\..\..\source\tools\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
     <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
