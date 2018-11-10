@@ -36,50 +36,68 @@ void EditPanelImpl::OnMouse(wxMouseEvent& event)
 		return;
 	}
 
-	auto& events = facade::EasyGUI::Instance()->ctx.input_events;
+	auto& egui = std::const_pointer_cast<egui::Context>(m_canvas->GetWidnowContext().egui);
+
 	const int x = event.GetX();
 	const int y = event.GetY();
+	GetCanvas()->GetWidnowContext();
 	auto proj = CameraHelper::TransPosScreenToProject(*GetCanvas()->GetCamera(), x, y);
 	if (event.LeftDown())
 	{
 		m_edit_op->OnMouseLeftDown(x, y);
-		events.emplace_back(egui::InputType::MOUSE_LEFT_DOWN, proj.x, proj.y);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_LEFT_DOWN, proj.x, proj.y);
+		}
 	}
 	else if (event.LeftUp())
 	{
 		m_edit_op->OnMouseLeftUp(x, y);
-		events.emplace_back(egui::InputType::MOUSE_LEFT_UP, proj.x, proj.y);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_LEFT_UP, proj.x, proj.y);
+		}
 	}
 	else if (event.RightDown())
 	{
 		m_edit_op->OnMouseRightDown(x, y);
-		events.emplace_back(egui::InputType::MOUSE_RIGHT_DOWN, proj.x, proj.y);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_RIGHT_DOWN, proj.x, proj.y);
+		}
 	}
 	else if (event.RightUp())
 	{
 		m_edit_op->OnMouseRightUp(x, y);
-		events.emplace_back(egui::InputType::MOUSE_RIGHT_UP, proj.x, proj.y);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_RIGHT_UP, proj.x, proj.y);
+		}
 	}
 	else if (event.Moving())
 	{
 		m_edit_op->OnMouseMove(x, y);
-		events.emplace_back(egui::InputType::MOUSE_MOVE, proj.x, proj.y);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_MOVE, proj.x, proj.y);
+		}
 	}
 	else if (event.Dragging())
 	{
 		m_edit_op->OnMouseDrag(x, y);
-		events.emplace_back(egui::InputType::MOUSE_DRAG, proj.x, proj.y);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_DRAG, proj.x, proj.y);
+		}
 	}
 	else if (event.LeftDClick())
 	{
 		m_edit_op->OnMouseLeftDClick(x, y);
-		events.emplace_back(egui::InputType::MOUSE_LEFT_DCLICK, proj.x, proj.y);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_LEFT_DCLICK, proj.x, proj.y);
+		}
 	}
 	else if (event.GetWheelRotation())
 	{
 		int dir = event.GetWheelRotation();
 		m_edit_op->OnMouseWheelRotation(x, y, dir);
-		events.emplace_back(egui::InputType::MOUSE_WHEEL_ROTATION, proj.x, proj.y, dir);
+		if (egui) {
+			egui->input_events.emplace_back(egui::InputType::MOUSE_WHEEL_ROTATION, proj.x, proj.y, dir);
+		}
 	}
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
