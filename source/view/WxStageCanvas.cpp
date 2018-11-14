@@ -52,6 +52,9 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	, m_dirty(false)
 {
 	InitRender(rc);
+
+	SetCurrentCanvas();
+
 	InitWindow(wc);
 
 	EnableInitiativeUpdate(true);
