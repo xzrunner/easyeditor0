@@ -178,9 +178,8 @@ void EditOP::ChangeEditOpState(const std::shared_ptr<EditOpState>& state)
 	m_op_state = state;
 	if (m_op_state) {
 		m_op_state->Bind();
+		m_op_state->SetCamera(m_camera);
 	}
-
-	m_op_state->SetCamera(m_camera);
 }
 
 }
