@@ -10,6 +10,7 @@ namespace ee0
 
 class SubjectMgr;
 class AtomicOP;
+class VariantSet;
 
 class MsgHelper
 {
@@ -24,6 +25,9 @@ public:
 	static bool SetEditorDirty(SubjectMgr& sub_mgr, bool dirty);
 
 	static void AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>& aop);
+
+private:
+	static void PrepareSelectionVars(VariantSet& vars, const GameObjWithPos& obj);
 
 }; // MsgHelper
 

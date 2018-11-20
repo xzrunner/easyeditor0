@@ -79,26 +79,7 @@ void MsgHelper::InsertSelection(SubjectMgr& sub_mgr, const std::vector<GameObjWi
 			vars.SetVariant("multiple", var);
 		}
 
-		Variant var_obj;
-		var_obj.m_type = VT_PVOID;
-#ifndef GAME_OBJ_ECS
-		var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj.GetNode());
-#else
-		var_obj.m_val.pv = &const_cast<GameObj&>(obj);
-#endif // GAME_OBJ_ECS
-		vars.SetVariant("obj", var_obj);
-
-#ifndef GAME_OBJ_ECS
-		Variant var_root;
-		var_root.m_type = ee0::VT_PVOID;
-		var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj.GetRoot());
-		vars.SetVariant("root", var_root);
-
-		Variant var_id;
-		var_id.m_type = ee0::VT_ULONG;
-		var_id.m_val.ul = obj.GetNodeID();
-		vars.SetVariant("id", var_id);
-#endif // GAME_OBJ_ECS
+		PrepareSelectionVars(vars, obj);
 
 		sub_mgr.NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
 	}
@@ -124,6 +105,30 @@ void MsgHelper::AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>
 	vars.SetVariant("aop", var);
 
 	sub_mgr.NotifyObservers(MSG_ATOMIC_OP_ADD, vars);
+}
+
+void MsgHelper::PrepareSelectionVars(VariantSet& vars, const GameObjWithPos& obj)
+{
+	Variant var_obj;
+	var_obj.m_type = VT_PVOID;
+#ifndef GAME_OBJ_ECS
+	var_obj.m_val.pv = const_cast<n0::SceneNodePtr*>(&obj.GetNode());
+#else
+	var_obj.m_val.pv = &const_cast<GameObj&>(obj);
+#endif // GAME_OBJ_ECS
+	vars.SetVariant("obj", var_obj);
+
+#ifndef GAME_OBJ_ECS
+	Variant var_root;
+	var_root.m_type = ee0::VT_PVOID;
+	var_root.m_val.pv = const_cast<n0::SceneNodePtr*>(&obj.GetRoot());
+	vars.SetVariant("root", var_root);
+
+	Variant var_id;
+	var_id.m_type = ee0::VT_ULONG;
+	var_id.m_val.ul = obj.GetNodeID();
+	vars.SetVariant("id", var_id);
+#endif // GAME_OBJ_ECS
 }
 
 }
