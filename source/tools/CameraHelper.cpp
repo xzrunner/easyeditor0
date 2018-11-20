@@ -46,4 +46,19 @@ sm::vec2 CameraHelper::TransPosProjectToScreen(const pt0::Camera& cam, const sm:
 	}
 }
 
+sm::ivec2 CameraHelper::GetScreenSize(const pt0::Camera& cam)
+{
+	auto type = cam.TypeID();
+	if (type == pt0::GetCamTypeID<pt2::OrthoCamera>())
+	{
+		auto wc = pt2::Blackboard::Instance()->GetWindowContext();
+		return sm::ivec2(wc->GetScreenWidth(), wc->GetScreenHeight());
+	}
+	else
+	{
+		auto wc = pt3::Blackboard::Instance()->GetWindowContext();
+		return wc->GetScreenSize();
+	}
+}
+
 }
