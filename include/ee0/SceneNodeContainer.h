@@ -8,12 +8,12 @@
 namespace ee0
 {
 
-class NodeContainer
+class SceneNodeContainer
 {
 public:
 	virtual void Traverse(std::function<bool(const GameObj&)> func,
 		const VariantSet& variants = VariantSet(), bool inverse = false) const = 0;
 
-}; // NodeContainer
+}; // SceneNodeContainer
 
 }

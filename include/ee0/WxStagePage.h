@@ -3,7 +3,7 @@
 #include "ee0/Observer.h"
 #include "ee0/WxEditPanel.h"
 #include "ee0/SelectionSet.h"
-#include "ee0/NodeContainer.h"
+#include "ee0/SceneNodeContainer.h"
 #include "ee0/EditRecord.h"
 #include "ee0/typedef.h"
 #include "ee0/Config.h"
@@ -11,7 +11,7 @@
 namespace ee0
 {
 
-class WxStagePage : public WxEditPanel, public Observer, public NodeContainer
+class WxStagePage : public WxEditPanel, public Observer, public SceneNodeContainer
 {
 public:
 	enum TraverseType

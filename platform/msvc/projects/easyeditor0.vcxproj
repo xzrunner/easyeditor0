@@ -31,7 +31,7 @@
     <ClInclude Include="..\..\..\include\ee0\KeysState.h" />
     <ClInclude Include="..\..\..\include\ee0\KeyType.h" />
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h" />
-    <ClInclude Include="..\..\..\include\ee0\NodeContainer.h" />
+    <ClInclude Include="..\..\..\include\ee0\SceneNodeContainer.h" />
     <ClInclude Include="..\..\..\include\ee0\prefs.h" />
     <ClInclude Include="..\..\..\include\ee0\ReflectPropTypes.h" />
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h" />

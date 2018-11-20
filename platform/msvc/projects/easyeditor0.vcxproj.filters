@@ -175,9 +175,6 @@
     <ClInclude Include="..\..\..\include\ee0\KeyType.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\NodeContainer.h">
-      <Filter>interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\KeysState.h">
       <Filter>tools</Filter>
     </ClInclude>
@@ -273,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\RenderContext.h">
       <Filter>tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\SceneNodeContainer.h">
+      <Filter>interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
