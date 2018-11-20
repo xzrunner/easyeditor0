@@ -7,6 +7,7 @@
 
 #include <guard/check.h>
 #include <unirender/RenderContext.h>
+#include <painting2/Shader.h>
 #include <painting2/Blackboard.h>
 #include <painting2/RenderContext.h>
 #include <painting2/WindowContext.h>
@@ -17,7 +18,9 @@
 #include <facade/RenderContext.h>
 #include <facade/Facade.h>
 #include <facade/DTex.h>
+#include <facade/EasyGUI.h>
 #include <rendergraph/RenderMgr.h>
+#include <rendergraph/SpriteRenderer.h>
 
 namespace ee0
 {
@@ -129,10 +132,44 @@ void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3
 void WxStageCanvas::OnDrawWhole() const
 {
 	OnDrawSprites();
+	OnDrawGUI();
 
 	if (ConfigFile::Instance()->GetDebugDraw()) {
 		DebugDraw();
 	}
+}
+
+void WxStageCanvas::InitGui()
+{
+	facade::EasyGUI::Instance();
+	auto& wc = const_cast<ee0::WindowContext&>(GetWidnowContext());
+	wc.egui = std::make_shared<egui::Context>();
+	egui::style_colors_dark(wc.egui->style);
+}
+
+// fixme: changed shader's mat
+void WxStageCanvas::PrepareDrawGui(float w, float h) const
+{
+	ee0::RenderContext::Reset2D();
+
+	auto sr = std::static_pointer_cast<rg::SpriteRenderer>(
+		rg::RenderMgr::Instance()->SetRenderer(rg::RenderType::SPRITE)
+	);
+	auto& palette = sr->GetPalette();
+
+	auto shader = sr->GetShader();
+	shader->Use();
+
+	auto pt2_shader = std::dynamic_pointer_cast<pt2::Shader>(shader);
+	assert(pt2_shader);
+	pt2_shader->UpdateViewMat(sm::vec2(0, 0), 1.0f);
+
+	pt2_shader->UpdateProjMat(w, h);
+
+	shader->UpdateModelMat(sm::mat4());
+
+	auto tex_id = facade::DTex::Instance()->GetSymCacheTexID();
+	m_rc.facade_rc->GetUrRc().BindTexture(tex_id, 0);
 }
 
 void WxStageCanvas::OnSize(wxSizeEvent& event)

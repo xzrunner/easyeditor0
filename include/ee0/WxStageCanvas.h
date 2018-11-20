@@ -49,12 +49,17 @@ protected:
 	virtual void OnSize(int w, int h) = 0;
 	virtual void OnDrawWhole() const;
 	virtual void OnDrawSprites() const = 0;
+	virtual void OnDrawGUI() const {}
 
 	virtual void OnTimer() {}
 	virtual bool OnUpdate() { return false; }
 
 	virtual void OnMouseImpl(wxMouseEvent& event) {}
 	virtual void OnKeyDownImpl(wxKeyEvent& event) {}
+
+protected:
+	void InitGui();
+	void PrepareDrawGui(float w, float h) const;
 
 private:
 	void OnSize(wxSizeEvent& event);
