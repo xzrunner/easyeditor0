@@ -100,6 +100,31 @@ void WxStageCanvas::EnableInitiativeUpdate(bool enable)
 	}
 }
 
+// fixme: changed shader's mat
+void WxStageCanvas::PrepareDrawGui(float w, float h) const
+{
+	ee0::RenderContext::Reset2D();
+
+	auto sr = std::static_pointer_cast<rg::SpriteRenderer>(
+		rg::RenderMgr::Instance()->SetRenderer(rg::RenderType::SPRITE)
+	);
+	auto& palette = sr->GetPalette();
+
+	auto shader = sr->GetShader();
+	shader->Use();
+
+	auto pt2_shader = std::dynamic_pointer_cast<pt2::Shader>(shader);
+	assert(pt2_shader);
+	pt2_shader->UpdateViewMat(sm::vec2(0, 0), 1.0f);
+
+	pt2_shader->UpdateProjMat(w, h);
+
+	shader->UpdateModelMat(sm::mat4());
+
+	auto tex_id = facade::DTex::Instance()->GetSymCacheTexID();
+	m_rc.facade_rc->GetUrRc().BindTexture(tex_id, 0);
+}
+
 wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
 {
 	return new wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB);
@@ -145,31 +170,6 @@ void WxStageCanvas::InitGui()
 	auto& wc = const_cast<ee0::WindowContext&>(GetWidnowContext());
 	wc.egui = std::make_shared<egui::Context>();
 	egui::style_colors_dark(wc.egui->style);
-}
-
-// fixme: changed shader's mat
-void WxStageCanvas::PrepareDrawGui(float w, float h) const
-{
-	ee0::RenderContext::Reset2D();
-
-	auto sr = std::static_pointer_cast<rg::SpriteRenderer>(
-		rg::RenderMgr::Instance()->SetRenderer(rg::RenderType::SPRITE)
-	);
-	auto& palette = sr->GetPalette();
-
-	auto shader = sr->GetShader();
-	shader->Use();
-
-	auto pt2_shader = std::dynamic_pointer_cast<pt2::Shader>(shader);
-	assert(pt2_shader);
-	pt2_shader->UpdateViewMat(sm::vec2(0, 0), 1.0f);
-
-	pt2_shader->UpdateProjMat(w, h);
-
-	shader->UpdateModelMat(sm::mat4());
-
-	auto tex_id = facade::DTex::Instance()->GetSymCacheTexID();
-	m_rc.facade_rc->GetUrRc().BindTexture(tex_id, 0);
 }
 
 void WxStageCanvas::OnSize(wxSizeEvent& event)

@@ -41,6 +41,8 @@ public:
 
 	void EnableInitiativeUpdate(bool enable);
 
+	void PrepareDrawGui(float w, float h) const;
+
 	static wxGLCanvas* CreateWxGLCanvas(wxWindow* wnd);
 	static void CreateRenderContext(RenderContext& rc, wxGLCanvas* canvas);
 	static void CreateWindowContext(WindowContext& wc, bool has2d, bool has3d);
@@ -59,7 +61,6 @@ protected:
 
 protected:
 	void InitGui();
-	void PrepareDrawGui(float w, float h) const;
 
 private:
 	void OnSize(wxSizeEvent& event);
