@@ -81,7 +81,11 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info,
 		}
 		else
 		{
-			pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, str));
+            if (prop.get_metadata(PropLongStringTag()).is_valid()) {
+                pg->Append(new wxLongStringProperty(info.desc, wxPG_LABEL, str));
+            } else {
+                pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, str));
+            }
 		}
 	}
 }

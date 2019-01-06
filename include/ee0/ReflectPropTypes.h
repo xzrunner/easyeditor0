@@ -13,6 +13,10 @@ static const char* PropOpenFileTag() {
 	return "PROP_OPEN_FILE";
 }
 
+static const char* PropLongStringTag() {
+    return "PROP_LONG_STRING";
+}
+
 struct UIMetaInfo
 {
 	UIMetaInfo(std::string desc)
