@@ -22,7 +22,7 @@ public:
 	EditPanelImpl& GetImpl() { return *m_impl; }
 	const EditPanelImpl& GetImpl() const { return *m_impl; }
 
-	bool GetKeyState(int key) const;
+//	bool GetKeyState(int key) const;
 
 	const moon::ContextPtr& GetMoonCtx() const { return m_moon_ctx; }
 

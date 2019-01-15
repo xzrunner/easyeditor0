@@ -115,19 +115,18 @@ void EditPanelImpl::OnMouse(wxMouseEvent& event)
 
 void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 {
-	int key_code = event.GetKeyCode();
-	m_keys_state.OnKeyDown(key_code);
+	const int key_code = event.GetKeyCode();
 
 	if (m_on_key_down_func) {
 		m_on_key_down_func(key_code);
 	}
 
-	if (GetKeyState(WXK_CONTROL) && key_code == 'Z')
+	if (wxGetKeyState(WXK_CONTROL) && key_code == 'Z')
 	{
 		m_sub_mgr->NotifyObservers(ee0::MSG_EDIT_OP_UNDO);
 	}
-	else if (GetKeyState(WXK_CONTROL) && key_code == 'Y'
-		  || GetKeyState(WXK_CONTROL) && GetKeyState(WXK_SHIFT) && key_code == 'Y')
+	else if (wxGetKeyState(WXK_CONTROL) && key_code == 'Y'
+		  || wxGetKeyState(WXK_CONTROL) && wxGetKeyState(WXK_SHIFT) && key_code == 'Y')
 	{
 		m_sub_mgr->NotifyObservers(ee0::MSG_EDIT_OP_REDO);
 	}
@@ -146,21 +145,15 @@ void EditPanelImpl::OnKeyDown(wxKeyEvent& event)
 
 void EditPanelImpl::OnKeyUp(wxKeyEvent& event)
 {
-	int key_code = event.GetKeyCode();
-	m_keys_state.OnKeyUp(key_code);
-
 	if (m_edit_op) {
-		m_edit_op->OnKeyUp(key_code);
+		m_edit_op->OnKeyUp(event.GetKeyCode());
 	}
 }
 
 void EditPanelImpl::OnChar(wxKeyEvent& event)
 {
-	int key_code = event.GetKeyCode();
-	m_keys_state.OnKeyDown(key_code);
-
 	if (m_edit_op) {
-		m_edit_op->OnChar(key_code);
+		m_edit_op->OnChar(event.GetKeyCode());
 	}
 }
 

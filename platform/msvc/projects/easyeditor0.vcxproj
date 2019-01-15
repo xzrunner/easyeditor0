@@ -28,7 +28,6 @@
     <ClInclude Include="..\..\..\include\ee0\NSCompCustomProp.h" />
     <ClInclude Include="..\..\..\include\ee0\GameObj.h" />
     <ClInclude Include="..\..\..\include\ee0\GuiCallback.h" />
-    <ClInclude Include="..\..\..\include\ee0\KeysState.h" />
     <ClInclude Include="..\..\..\include\ee0\KeyType.h" />
     <ClInclude Include="..\..\..\include\ee0\MsgHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\SceneNodeContainer.h" />
@@ -103,7 +102,6 @@
     <ClCompile Include="..\..\..\source\tools\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
-    <ClCompile Include="..\..\..\source\view\KeysState.cpp" />
     <ClCompile Include="..\..\..\source\view\RightPopupMenu.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompCustomPropPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompIdPanel.cpp" />

@@ -14,7 +14,7 @@ void WxLibraryList::OnListSelected(wxCommandEvent& event)
 {
 	int idx = event.GetInt();
 
-	if (!GetKeyState(WXK_CONTROL)) {
+	if (!wxGetKeyState(WXK_CONTROL)) {
 		m_selection_set.clear();
 	}
 	m_selection_set.insert(idx);
@@ -85,7 +85,7 @@ void WxLibraryList::OnMouse(wxMouseEvent& event)
 		return;
 	}
 
-	if (!GetKeyState(WXK_CONTROL)) {
+	if (!wxGetKeyState(WXK_CONTROL)) {
 		m_selection_set.clear();
 	}
 	m_selection_set.insert(GetSelection());

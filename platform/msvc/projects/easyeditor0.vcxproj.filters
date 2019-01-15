@@ -175,9 +175,6 @@
     <ClInclude Include="..\..\..\include\ee0\KeyType.h">
       <Filter>tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\include\ee0\KeysState.h">
-      <Filter>tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\include\ee0\AtomicOP.h">
       <Filter>edit</Filter>
     </ClInclude>
@@ -337,9 +334,6 @@
       <Filter>view\detail</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp">
-      <Filter>tools</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\source\view\KeysState.cpp">
       <Filter>tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp">

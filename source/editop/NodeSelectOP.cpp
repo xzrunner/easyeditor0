@@ -74,7 +74,7 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 		vars.SetVariant("id", var_id);
 #endif // GAME_OBJ_ECS
 
-		if (m_stage.GetKeyState(WXK_CONTROL))
+		if (wxGetKeyState(WXK_CONTROL))
 		{
 #ifndef GAME_OBJ_ECS
 			if (selection.IsExist(n0::NodeWithPos(selected, selected, 0))) {
@@ -127,7 +127,7 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 
 	std::vector<GameObj> objs;
 	QueryByRect(m_last_pos, sm::ivec2(x, y), m_last_pos.x < x, objs);
-	if (m_stage.GetKeyState(WXK_CONTROL))
+	if (wxGetKeyState(WXK_CONTROL))
 	{
 		for (auto& obj : objs)
 		{

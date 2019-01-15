@@ -26,10 +26,10 @@ WxEditPanel::WxEditPanel(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 	m_moon_ctx->Init();
 }
 
-bool WxEditPanel::GetKeyState(int key) const
-{
-	return m_impl->GetKeyState(key);
-}
+//bool WxEditPanel::GetKeyState(int key) const
+//{
+//	return m_impl->GetKeyState(key);
+//}
 
 void WxEditPanel::OnSize(wxSizeEvent& event)
 {
