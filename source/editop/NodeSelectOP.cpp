@@ -184,4 +184,17 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 	return false;
 }
 
+bool NodeSelectOP::OnMouseMove(int x, int y)
+{
+    if (EditOP::OnMouseMove(x, y)) {
+        return true;
+    }
+
+    if (m_last_pos.IsValid()) {
+        OnMouseLeftUp(x, y);
+    }
+
+    return false;
+}
+
 }

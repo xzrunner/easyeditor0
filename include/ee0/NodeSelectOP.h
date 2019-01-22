@@ -21,6 +21,7 @@ public:
 	virtual bool OnKeyDown(int key_code) override;
 	virtual bool OnMouseLeftDown(int x, int y) override;
 	virtual bool OnMouseLeftUp(int x, int y) override;
+    virtual bool OnMouseMove(int x, int y) override;
 
 private:
 	virtual GameObj QueryByPos(int screen_x, int screen_y) const = 0;
