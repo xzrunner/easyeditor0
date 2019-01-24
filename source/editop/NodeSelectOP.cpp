@@ -5,6 +5,7 @@
 #include "ee0/SubjectMgr.h"
 
 #include <guard/check.h>
+#include <node0/SceneNode.h>
 
 namespace ee0
 {
@@ -23,22 +24,28 @@ bool NodeSelectOP::OnKeyDown(int key_code)
 		return true;
 	}
 
-	if (key_code == WXK_DELETE)
-	{
-		m_stage.GetSelection().Traverse([&](const GameObjWithPos& owp)->bool
-		{
-#ifndef GAME_OBJ_ECS
-			bool succ = MsgHelper::DeleteNode(*m_stage.GetSubjectMgr(),
-				std::const_pointer_cast<n0::SceneNode>(owp.GetNode()));
-#else
-			bool succ = MsgHelper::DeleteNode(*m_stage.GetSubjectMgr(), owp);
-#endif // GAME_OBJ_ECS
-			GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
-			return true;
-		});
-
-		m_stage.GetSubjectMgr()->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
-	}
+    switch (key_code)
+    {
+    case WXK_DELETE:
+        DeleteSelection();
+        break;
+    case 'C':
+        if (wxGetKeyState(WXK_CONTROL)) {
+            CopySelectionToClipboard();
+        }
+        break;
+    case 'V':
+        if (wxGetKeyState(WXK_CONTROL)) {
+            PasteSelectionFromClipboard();
+        }
+        break;
+    case 'X':
+        if (wxGetKeyState(WXK_CONTROL)) {
+            CopySelectionToClipboard();
+            DeleteSelection();
+        }
+        break;
+    }
 
 	return false;
 }
@@ -195,6 +202,45 @@ bool NodeSelectOP::OnMouseMove(int x, int y)
     }
 
     return false;
+}
+
+void NodeSelectOP::DeleteSelection()
+{
+	m_stage.GetSelection().Traverse([&](const GameObjWithPos& owp)->bool
+	{
+#ifndef GAME_OBJ_ECS
+		bool succ = MsgHelper::DeleteNode(*m_stage.GetSubjectMgr(),
+			std::const_pointer_cast<n0::SceneNode>(owp.GetNode()));
+#else
+		bool succ = MsgHelper::DeleteNode(*m_stage.GetSubjectMgr(), owp);
+#endif // GAME_OBJ_ECS
+		GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
+		return true;
+	});
+
+	m_stage.GetSubjectMgr()->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+}
+
+void NodeSelectOP::CopySelectionToClipboard()
+{
+    m_clipboard.clear();
+    m_clipboard.reserve(m_stage.GetSelection().Size());
+    m_stage.GetSelection().Traverse([&](const GameObjWithPos& owp)->bool
+    {
+        m_clipboard.push_back(owp.GetNode());
+        return true;
+    });
+}
+
+void NodeSelectOP::PasteSelectionFromClipboard()
+{
+    m_stage.GetSubjectMgr()->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+
+    auto& sub_mgr = m_stage.GetSubjectMgr();
+    for (auto& n : m_clipboard) {
+        auto copy = n->Clone();
+        MsgHelper::InsertNode(*sub_mgr, copy, true);
+    }
 }
 
 }

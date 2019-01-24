@@ -28,11 +28,17 @@ private:
 	virtual void QueryByRect(const sm::ivec2& p0, const sm::ivec2& p1,
 		bool contain, std::vector<GameObj>& result) const = 0;
 
+    void DeleteSelection();
+    void CopySelectionToClipboard();
+    void PasteSelectionFromClipboard();
+
 protected:
 	WxStagePage& m_stage;
 
 private:
 	sm::ivec2 m_last_pos;
+
+    std::vector<n0::SceneNodePtr> m_clipboard;
 
 }; // NodeSelectOP
 
