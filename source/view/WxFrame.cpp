@@ -17,8 +17,8 @@ BEGIN_EVENT_TABLE(WxFrame, wxFrame)
 	EVT_MENU(ID_SETTINGS, WxFrame::OnSettings)
 END_EVENT_TABLE()
 
-WxFrame::WxFrame(const std::string& title, bool maxmize, const wxSize& size)
-	: wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size, wxDEFAULT_FRAME_STYLE | (wxMAXIMIZE * maxmize))
+WxFrame::WxFrame(const std::string& title, const wxSize& size, long style)
+	: wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, size, style)
 {
 	InitMenuBar();
 	InitStatueBar();

@@ -12,8 +12,8 @@ class Application;
 class WxFrame : public wxFrame
 {
 public:
-	WxFrame(const std::string& title, bool maxmize = false,
-		const wxSize& size = wxSize(800, 600));
+	WxFrame(const std::string& title, const wxSize& size = wxDefaultSize,
+        long style = wxDEFAULT_FRAME_STYLE);
 
 	void SetApp(const std::shared_ptr<Application>& app) {
 		m_app = app;
