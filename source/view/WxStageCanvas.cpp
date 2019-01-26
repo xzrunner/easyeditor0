@@ -156,8 +156,13 @@ void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3
 
 void WxStageCanvas::OnDrawWhole() const
 {
-    if (!m_binded_wnd_ctx && GetWidnowContext().wc2) {
-        if (rg::RenderMgr::Instance()->BindSprWndCtx(*GetWidnowContext().wc2)) {
+    if (!m_binded_wnd_ctx) {
+        if (GetWidnowContext().wc2 &&
+            rg::RenderMgr::Instance()->BindSprWndCtx(*GetWidnowContext().wc2)) {
+            m_binded_wnd_ctx = true;
+        }
+        if (GetWidnowContext().wc3 &&
+            rg::RenderMgr::Instance()->BindMeshWndCtx(*GetWidnowContext().wc3)) {
             m_binded_wnd_ctx = true;
         }
     }
