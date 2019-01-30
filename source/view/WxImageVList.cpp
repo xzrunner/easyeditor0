@@ -167,7 +167,7 @@ void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 		}
 
 		// name
-		dc.SetFont(wxFont(is_selected ? 12 : 10, wxDEFAULT, wxNORMAL, wxNORMAL));
+		dc.SetFont(wxFont(is_selected ? 12 : 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTSTYLE_NORMAL));
 		wxSize size = dc.GetTextExtent(name.c_str());
 		int x = rect.x + COMPACT_SPACE_LEFT + COMPACT_HEIGHT * 2;
 		int y = rect.y + COMPACT_SPACE_UP;
@@ -195,7 +195,7 @@ void WxImageVList::OnDrawItem(wxDC& dc, const wxRect& rect, size_t n) const
 		}
 
 		// name
-		dc.SetFont(wxFont(is_selected ? 12 : 10, wxDEFAULT, wxNORMAL, wxNORMAL));
+		dc.SetFont(wxFont(is_selected ? 12 : 10, wxFONTFAMILY_DEFAULT, wxFONTSTYLE_NORMAL, wxFONTSTYLE_NORMAL));
 		wxSize size = dc.GetTextExtent(name.c_str());
 		dc.DrawText(name.c_str(), rect.x + rect.width * 0.5f - size.GetWidth() * 0.5f, y + NORMAL_SPACE_UP);
 	}
