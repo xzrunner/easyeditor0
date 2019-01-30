@@ -57,6 +57,7 @@
     <ClInclude Include="..\..\..\include\ee0\NodeSelectOP.h" />
     <ClInclude Include="..\..\..\include\ee0\Observer.h" />
     <ClInclude Include="..\..\..\include\ee0\WxListSelectDlg.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxMaterialCtrl.h" />
     <ClInclude Include="..\..\..\include\ee0\WxOpenFileProp.h" />
     <ClInclude Include="..\..\..\include\ee0\WxPropHelper.h" />
     <ClInclude Include="..\..\..\include\ee0\WxSimpleCanvas.h" />
@@ -90,6 +91,7 @@
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxImagePanel.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxListSelectDlg.cpp" />
+    <ClCompile Include="..\..\..\source\gui\WxMaterialCtrl.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxOpenFileProp.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxSliderOneCtrl.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxSliderTwoCtrl.cpp" />

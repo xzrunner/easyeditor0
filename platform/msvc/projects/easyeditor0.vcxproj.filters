@@ -76,6 +76,9 @@
     <Filter Include="view\property">
       <UniqueIdentifier>{70cf4648-6446-4cc6-8721-e267357b1eac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="gui\detail">
+      <UniqueIdentifier>{375145d7-85e2-4bfa-82c9-0e778e89eb01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\include\ee0\Variant.h">
@@ -271,6 +274,9 @@
     <ClInclude Include="..\..\..\include\ee0\SceneNodeContainer.h">
       <Filter>interface</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxMaterialCtrl.h">
+      <Filter>gui\detail</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -401,6 +407,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\RenderContext.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\gui\WxMaterialCtrl.cpp">
+      <Filter>gui\detail</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
