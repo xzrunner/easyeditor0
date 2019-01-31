@@ -38,7 +38,7 @@ private:
 			virtual void OnDraw() const override;
 
 		private:
-			void DrawItem(const pt2::Color& col, float pos) const;
+			void DrawItem(const pt0::Color& col, float pos) const;
 
 		private:
 			pt2::GradientColor& m_col;

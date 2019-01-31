@@ -1,7 +1,7 @@
 #include "ee0/CompCustomProp.h"
 
 #include <SM_Vector.h>
-#include <painting2/Color.h>
+#include <painting0/Color.h>
 
 namespace ee0
 {
@@ -37,8 +37,8 @@ std::unique_ptr<n0::NodeComp> CompCustomProp::Clone(const n0::SceneNode& obj) co
 			break;
 		case PROP_COLOR:
 			{
-				auto& col = *static_cast<pt2::Color*>(itr.val.m_val.pv);
-				auto tmp = new pt2::Color(col);
+				auto& col = *static_cast<pt0::Color*>(itr.val.m_val.pv);
+				auto tmp = new pt0::Color(col);
 				itr.val.m_val.pv = tmp;
 			}
 			break;

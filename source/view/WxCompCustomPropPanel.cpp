@@ -3,7 +3,7 @@
 
 #include <SM_Vector.h>
 #include <node0/SceneNode.h>
-#include <painting2/Color.h>
+#include <painting0/Color.h>
 #include <cpputil/StringHelper.h>
 
 #include <wx/wx.h>
@@ -179,7 +179,7 @@ void WxCompCustomPropPanel::InitProperties()
 			break;
 		case CompCustomProp::PROP_COLOR:
 			{
-				auto pcol = static_cast<pt2::Color*>(prop.val.m_val.pv);
+				auto pcol = static_cast<pt0::Color*>(prop.val.m_val.pv);
 				wxColour col = wxColour(pcol->r, pcol->g, pcol->b, pcol->a);
 				m_pg->Append(new wxColourProperty(name, wxPG_LABEL, col));
 				m_pg->SetPropertyAttribute(name.c_str(), "HasAlpha", true);
@@ -236,7 +236,7 @@ void WxCompCustomPropPanel::OnPropertyGridChange(wxPropertyGridEvent& event)
 				{
 					wxColour col = wxANY_AS(val, wxColour);
 
-					auto pcol = static_cast<pt2::Color*>(prop.val.m_val.pv);
+					auto pcol = static_cast<pt0::Color*>(prop.val.m_val.pv);
 					pcol->r = col.Red();
 					pcol->g = col.Green();
 					pcol->b = col.Blue();
@@ -302,7 +302,7 @@ void WxCompCustomPropPanel::OnAddPress(wxCommandEvent& event)
 		m_pg->Append(new wxColourProperty(key, wxPG_LABEL, wxColour(255, 255, 255)));
 		m_pg->SetPropertyAttribute(key.c_str(), "HasAlpha", true);
 		prop.val.m_type = VT_PVOID;
-		prop.val.m_val.pv = new pt2::Color(255, 255, 255);
+		prop.val.m_val.pv = new pt0::Color(255, 255, 255);
 		break;
 	}
 

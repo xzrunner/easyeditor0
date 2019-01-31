@@ -14,7 +14,7 @@
 namespace
 {
 
-wxColour ToWxColor(const pt2::Color& col)
+wxColour ToWxColor(const pt0::Color& col)
 {
 	return wxColour(col.r, col.g, col.b, col.a);
 }
@@ -128,7 +128,7 @@ OnDraw() const
 }
 
 void WxColorGradientDlg::ColorPreview::Canvas::
-DrawItem(const pt2::Color& col, float pos) const
+DrawItem(const pt0::Color& col, float pos) const
 {
 	glColor3ub(col.r, col.g, col.b);
 	float x = -1 + 2 * pos;

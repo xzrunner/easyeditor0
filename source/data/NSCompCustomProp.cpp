@@ -3,7 +3,7 @@
 #include <bs/ExportStream.h>
 #include <bs/ImportStream.h>
 #include <SM_Vector.h>
-#include <painting2/Color.h>
+#include <painting0/Color.h>
 #include <guard/check.h>
 
 namespace ee0
@@ -79,7 +79,7 @@ void NSCompCustomProp::StoreToBin(const std::string& dir, bs::ExportStream& es) 
 			break;
 		case ee0::CompCustomProp::PROP_COLOR:
 			{
-				auto& col = *static_cast<pt2::Color*>(prop.val.m_val.pv);
+				auto& col = *static_cast<pt0::Color*>(prop.val.m_val.pv);
 				es.Write(static_cast<uint32_t>(col.ToRGBA()));
 			}
 			break;
@@ -144,7 +144,7 @@ void NSCompCustomProp::LoadFromBin(const std::string& dir, bs::ImportStream& is)
 				prop.val.m_type = ee0::VT_PVOID;
 
 				uint32_t rgba = is.UInt32();
-				auto tmp = new pt2::Color();
+				auto tmp = new pt0::Color();
 				tmp->FromRGBA(rgba);
 				prop.val.m_val.pv = tmp;
 			}
@@ -200,7 +200,7 @@ void NSCompCustomProp::StoreToJson(const std::string& dir, rapidjson::Value& val
 			{
 				prop_val.AddMember("type", "color", alloc);
 
-				auto& col = *static_cast<pt2::Color*>(prop.val.m_val.pv);
+				auto& col = *static_cast<pt0::Color*>(prop.val.m_val.pv);
 				prop_val.AddMember("val", col.ToRGBA(), alloc);
 			}
 			break;
@@ -265,7 +265,7 @@ void NSCompCustomProp::LoadFromJson(mm::LinearAllocator& alloc, const std::strin
 			prop.val.m_type = ee0::VT_PVOID;
 
 			uint32_t rgba = val.GetUint();
-			auto tmp = new pt2::Color();
+			auto tmp = new pt0::Color();
 			tmp->FromRGBA(rgba);
 			prop.val.m_val.pv = tmp;
 		}

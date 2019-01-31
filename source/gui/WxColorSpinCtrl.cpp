@@ -2,7 +2,7 @@
 #include "ee0/SubjectMgr.h"
 #include "ee0/MessageID.h"
 
-#include <painting2/Color.h>
+#include <painting0/Color.h>
 
 #include <wx/sizer.h>
 #include <wx/stattext.h>
@@ -11,7 +11,7 @@
 namespace ee0
 {
 
-WxColorSpinCtrl::WxColorSpinCtrl(wxWindow* parent, pt2::Color& col,
+WxColorSpinCtrl::WxColorSpinCtrl(wxWindow* parent, pt0::Color& col,
 	                             const std::string& title, const SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY)
 	, m_col(col)
