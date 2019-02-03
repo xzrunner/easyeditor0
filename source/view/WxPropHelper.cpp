@@ -23,10 +23,10 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info,
 	else if (type == rttr::type::get<sm::bvec2>())
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec2>();
-		pg->Append(new wxFloatProperty("R", wxPG_LABEL, b.x));
-		pg->Append(new wxFloatProperty("G", wxPG_LABEL, b.y));
-		pg->SetPropertyAttribute("R", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-		pg->SetPropertyAttribute("G", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+		pg->Append(new wxFloatProperty("X", wxPG_LABEL, b.x));
+		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, b.y));
+		pg->SetPropertyAttribute("X", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+		pg->SetPropertyAttribute("Y", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 	}
 	else if (type == rttr::type::get<float>())
 	{
@@ -36,23 +36,23 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info,
 	else if (type == rttr::type::get<sm::vec2>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec2>();
-		pg->Append(new wxFloatProperty("R", wxPG_LABEL, v.x));
-		pg->Append(new wxFloatProperty("G", wxPG_LABEL, v.y));
+		pg->Append(new wxFloatProperty("X", wxPG_LABEL, v.x));
+		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, v.y));
 	}
 	else if (type == rttr::type::get<sm::vec3>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec3>();
-		pg->Append(new wxFloatProperty("R", wxPG_LABEL, v.x));
-		pg->Append(new wxFloatProperty("G", wxPG_LABEL, v.y));
-		pg->Append(new wxFloatProperty("B", wxPG_LABEL, v.z));
+		pg->Append(new wxFloatProperty("X", wxPG_LABEL, v.x));
+		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, v.y));
+		pg->Append(new wxFloatProperty("Z", wxPG_LABEL, v.z));
 	}
 	else if (type == rttr::type::get<sm::vec4>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec4>();
-		pg->Append(new wxFloatProperty("R", wxPG_LABEL, v.x));
-		pg->Append(new wxFloatProperty("G", wxPG_LABEL, v.y));
-		pg->Append(new wxFloatProperty("B", wxPG_LABEL, v.z));
-		pg->Append(new wxFloatProperty("A", wxPG_LABEL, v.w));
+		pg->Append(new wxFloatProperty("X", wxPG_LABEL, v.x));
+		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, v.y));
+		pg->Append(new wxFloatProperty("Z", wxPG_LABEL, v.z));
+		pg->Append(new wxFloatProperty("W", wxPG_LABEL, v.w));
 	}
 	else if (type == rttr::type::get<const char*>()
 	      || type == rttr::type::get<std::string>())
@@ -102,12 +102,12 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 	{
 		prop.set_value(obj, wxANY_AS(val, bool));
 	}
-	else if (type == rttr::type::get<sm::bvec2>() && (key == "R" || key == "G"))
+	else if (type == rttr::type::get<sm::bvec2>() && (key == "X" || key == "Y"))
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec2>();
-		if (key == "R") {
+		if (key == "X") {
 			b.x = wxANY_AS(val, bool);
-		} else if (key == "G") {
+		} else if (key == "Y") {
 			b.y = wxANY_AS(val, bool);
 		}
 		prop.set_value(obj, b);
@@ -116,38 +116,38 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 	{
 		prop.set_value(obj, wxANY_AS(val, float));
 	}
-	else if (type == rttr::type::get<sm::vec2>() && (key == "R" || key == "G"))
+	else if (type == rttr::type::get<sm::vec2>() && (key == "X" || key == "Y"))
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec2>();
-		if (key == "R") {
+		if (key == "X") {
 			v.x = wxANY_AS(val, float);
-		} else if (key == "G") {
+		} else if (key == "Y") {
 			v.y = wxANY_AS(val, float);
 		}
 		prop.set_value(obj, v);
 	}
-	else if (type == rttr::type::get<sm::vec3>() && (key == "R" || key == "G" || key == "B"))
+	else if (type == rttr::type::get<sm::vec3>() && (key == "X" || key == "Y" || key == "Z"))
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec3>();
-		if (key == "R") {
+		if (key == "X") {
 			v.x = wxANY_AS(val, float);
-		} else if (key == "G") {
+		} else if (key == "Y") {
 			v.y = wxANY_AS(val, float);
-		} else if (key == "B") {
+		} else if (key == "Z") {
 			v.z = wxANY_AS(val, float);
 		}
 		prop.set_value(obj, v);
 	}
-	else if (type == rttr::type::get<sm::vec4>() && (key == "R" || key == "G" || key == "B" || key == "A"))
+	else if (type == rttr::type::get<sm::vec4>() && (key == "X" || key == "Y" || key == "Z" || key == "W"))
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec4>();
-		if (key == "R") {
+		if (key == "X") {
 			v.x = wxANY_AS(val, float);
-		} else if (key == "G") {
+		} else if (key == "Y") {
 			v.y = wxANY_AS(val, float);
-		} else if (key == "B") {
+		} else if (key == "Z") {
 			v.z = wxANY_AS(val, float);
-		} else if (key == "A") {
+		} else if (key == "W") {
 			v.w = wxANY_AS(val, float);
 		}
 		prop.set_value(obj, v);
