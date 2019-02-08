@@ -33,6 +33,92 @@ WxCompPanel::WxCompPanel(wxWindow* parent, const std::string& title)
 {
 }
 
+void WxCompPanel::RefreshNodeComp()
+{
+    for (auto& ctrl : m_controls)
+    {
+        auto type = ctrl.prop.get_type();
+        if (type == rttr::type::get<bool>())
+        {
+            auto b = ctrl.prop.get_value(ctrl.obj).get_value<bool>();
+            static_cast<wxCheckBox*>(ctrl.control)->SetValue(b);
+        }
+        else if (type == rttr::type::get<sm::bvec2>())
+        {
+            auto b2 = ctrl.prop.get_value(ctrl.obj).get_value<sm::bvec2>();
+            if (ctrl.flag == FLAG_XYZW[0]) {
+                static_cast<wxCheckBox*>(ctrl.control)->SetValue(b2.x);
+            } else if (ctrl.flag == FLAG_XYZW[1]) {
+                static_cast<wxCheckBox*>(ctrl.control)->SetValue(b2.y);
+            }
+        }
+        else if (type == rttr::type::get<float>())
+        {
+            auto v = ctrl.prop.get_value(ctrl.obj).get_value<float>();
+            static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v));
+        }
+        else if (type == rttr::type::get<sm::vec2>())
+        {
+            auto v2 = ctrl.prop.get_value(ctrl.obj).get_value<sm::vec2>();
+            if (ctrl.flag == FLAG_XYZW[0]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v2.x));
+            } else if (ctrl.flag == FLAG_XYZW[1]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v2.y));
+            }
+        }
+        else if (type == rttr::type::get<sm::vec3>())
+        {
+            auto v3 = ctrl.prop.get_value(ctrl.obj).get_value<sm::vec3>();
+            if (ctrl.flag == FLAG_XYZW[0]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v3.x));
+            } else if (ctrl.flag == FLAG_XYZW[1]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v3.y));
+            } else if (ctrl.flag == FLAG_XYZW[2]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v3.z));
+            }
+        }
+        else if (type == rttr::type::get<sm::vec4>())
+        {
+            auto v4 = ctrl.prop.get_value(ctrl.obj).get_value<sm::vec4>();
+            if (ctrl.flag == FLAG_XYZW[0]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v4.x));
+            } else if (ctrl.flag == FLAG_XYZW[1]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v4.y));
+            } else if (ctrl.flag == FLAG_XYZW[2]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v4.z));
+            } else if (ctrl.flag == FLAG_XYZW[4]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(v4.w));
+            }
+        }
+        else if (type == rttr::type::get<const char*>()
+              || type == rttr::type::get<std::string>())
+        {
+            std::string str = (type == rttr::type::get<const char*>()) ?
+                ctrl.prop.get_value(ctrl.obj).get_value<const char*>() :
+                ctrl.prop.get_value(ctrl.obj).to_string();
+            static_cast<wxTextCtrl*>(ctrl.control)->SetValue(str);
+        }
+        else if (type == rttr::type::get<pt0::Color>())
+        {
+            auto col = ctrl.prop.get_value(ctrl.obj).get_value<pt0::Color>();
+            if (ctrl.flag == FLAG_XYZW[0]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(col.r));
+            } else if (ctrl.flag == FLAG_XYZW[1]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(col.g));
+            } else if (ctrl.flag == FLAG_XYZW[2]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(col.b));
+            } else if (ctrl.flag == FLAG_XYZW[3]) {
+                static_cast<wxTextCtrl*>(ctrl.control)->SetValue(std::to_string(col.a));
+            }
+        }
+        else
+        {
+            // unknown type
+            assert(0);
+        }
+    }
+}
+
 void WxCompPanel::InitControl(wxSizer* top_sizer, const UIMetaInfo& info,
                               rttr::instance obj, rttr::property prop)
 {
@@ -205,6 +291,11 @@ void WxCompPanel::InitControl(wxSizer* top_sizer, const UIMetaInfo& info,
 
         top_sizer->Add(sizer);
     }
+    else
+    {
+        // unknown type
+        assert(0);
+    }
 }
 
 void WxCompPanel::OnCollapsChanged(wxCollapsiblePaneEvent& event)
@@ -302,20 +393,20 @@ void WxCompPanel::SetCheckboxValue(wxCommandEvent& event)
             continue;
         }
 
-        auto s_val = static_cast<wxTextCtrl*>(ctrl.control)->GetValue();
+        auto b_val = static_cast<wxCheckBox*>(ctrl.control)->GetValue();
 
         auto type = ctrl.prop.get_type();
         if (type == rttr::type::get<bool>())
         {
-            ctrl.prop.set_value(ctrl.obj, static_cast<bool>(std::atoi(s_val)));
+            ctrl.prop.set_value(ctrl.obj, b_val);
         }
         else if (type == rttr::type::get<sm::bvec2>())
         {
             auto b = ctrl.prop.get_value(ctrl.obj).get_value<sm::bvec2>();
             if (ctrl.flag == FLAG_XYZW[0]) {
-                b.x = static_cast<bool>(std::atoi(s_val));
+                b.x = b_val;
             } else if (ctrl.flag == FLAG_XYZW[1]) {
-                b.y = static_cast<bool>(std::atoi(s_val));
+                b.y = b_val;
             }
             ctrl.prop.set_value(ctrl.obj, b);
         }

@@ -12,7 +12,8 @@ class WxCompPanel : public wxCollapsiblePane
 {
 public:
 	WxCompPanel(wxWindow* parent, const std::string& title);
-	virtual void RefreshNodeComp() = 0;
+
+    virtual void RefreshNodeComp();
 
 private:
 	enum
