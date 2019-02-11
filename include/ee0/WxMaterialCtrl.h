@@ -3,12 +3,13 @@
 #include "ee0/typedef.h"
 
 #include <painting0/RenderVariant.h>
+#include <painting0/Material.h>
 
 #include <wx/window.h>
 
 class wxTextCtrl;
 
-namespace pt0 { class Material; class RenderVariant; }
+namespace pt0 { class RenderVariant; }
 
 namespace ee0
 {
