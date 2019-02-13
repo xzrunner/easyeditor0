@@ -158,11 +158,11 @@ void WxStageCanvas::OnDrawWhole() const
 {
     if (!m_binded_wnd_ctx) {
         if (GetWidnowContext().wc2 &&
-            rg::RenderMgr::Instance()->BindSprWndCtx(*GetWidnowContext().wc2)) {
+            rg::RenderMgr::Instance()->BindWndCtx2D(*GetWidnowContext().wc2)) {
             m_binded_wnd_ctx = true;
         }
         if (GetWidnowContext().wc3 &&
-            rg::RenderMgr::Instance()->BindMeshWndCtx(*GetWidnowContext().wc3)) {
+            rg::RenderMgr::Instance()->BindWndCtx3D(*GetWidnowContext().wc3)) {
             m_binded_wnd_ctx = true;
         }
     }
