@@ -277,6 +277,9 @@
     <ClInclude Include="..\..\..\include\ee0\WxMaterialCtrl.h">
       <Filter>gui\detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\CombineAOP.h">
+      <Filter>edit</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -410,6 +413,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\gui\WxMaterialCtrl.cpp">
       <Filter>gui\detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\editop\CombineAOP.cpp">
+      <Filter>edit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
