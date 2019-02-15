@@ -156,15 +156,15 @@ void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3
 
 void WxStageCanvas::OnDrawWhole() const
 {
-    if (!m_binded_wnd_ctx) {
-        if (GetWidnowContext().wc2 &&
-            rg::RenderMgr::Instance()->BindWndCtx2D(*GetWidnowContext().wc2)) {
-            m_binded_wnd_ctx = true;
-        }
-        if (GetWidnowContext().wc3 &&
-            rg::RenderMgr::Instance()->BindWndCtx3D(*GetWidnowContext().wc3)) {
-            m_binded_wnd_ctx = true;
-        }
+    if (GetWidnowContext().wc2) {
+        rg::RenderMgr::Instance()->BindWndCtx2D(
+            std::const_pointer_cast<pt2::WindowContext>(GetWidnowContext().wc2)
+        );
+    }
+    if (GetWidnowContext().wc3) {
+        rg::RenderMgr::Instance()->BindWndCtx3D(
+            std::const_pointer_cast<pt3::WindowContext>(GetWidnowContext().wc3)
+        );
     }
 
 	OnDrawSprites();

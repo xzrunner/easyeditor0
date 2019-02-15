@@ -106,8 +106,6 @@ private:
 
 	std::vector<std::function<void()>> m_tasks;
 
-    mutable bool m_binded_wnd_ctx = false;
-
 	DECLARE_EVENT_TABLE()
 
 }; // WxStageCanvas
