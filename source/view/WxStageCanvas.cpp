@@ -105,12 +105,12 @@ void WxStageCanvas::PrepareDrawGui(float w, float h) const
 {
 	ee0::RenderContext::Reset2D();
 
-	auto sr = std::static_pointer_cast<rg::SpriteRenderer>(
+	auto rd = std::static_pointer_cast<rg::SpriteRenderer>(
 		rg::RenderMgr::Instance()->SetRenderer(rg::RenderType::SPRITE)
 	);
-	auto& palette = sr->GetPalette();
+	auto& palette = rd->GetPalette();
 
-	auto shader = sr->GetShader();
+	auto shader = rd->GetAllShaders()[0];
 	shader->Use();
 
 	auto pt2_shader = std::dynamic_pointer_cast<pt2::Shader>(shader);
