@@ -66,6 +66,20 @@ void EditPanelImpl::OnMouse(wxMouseEvent& event)
 			egui->input_events.emplace_back(egui::InputType::MOUSE_LEFT_UP, gui_x, gui_y);
 		}
 	}
+    else if (event.MiddleDown())
+    {
+        m_edit_op->OnMouseMiddleDown(x, y);
+        if (egui) {
+            egui->input_events.emplace_back(egui::InputType::MOUSE_MIDDLE_DOWN, gui_x, gui_y);
+        }
+    }
+    else if (event.MiddleUp())
+    {
+        m_edit_op->OnMouseMiddleUp(x, y);
+        if (egui) {
+            egui->input_events.emplace_back(egui::InputType::MOUSE_MIDDLE_UP, gui_x, gui_y);
+        }
+    }
 	else if (event.RightDown())
 	{
 		m_edit_op->OnMouseRightDown(x, y);

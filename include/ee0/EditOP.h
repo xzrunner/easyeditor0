@@ -24,6 +24,8 @@ public:
 
 	virtual bool OnMouseLeftDown(int x, int y);
 	virtual bool OnMouseLeftUp(int x, int y);
+    virtual bool OnMouseMiddleDown(int x, int y);
+    virtual bool OnMouseMiddleUp(int x, int y);
 	virtual bool OnMouseRightDown(int x, int y);
 	virtual bool OnMouseRightUp(int x, int y);
 	virtual bool OnMouseMove(int x, int y);

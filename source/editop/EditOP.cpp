@@ -48,6 +48,24 @@ bool EditOP::OnMouseLeftUp(int x, int y)
 	}
 }
 
+bool EditOP::OnMouseMiddleDown(int x, int y)
+{
+	if (m_prev_op && m_prev_op->OnMouseMiddleDown(x, y)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool EditOP::OnMouseMiddleUp(int x, int y)
+{
+	if (m_prev_op && m_prev_op->OnMouseMiddleUp(x, y)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 bool EditOP::OnMouseRightDown(int x, int y)
 {
 	if (m_prev_op && m_prev_op->OnMouseRightDown(x, y)) {
