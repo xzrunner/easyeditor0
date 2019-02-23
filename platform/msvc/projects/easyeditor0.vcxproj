@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\..\source\data\WxBitmap.cpp" />
     <ClCompile Include="..\..\..\source\editop\CombineAOP.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditOP.cpp" />
+    <ClCompile Include="..\..\..\source\editop\EditOpState.cpp" />
     <ClCompile Include="..\..\..\source\editop\EditRecord.cpp" />
     <ClCompile Include="..\..\..\source\editop\NodeSelectOP.cpp" />
     <ClCompile Include="..\..\..\source\gui\prefs.cpp" />
