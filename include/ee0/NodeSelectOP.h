@@ -2,6 +2,7 @@
 
 #include "ee0/EditOP.h"
 #include "ee0/GameObj.h"
+#include "ee0/typedef.h"
 
 #include <SM_Vector.h>
 
@@ -11,6 +12,7 @@ namespace ee0
 {
 
 class WxStagePage;
+class VariantSet;
 
 class NodeSelectOP : public EditOP
 {
@@ -28,9 +30,20 @@ private:
 	virtual void QueryByRect(const sm::ivec2& p0, const sm::ivec2& p1,
 		bool contain, std::vector<GameObj>& result) const = 0;
 
+    // callback func
+    virtual void AfterInsertSelected(const n0::SceneNodePtr& node) const {}
+    virtual void AfterDeleteSelected(const n0::SceneNodePtr& node) const {}
+    virtual void AfterClearSelection() const {}
+
     void DeleteSelection();
     void CopySelectionToClipboard();
     void PasteSelectionFromClipboard();
+
+    void InsertSelected(const SubjectMgrPtr& sub_mgr,
+        const n0::SceneNodePtr& node, const VariantSet& variants) const;
+    void DeleteSelected(const SubjectMgrPtr& sub_mgr,
+        const n0::SceneNodePtr& node, const VariantSet& variants) const;
+    void ClearSelection(const SubjectMgrPtr& sub_mgr) const;
 
 protected:
 	WxStagePage& m_stage;

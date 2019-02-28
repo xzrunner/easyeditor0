@@ -88,9 +88,9 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 #else
 			if (selection.IsExist(selected)) {
 #endif // GAME_OBJ_ECS
-				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
+                DeleteSelected(sub_mgr, selected, vars);
 			} else {
-				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+                InsertSelected(sub_mgr, selected, vars);
 			}
 		}
 		else
@@ -101,14 +101,14 @@ bool NodeSelectOP::OnMouseLeftDown(int x, int y)
 			if (!selection.IsExist(selected))
 #endif // GAME_OBJ_ECS
 			{
-				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
-				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+                ClearSelection(sub_mgr);
+                InsertSelected(sub_mgr, selected, vars);
 			}
 		}
 	}
 	else
 	{
-		sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+        ClearSelection(sub_mgr);
 	}
 
 	sub_mgr->NotifyObservers(MSG_SET_CANVAS_DIRTY);
@@ -162,15 +162,15 @@ bool NodeSelectOP::OnMouseLeftUp(int x, int y)
 #else
 			if (selection.IsExist(obj)) {
 #endif // GAME_OBJ_ECS
-				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
+                DeleteSelected(sub_mgr, obj, vars);
 			} else {
-				sub_mgr->NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+                InsertSelected(sub_mgr, obj, vars);
 			}
 		}
 	}
 	else
 	{
-		sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+        ClearSelection(sub_mgr);
 
 #ifndef GAME_OBJ_ECS
 		std::vector<n0::NodeWithPos> nwps;
@@ -218,7 +218,7 @@ void NodeSelectOP::DeleteSelection()
 		return true;
 	});
 
-	m_stage.GetSubjectMgr()->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+    ClearSelection(m_stage.GetSubjectMgr());
 }
 
 void NodeSelectOP::CopySelectionToClipboard()
@@ -234,13 +234,35 @@ void NodeSelectOP::CopySelectionToClipboard()
 
 void NodeSelectOP::PasteSelectionFromClipboard()
 {
-    m_stage.GetSubjectMgr()->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+    ClearSelection(m_stage.GetSubjectMgr());
 
     auto& sub_mgr = m_stage.GetSubjectMgr();
     for (auto& n : m_clipboard) {
         auto copy = n->Clone();
         MsgHelper::InsertNode(*sub_mgr, copy, true);
     }
+}
+
+void NodeSelectOP::InsertSelected(const SubjectMgrPtr& sub_mgr,
+                                  const n0::SceneNodePtr& node,
+                                  const VariantSet& vars) const
+{
+    sub_mgr->NotifyObservers(MSG_NODE_SELECTION_INSERT, vars);
+    AfterInsertSelected(node);
+}
+
+void NodeSelectOP::DeleteSelected(const SubjectMgrPtr& sub_mgr,
+                                  const n0::SceneNodePtr& node,
+                                  const VariantSet& vars) const
+{
+    sub_mgr->NotifyObservers(MSG_NODE_SELECTION_DELETE, vars);
+    AfterDeleteSelected(node);
+}
+
+void NodeSelectOP::ClearSelection(const SubjectMgrPtr& sub_mgr) const
+{
+    sub_mgr->NotifyObservers(MSG_NODE_SELECTION_CLEAR);
+    AfterClearSelection();
 }
 
 }
