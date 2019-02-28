@@ -184,6 +184,21 @@ void EditOP::SetCamera(const std::shared_ptr<pt0::Camera>& camera)
 	}
 }
 
+std::shared_ptr<EditOP>& EditOP::SetPrevEditOP(const std::shared_ptr<EditOP>& op)
+{
+    m_prev_op = op;
+    return m_prev_op;
+}
+
+void EditOP::AddPrevEditOP(const std::shared_ptr<EditOP>& op)
+{
+    if (!m_prev_op) {
+        m_prev_op = op;
+    } else {
+        m_prev_op->AddPrevEditOP(op);
+    }
+}
+
 void EditOP::ChangeEditOpState(const std::shared_ptr<EditOpState>& state)
 {
 	if (m_op_state == state) {

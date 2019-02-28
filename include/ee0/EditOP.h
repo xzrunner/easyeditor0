@@ -42,10 +42,8 @@ public:
 
 	virtual void SetCamera(const std::shared_ptr<pt0::Camera>& camera);
 
-	auto& SetPrevEditOP(const std::shared_ptr<EditOP>& op) {
-		m_prev_op = op;
-		return op;
-	}
+    std::shared_ptr<EditOP>& SetPrevEditOP(const std::shared_ptr<EditOP>& op);
+    void AddPrevEditOP(const std::shared_ptr<EditOP>& op);
 
 protected:
 	void ChangeEditOpState(const std::shared_ptr<EditOpState>& state);
