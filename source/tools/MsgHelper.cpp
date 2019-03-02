@@ -15,7 +15,7 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_
 	var.m_val.pv = &const_cast<GameObj&>(obj);
 	vars.SetVariant("obj", var);
 
-	bool insert = sub_mgr.NotifyObservers(MSG_INSERT_SCENE_NODE, vars);
+	bool insert = sub_mgr.NotifyObservers(MSG_SCENE_NODE_INSERT, vars);
 
 	if (select_new)
 	{
@@ -49,7 +49,7 @@ bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj)
 	var.m_val.pv = &const_cast<GameObj&>(obj);
 #endif // GAME_OBJ_ECS
 	vars.SetVariant("obj", var);
-	return sub_mgr.NotifyObservers(MSG_DELETE_SCENE_NODE, vars);
+	return sub_mgr.NotifyObservers(MSG_SCENE_NODE_DELETE, vars);
 }
 
 bool MsgHelper::SendNodeMsg(SubjectMgr& sub_mgr, const GameObj& obj, MessageID msg)

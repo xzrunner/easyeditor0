@@ -214,7 +214,7 @@ void NodeSelectOP::DeleteSelection()
 #else
 		bool succ = MsgHelper::DeleteNode(*m_stage.GetSubjectMgr(), owp);
 #endif // GAME_OBJ_ECS
-		GD_ASSERT(succ, "fail to MSG_DELETE_SCENE_NODE");
+		GD_ASSERT(succ, "fail to MSG_SCENE_NODE_DELETE");
 		return true;
 	});
 
