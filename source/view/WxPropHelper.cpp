@@ -28,6 +28,11 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info,
 		pg->SetPropertyAttribute("X", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 		pg->SetPropertyAttribute("Y", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 	}
+    else if (type == rttr::type::get<int>())
+    {
+        auto v = prop.get_value(obj).get_value<int>();
+        pg->Append(new wxIntProperty(info.desc, wxPG_LABEL, v));
+    }
 	else if (type == rttr::type::get<float>())
 	{
 		auto v = prop.get_value(obj).get_value<float>();
@@ -112,6 +117,10 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 		}
 		prop.set_value(obj, b);
 	}
+    else if (type == rttr::type::get<int>() && key == info.desc)
+    {
+        prop.set_value(obj, wxANY_AS(val, int));
+    }
 	else if (type == rttr::type::get<float>() && key == info.desc)
 	{
 		prop.set_value(obj, wxANY_AS(val, float));
