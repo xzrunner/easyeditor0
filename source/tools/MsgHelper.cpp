@@ -107,6 +107,23 @@ void MsgHelper::AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>
 	sub_mgr.NotifyObservers(MSG_ATOMIC_OP_ADD, vars);
 }
 
+void MsgHelper::CreateNewPage(SubjectMgr& sub_mgr, const char* type, const char* filepath)
+{
+    VariantSet vars;
+
+    Variant var_type;
+    var_type.m_type = VT_PCHAR;
+    var_type.m_val.pc = type;
+    vars.SetVariant("type", var_type);
+
+    Variant var_path;
+    var_path.m_type = VT_PCHAR;
+    var_path.m_val.pc = filepath;
+    vars.SetVariant("filepath", var_path);
+
+    sub_mgr.NotifyObservers(MSG_STAGE_PAGE_NEW, vars);
+}
+
 void MsgHelper::PrepareSelectionVars(VariantSet& vars, const GameObjWithPos& obj)
 {
 	Variant var_obj;
