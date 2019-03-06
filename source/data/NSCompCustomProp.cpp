@@ -72,14 +72,14 @@ void NSCompCustomProp::StoreToBin(const std::string& dir, bs::ExportStream& es) 
 			break;
 		case ee0::CompCustomProp::PROP_VEC2:
 			{
-				auto& vec2 = *static_cast<sm::vec2*>(prop.val.m_val.pv);
+				auto& vec2 = *static_cast<const sm::vec2*>(prop.val.m_val.pv);
 				es.Write(static_cast<uint32_t>(vec2.x));
 				es.Write(static_cast<uint32_t>(vec2.y));
 			}
 			break;
 		case ee0::CompCustomProp::PROP_COLOR:
 			{
-				auto& col = *static_cast<pt0::Color*>(prop.val.m_val.pv);
+				auto& col = *static_cast<const pt0::Color*>(prop.val.m_val.pv);
 				es.Write(static_cast<uint32_t>(col.ToRGBA()));
 			}
 			break;
@@ -188,7 +188,7 @@ void NSCompCustomProp::StoreToJson(const std::string& dir, rapidjson::Value& val
 			{
 				prop_val.AddMember("type", "vec2", alloc);
 
-				auto& vec2 = *static_cast<sm::vec2*>(prop.val.m_val.pv);
+				auto& vec2 = *static_cast<const sm::vec2*>(prop.val.m_val.pv);
 				rapidjson::Value vec2_val;
 				vec2_val.SetObject();
 				vec2_val.AddMember("x", vec2.x, alloc);
@@ -200,7 +200,7 @@ void NSCompCustomProp::StoreToJson(const std::string& dir, rapidjson::Value& val
 			{
 				prop_val.AddMember("type", "color", alloc);
 
-				auto& col = *static_cast<pt0::Color*>(prop.val.m_val.pv);
+				auto& col = *static_cast<const pt0::Color*>(prop.val.m_val.pv);
 				prop_val.AddMember("val", col.ToRGBA(), alloc);
 			}
 			break;

@@ -115,13 +115,13 @@ void WxStagePage::SelectionInsert(const VariantSet& variants)
 
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == VT_PVOID, "no var in vars: obj");
-	obj = *static_cast<GameObj*>(var_obj.m_val.pv);
+	obj = *static_cast<const GameObj*>(var_obj.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
 	auto var_root = variants.GetVariant("root");
 	if (var_root.m_type != VT_EMPTY) {
 		GD_ASSERT(var_root.m_type == VT_PVOID, "no var in vars: obj");
-		root = *static_cast<GameObj*>(var_root.m_val.pv);
+		root = *static_cast<const GameObj*>(var_root.m_val.pv);
 	}
 
 	auto var_id = variants.GetVariant("id");
@@ -142,7 +142,7 @@ void WxStagePage::SelectionInsert(const VariantSet& variants)
 #else
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == VT_PVOID, "no var in vars: obj");
-	auto obj = *static_cast<e0::Entity*>(var_obj.m_val.pv);
+	auto obj = *static_cast<const e0::Entity*>(var_obj.m_val.pv);
 	m_selection.Add(obj);
 #endif // GAME_OBJ_ECS
 
@@ -153,7 +153,7 @@ void WxStagePage::SelectionDelete(const VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == VT_PVOID, "no var in vars: obj");
-	GameObj* obj = static_cast<GameObj*>(var.m_val.pv);
+	const GameObj* obj = static_cast<const GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
 #ifndef GAME_OBJ_ECS
@@ -183,7 +183,7 @@ void WxStagePage::AddAtomicOp(const ee0::VariantSet& variants)
 {
 	auto var_obj = variants.GetVariant("aop");
 	GD_ASSERT(var_obj.m_type == VT_PVOID, "no var in vars: aop");
-	auto& aop = *static_cast<std::shared_ptr<AtomicOP>*>(var_obj.m_val.pv);
+	auto& aop = *static_cast<const std::shared_ptr<AtomicOP>*>(var_obj.m_val.pv);
 	m_edit_record.Add(aop);
 }
 

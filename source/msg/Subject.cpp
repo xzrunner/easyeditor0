@@ -22,10 +22,10 @@ void Subject::UnregisterObserver(Observer* o)
 
 void Subject::NotifyObservers(const VariantSet& variants)
 {
-	Observer* skip = nullptr;
+	const Observer* skip = nullptr;
 	auto var = variants.GetVariant("skip_observer");
 	if (var.m_type == VT_PVOID) {
-		skip = static_cast<Observer*>(var.m_val.pv);
+		skip = static_cast<const Observer*>(var.m_val.pv);
 	}
 
 	auto copy = m_observers;

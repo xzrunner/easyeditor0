@@ -12,7 +12,7 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_
 
 	Variant var;
 	var.m_type = VT_PVOID;
-	var.m_val.pv = &const_cast<GameObj&>(obj);
+	var.m_val.pv = &obj;
 	vars.SetVariant("obj", var);
 
 	bool insert = sub_mgr.NotifyObservers(MSG_SCENE_NODE_INSERT, vars);
@@ -21,7 +21,7 @@ bool MsgHelper::InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_
 	{
 		Variant var_root;
 		var_root.m_type = ee0::VT_PVOID;
-		var_root.m_val.pv = &const_cast<GameObj&>(obj);
+		var_root.m_val.pv = &obj;
 		vars.SetVariant("root", var_root);
 
 		Variant var_id;
@@ -43,11 +43,7 @@ bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj)
 	ee0::VariantSet vars;
 	ee0::Variant var;
 	var.m_type = ee0::VT_PVOID;
-#ifndef GAME_OBJ_ECS
-	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj);
-#else
-	var.m_val.pv = &const_cast<GameObj&>(obj);
-#endif // GAME_OBJ_ECS
+	var.m_val.pv = &obj;
 	vars.SetVariant("obj", var);
 	return sub_mgr.NotifyObservers(MSG_SCENE_NODE_DELETE, vars);
 }
@@ -57,11 +53,7 @@ bool MsgHelper::SendNodeMsg(SubjectMgr& sub_mgr, const GameObj& obj, MessageID m
 	ee0::VariantSet vars;
 	ee0::Variant var;
 	var.m_type = ee0::VT_PVOID;
-#ifndef GAME_OBJ_ECS
-	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj);
-#else
-	var.m_val.pv = &const_cast<GameObj&>(obj);
-#endif // GAME_OBJ_ECS
+	var.m_val.pv = &obj;
 	vars.SetVariant("obj", var);
 	return sub_mgr.NotifyObservers(msg, vars);
 }
@@ -101,7 +93,7 @@ void MsgHelper::AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>
 
 	Variant var;
 	var.m_type = VT_PVOID;
-	var.m_val.pv = &std::const_pointer_cast<AtomicOP>(aop);
+	var.m_val.pv = &aop;
 	vars.SetVariant("aop", var);
 
 	sub_mgr.NotifyObservers(MSG_ATOMIC_OP_ADD, vars);
@@ -129,16 +121,16 @@ void MsgHelper::PrepareSelectionVars(VariantSet& vars, const GameObjWithPos& obj
 	Variant var_obj;
 	var_obj.m_type = VT_PVOID;
 #ifndef GAME_OBJ_ECS
-	var_obj.m_val.pv = const_cast<n0::SceneNodePtr*>(&obj.GetNode());
+	var_obj.m_val.pv = &obj.GetNode();
 #else
-	var_obj.m_val.pv = &const_cast<GameObj&>(obj);
+	var_obj.m_val.pv = &obj;
 #endif // GAME_OBJ_ECS
 	vars.SetVariant("obj", var_obj);
 
 #ifndef GAME_OBJ_ECS
 	Variant var_root;
 	var_root.m_type = ee0::VT_PVOID;
-	var_root.m_val.pv = const_cast<n0::SceneNodePtr*>(&obj.GetRoot());
+	var_root.m_val.pv = &obj.GetRoot();
 	vars.SetVariant("root", var_root);
 
 	Variant var_id;

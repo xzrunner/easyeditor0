@@ -30,14 +30,14 @@ std::unique_ptr<n0::NodeComp> CompCustomProp::Clone(const n0::SceneNode& obj) co
 			break;
 		case PROP_VEC2:
 			{
-				auto& vec2 = *static_cast<sm::vec2*>(itr.val.m_val.pv);
+				auto& vec2 = *static_cast<const sm::vec2*>(itr.val.m_val.pv);
 				auto tmp = new sm::vec2(vec2);
 				itr.val.m_val.pv = tmp;
 			}
 			break;
 		case PROP_COLOR:
 			{
-				auto& col = *static_cast<pt0::Color*>(itr.val.m_val.pv);
+				auto& col = *static_cast<const pt0::Color*>(itr.val.m_val.pv);
 				auto tmp = new pt0::Color(col);
 				itr.val.m_val.pv = tmp;
 			}

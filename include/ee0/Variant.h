@@ -28,7 +28,7 @@ public:
 		uint64_t    ull;            // VT_ULONGLONG
 		bool        bl;             // VT_BOOL
 		const char* pc;             // VT_PCHAR
-		void*       pv;             // VT_PVOID
+		const void* pv;             // VT_PVOID
 	} m_val;
 
 }; // Variant

@@ -168,7 +168,7 @@ void WxCompCustomPropPanel::InitProperties()
 				pos_prop->SetExpanded(false);
 				auto str_x = name + ".X";
 				auto str_y = name + ".Y";
-				sm::vec2* vec2 = static_cast<sm::vec2*>(prop.val.m_val.pv);
+                const sm::vec2* vec2 = static_cast<const sm::vec2*>(prop.val.m_val.pv);
 				m_pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, vec2->x));
 				m_pg->SetPropertyAttribute(str_x.c_str(), wxPG_ATTR_UNITS, wxT("pixels"));
 				m_pg->SetPropertyAttribute(str_x.c_str(), "Precision", 1);
@@ -179,7 +179,7 @@ void WxCompCustomPropPanel::InitProperties()
 			break;
 		case CompCustomProp::PROP_COLOR:
 			{
-				auto pcol = static_cast<pt0::Color*>(prop.val.m_val.pv);
+				auto pcol = static_cast<const pt0::Color*>(prop.val.m_val.pv);
 				wxColour col = wxColour(pcol->r, pcol->g, pcol->b, pcol->a);
 				m_pg->Append(new wxColourProperty(name, wxPG_LABEL, col));
 				m_pg->SetPropertyAttribute(name.c_str(), "HasAlpha", true);
@@ -227,7 +227,7 @@ void WxCompCustomPropPanel::OnPropertyGridChange(wxPropertyGridEvent& event)
 					cpputil::StringHelper::Split(str, ";", tokens);
 					GD_ASSERT(tokens.size() == 2, "err prop str");
 
-					auto pvec2 = static_cast<sm::vec2*>(prop.val.m_val.pv);
+					auto pvec2 = const_cast<sm::vec2*>(static_cast<const sm::vec2*>(prop.val.m_val.pv));
 					pvec2->x = std::stof(tokens[0]);
 					pvec2->y = std::stof(tokens[1]);
 				}
@@ -236,7 +236,7 @@ void WxCompCustomPropPanel::OnPropertyGridChange(wxPropertyGridEvent& event)
 				{
 					wxColour col = wxANY_AS(val, wxColour);
 
-					auto pcol = static_cast<pt0::Color*>(prop.val.m_val.pv);
+					auto pcol = const_cast<pt0::Color*>(static_cast<const pt0::Color*>(prop.val.m_val.pv));
 					pcol->r = col.Red();
 					pcol->g = col.Green();
 					pcol->b = col.Blue();
