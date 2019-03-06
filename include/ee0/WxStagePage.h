@@ -22,8 +22,7 @@ public:
 
 public:
 	WxStagePage(wxWindow* parent);
-	// todo
-//	virtual ~WxStagePage();
+	virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const VariantSet& variants) override;
 

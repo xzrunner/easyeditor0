@@ -41,13 +41,12 @@ WxStagePage::WxStagePage(wxWindow* parent)
 	RegisterMoonCallback();
 }
 
-// todo
-//WxStagePage::~WxStagePage()
-//{
-//	for (auto& msg : MESSAGES) {
-//		m_sub_mgr->UnregisterObserver(msg, this);
-//	}
-//}
+WxStagePage::~WxStagePage()
+{
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->UnregisterObserver(msg, this);
+	}
+}
 
 void WxStagePage::OnNotify(uint32_t msg, const VariantSet& variants)
 {
