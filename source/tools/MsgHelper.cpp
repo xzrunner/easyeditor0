@@ -99,7 +99,8 @@ void MsgHelper::AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>
 	sub_mgr.NotifyObservers(MSG_ATOMIC_OP_ADD, vars);
 }
 
-void MsgHelper::CreateNewPage(SubjectMgr& sub_mgr, const char* type, const char* filepath)
+void MsgHelper::CreateNewPage(SubjectMgr& sub_mgr, const char* type, const char* filepath,
+                              const n0::SceneNodePtr& obj)
 {
     VariantSet vars;
 
@@ -112,6 +113,11 @@ void MsgHelper::CreateNewPage(SubjectMgr& sub_mgr, const char* type, const char*
     var_path.m_type = VT_PCHAR;
     var_path.m_val.pc = filepath;
     vars.SetVariant("filepath", var_path);
+
+    Variant var_obj;
+    var_obj.m_type = VT_PVOID;
+    var_obj.m_val.pv = &obj;
+    vars.SetVariant("obj", var_obj);
 
     sub_mgr.NotifyObservers(MSG_STAGE_PAGE_NEW, vars);
 }

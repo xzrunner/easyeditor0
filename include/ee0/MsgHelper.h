@@ -26,7 +26,8 @@ public:
 
 	static void AddAtomicOP(SubjectMgr& sub_mgr, const std::shared_ptr<AtomicOP>& aop);
 
-    static void CreateNewPage(SubjectMgr& sub_mgr, const char* type, const char* filepath);
+    static void CreateNewPage(SubjectMgr& sub_mgr, const char* type, const char* filepath,
+        const n0::SceneNodePtr& obj);
 
 private:
 	static void PrepareSelectionVars(VariantSet& vars, const GameObjWithPos& obj);
