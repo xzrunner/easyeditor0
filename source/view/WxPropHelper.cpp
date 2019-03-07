@@ -163,11 +163,13 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 	}
 	else if (type == rttr::type::get<const char*>() && key == info.desc)
 	{
-		prop.set_value(obj, wxANY_AS(val, wxString).ToStdString());
+        auto str = wxANY_AS(val, wxString).ToStdString();
+		prop.set_value(obj, str.c_str());
 	}
 	else if (type == rttr::type::get<std::string>() && key == info.desc)
 	{
-		prop.set_value(obj, wxANY_AS(val, wxString).ToStdString());
+        auto str = wxANY_AS(val, wxString).ToStdString();
+        prop.set_value(obj, str);
 	}
 }
 
