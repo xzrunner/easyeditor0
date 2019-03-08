@@ -9,9 +9,8 @@
 namespace ee0
 {
 
-void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info,
-	                          rttr::instance obj, rttr::property prop,
-                              std::function<void()> open_file_cb)
+void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::instance obj, rttr::property prop,
+                              std::function<void(const std::string& filepath)> open_file_cb)
 {
 	auto type = prop.get_type();
 	if (type == rttr::type::get<bool>())
@@ -82,7 +81,7 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info,
 					prop.set_value(obj, filepath);
 				}
                 if (open_file_cb) {
-                    open_file_cb();
+                    open_file_cb(filepath);
                 }
 			});
 

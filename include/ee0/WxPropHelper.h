@@ -14,8 +14,8 @@ struct UIMetaInfo;
 class WxPropHelper
 {
 public:
-	static void CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info,
-		rttr::instance obj, rttr::property prop, std::function<void()> open_file_cb = nullptr);
+	static void CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::instance obj, rttr::property prop,
+        std::function<void(const std::string& filepath)> open_file_cb = nullptr);
 
 	static void UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
 		rttr::instance obj, rttr::property prop);
