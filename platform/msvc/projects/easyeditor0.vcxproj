@@ -15,6 +15,7 @@
     <ClInclude Include="..\..\..\include\ee0\AtomicOP.h" />
     <ClInclude Include="..\..\..\include\ee0\Callback.h" />
     <ClInclude Include="..\..\..\include\ee0\CameraHelper.h" />
+    <ClInclude Include="..\..\..\include\ee0\Clipboard.h" />
     <ClInclude Include="..\..\..\include\ee0\color_config.h" />
     <ClInclude Include="..\..\..\include\ee0\CombineAOP.h" />
     <ClInclude Include="..\..\..\include\ee0\CompCustomProp.h" />
@@ -102,6 +103,7 @@
     <ClCompile Include="..\..\..\source\msg\SubjectMgr.cpp" />
     <ClCompile Include="..\..\..\source\tools\Callback.cpp" />
     <ClCompile Include="..\..\..\source\tools\CameraHelper.cpp" />
+    <ClCompile Include="..\..\..\source\tools\Clipboard.cpp" />
     <ClCompile Include="..\..\..\source\tools\ConfigFile.cpp" />
     <ClCompile Include="..\..\..\source\tools\MsgHelper.cpp" />
     <ClCompile Include="..\..\..\source\tools\RenderContext.cpp" />

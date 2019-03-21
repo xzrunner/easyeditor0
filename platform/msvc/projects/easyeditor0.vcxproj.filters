@@ -280,6 +280,9 @@
     <ClInclude Include="..\..\..\include\ee0\CombineAOP.h">
       <Filter>edit</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\Clipboard.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -419,6 +422,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\editop\EditOpState.cpp">
       <Filter>edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\Clipboard.cpp">
+      <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

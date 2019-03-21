@@ -3,6 +3,7 @@
 #include "ee0/MessageID.h"
 #include "ee0/MsgHelper.h"
 #include "ee0/SubjectMgr.h"
+#include "ee0/Clipboard.h"
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -223,13 +224,17 @@ void NodeSelectOP::DeleteSelection()
 
 void NodeSelectOP::CopySelectionToClipboard()
 {
-    m_clipboard.clear();
-    m_clipboard.reserve(m_stage.GetSelection().Size());
+    auto clipboard = Clipboard::Instance();
+    clipboard->Clear();
+
+    std::vector<n0::SceneNodePtr> nodes;
+    nodes.reserve(m_stage.GetSelection().Size());
     m_stage.GetSelection().Traverse([&](const GameObjWithPos& owp)->bool
     {
-        m_clipboard.push_back(owp.GetNode());
+        nodes.push_back(owp.GetNode());
         return true;
     });
+    clipboard->SetSceneNodes(nodes);
 }
 
 void NodeSelectOP::PasteSelectionFromClipboard()
@@ -237,7 +242,7 @@ void NodeSelectOP::PasteSelectionFromClipboard()
     ClearSelection(m_stage.GetSubjectMgr());
 
     auto& sub_mgr = m_stage.GetSubjectMgr();
-    for (auto& n : m_clipboard) {
+    for (auto& n : Clipboard::Instance()->GetSceneNodes()) {
         auto copy = n->Clone();
         MsgHelper::InsertNode(*sub_mgr, copy, true);
     }

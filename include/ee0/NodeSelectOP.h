@@ -51,8 +51,6 @@ protected:
 private:
 	sm::ivec2 m_last_pos;
 
-    std::vector<n0::SceneNodePtr> m_clipboard;
-
 }; // NodeSelectOP
 
 }
