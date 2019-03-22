@@ -1,20 +1,23 @@
 #include "ee0/WxFrame.h"
 #include "ee0/Application.h"
+#include "ee0/AssetsMap.h"
 
 #include <wx/menu.h>
 #include <wx/msgdlg.h>
 #include <wx/filedlg.h>
+#include <wx/dirdlg.h>
 
 namespace ee0
 {
 
 BEGIN_EVENT_TABLE(WxFrame, wxFrame)
-	EVT_MENU(wxID_NEW, WxFrame::OnNew)
-	EVT_MENU(wxID_OPEN, WxFrame::OnOpen)
-	EVT_MENU(wxID_SAVE, WxFrame::OnSave)
-	EVT_MENU(wxID_SAVEAS, WxFrame::OnSaveAs)
-	EVT_MENU(wxID_CLEAR, WxFrame::OnClear)
-	EVT_MENU(ID_SETTINGS, WxFrame::OnSettings)
+	EVT_MENU(wxID_NEW,          WxFrame::OnNew)
+	EVT_MENU(wxID_OPEN,         WxFrame::OnOpen)
+	EVT_MENU(wxID_SAVE,         WxFrame::OnSave)
+	EVT_MENU(wxID_SAVEAS,       WxFrame::OnSaveAs)
+	EVT_MENU(wxID_CLEAR,        WxFrame::OnClear)
+	EVT_MENU(ID_SETTINGS,       WxFrame::OnSettings)
+    EVT_MENU(ID_ADD_ASSETS_DIR, WxFrame::OnAddAssetsDir)
 END_EVENT_TABLE()
 
 WxFrame::WxFrame(const std::string& title, const wxSize& size, long style)
@@ -65,6 +68,14 @@ void WxFrame::OnSettings(wxCommandEvent& event)
 {
 }
 
+void WxFrame::OnAddAssetsDir(wxCommandEvent& event)
+{
+    wxDirDialog dlg(NULL, "Assets", wxEmptyString, wxDD_DEFAULT_STYLE | wxDD_DIR_MUST_EXIST);
+    if (dlg.ShowModal() == wxID_OK) {
+        AssetsMap::Instance()->LoadDirWithUnity(dlg.GetPath().ToStdString());
+    }
+}
+
 void WxFrame::InitMenuBar()
 {
 	wxMenuBar* menu_bar = new wxMenuBar;
@@ -104,6 +115,7 @@ wxMenu* WxFrame::InitSettingsBar()
 {
 	wxMenu* menu = new wxMenu;
 	menu->Append(ID_SETTINGS, wxT("Base"), wxT("Base"));
+    menu->Append(ID_ADD_ASSETS_DIR, wxT("Add assets dir..."), wxT("Add assets dir"));
 	return menu;
 }
 

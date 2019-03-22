@@ -283,6 +283,9 @@
     <ClInclude Include="..\..\..\include\ee0\Clipboard.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\AssetsMap.h">
+      <Filter>tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -424,6 +427,9 @@
       <Filter>edit</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\Clipboard.cpp">
+      <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\tools\AssetsMap.cpp">
       <Filter>tools</Filter>
     </ClCompile>
   </ItemGroup>

@@ -27,6 +27,7 @@ protected:
 	virtual void OnClear(wxCommandEvent& event);
 
 	virtual void OnSettings(wxCommandEvent& event);
+    virtual void OnAddAssetsDir(wxCommandEvent& event);
 
 private:
 	void InitMenuBar();
@@ -39,6 +40,7 @@ private:
 	enum
 	{
 		ID_SETTINGS = 1000,
+        ID_ADD_ASSETS_DIR,
 	};
 
 protected:
