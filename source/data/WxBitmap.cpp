@@ -95,10 +95,28 @@ bool WxBitmap::LoadFromImageFile(const std::string& filepath)
 	}
 	else
 	{
-		uint8_t* rgb = gimg_rgba2rgb(pixels, width, height);
-		wxImage wx_img(width, height, rgb);
-		LoadFromImage(wx_img, true);
-		return true;
+        uint8_t* rgb8 = nullptr;
+        switch (format)
+        {
+        case GPF_RGBA8:
+            rgb8 = gimg_rgba8_to_rgb8(pixels, width, height);
+            break;
+        case GPF_RGB32F:
+            gimg_revert_y(pixels, width, height, format);
+            rgb8 = gimg_rgb32f_to_rgb8(pixels, width, height);
+            break;
+        }
+
+        if (rgb8)
+        {
+            wxImage wx_img(width, height, rgb8);
+            LoadFromImage(wx_img, true);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
 	}
 }
 
@@ -154,7 +172,7 @@ bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
  		return false;
  	}
 
- 	uint8_t* rgb = gimg_rgba2rgb(rgba, w, h);
+ 	uint8_t* rgb = gimg_rgba8_to_rgb8(rgba, w, h);
 
  	wxImage image(w, h, rgb, true);
 	LoadFromImage(image, false);
