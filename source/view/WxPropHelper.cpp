@@ -3,6 +3,7 @@
 #include "ee0/WxOpenFileProp.h"
 
 #include <SM_Vector.h>
+#include <cpputil/StringHelper.h>
 
 #include <wx/propgrid/propgrid.h>
 
@@ -89,6 +90,7 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 		}
 		else
 		{
+            str = cpputil::StringHelper::UTF8ToGBK(str.c_str());
             if (prop.get_metadata(PropLongStringTag()).is_valid()) {
                 pg->Append(new wxLongStringProperty(info.desc, wxPG_LABEL, str));
             } else {
@@ -163,11 +165,13 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 	else if (type == rttr::type::get<const char*>() && key == info.desc)
 	{
         auto str = wxANY_AS(val, wxString).ToStdString();
+        str = cpputil::StringHelper::GBKToUTF8(str.c_str());
 		prop.set_value(obj, str.c_str());
 	}
 	else if (type == rttr::type::get<std::string>() && key == info.desc)
 	{
         auto str = wxANY_AS(val, wxString).ToStdString();
+        str = cpputil::StringHelper::GBKToUTF8(str.c_str());
         prop.set_value(obj, str);
 	}
 }
