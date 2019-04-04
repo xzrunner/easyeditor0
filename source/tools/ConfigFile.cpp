@@ -1,4 +1,5 @@
 #include "ee0/ConfigFile.h"
+#include "ee0/AssetsMap.h"
 
 #include <js/RapidJsonHelper.h>
 
@@ -45,6 +46,12 @@ void ConfigFile::LoadFromFile(const std::string& filepath)
 		auto full_path = boost::filesystem::absolute(filepath, dir);
 		m_user_fonts.push_back(std::make_pair(name, full_path.string()));
 	}
+
+    if (doc.HasMember("asset_dirs")) {
+        for (auto& dir : doc["asset_dirs"].GetArray()) {
+            AssetsMap::Instance()->LoadDirWithUnity(dir.GetString());
+        }
+    }
 
 	if (doc.HasMember("debug_draw")) {
 		m_debug_draw = doc["debug_draw"].GetBool();

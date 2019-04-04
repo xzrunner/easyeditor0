@@ -25,6 +25,8 @@ private:
 	std::vector<std::pair<std::string, std::string>> m_fonts;
 	std::vector<std::pair<std::string, std::string>> m_user_fonts;
 
+    std::vector<std::string> m_asset_dirs;
+
 	bool m_debug_draw;
 
 	bool m_draw_stat;
