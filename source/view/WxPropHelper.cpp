@@ -4,6 +4,7 @@
 
 #include <SM_Vector.h>
 #include <cpputil/StringHelper.h>
+#include <painting0/Color.h>
 
 #include <wx/propgrid/propgrid.h>
 
@@ -98,6 +99,14 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
             }
 		}
 	}
+    else if (type == rttr::type::get<pt0::Color>())
+    {
+        auto col = prop.get_value(obj).get_value<pt0::Color>();
+        pg->Append(new wxUIntProperty("R", wxPG_LABEL, col.r));
+        pg->Append(new wxUIntProperty("G", wxPG_LABEL, col.g));
+        pg->Append(new wxUIntProperty("B", wxPG_LABEL, col.b));
+        pg->Append(new wxUIntProperty("A", wxPG_LABEL, col.a));
+    }
 }
 
 void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
@@ -174,6 +183,20 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
         str = cpputil::StringHelper::GBKToUTF8(str.c_str());
         prop.set_value(obj, str);
 	}
+    else if (type == rttr::type::get<pt0::Color>() && key == info.desc)
+    {
+        auto col = prop.get_value(obj).get_value<pt0::Color>();
+		if (key == "R") {
+            col.r = wxANY_AS(val, uint32_t);
+		} else if (key == "G") {
+            col.g = wxANY_AS(val, uint32_t);
+		} else if (key == "B") {
+            col.b = wxANY_AS(val, uint32_t);
+		} else if (key == "A") {
+            col.a = wxANY_AS(val, uint32_t);
+		}
+		prop.set_value(obj, col);
+    }
 }
 
 }
