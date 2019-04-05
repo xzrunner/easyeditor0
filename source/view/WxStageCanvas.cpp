@@ -19,8 +19,8 @@
 #include <facade/Facade.h>
 #include <facade/DTex.h>
 #include <facade/EasyGUI.h>
-#include <rendergraph/RenderMgr.h>
-#include <rendergraph/SpriteRenderer.h>
+#include <renderpipeline/RenderMgr.h>
+#include <renderpipeline/SpriteRenderer.h>
 
 namespace ee0
 {
@@ -105,8 +105,8 @@ void WxStageCanvas::PrepareDrawGui(float w, float h) const
 {
 	ee0::RenderContext::Reset2D();
 
-	auto rd = std::static_pointer_cast<rg::SpriteRenderer>(
-		rg::RenderMgr::Instance()->SetRenderer(rg::RenderType::SPRITE)
+	auto rd = std::static_pointer_cast<rp::SpriteRenderer>(
+		rp::RenderMgr::Instance()->SetRenderer(rp::RenderType::SPRITE)
 	);
 	auto& palette = rd->GetPalette();
 
@@ -157,12 +157,12 @@ void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3
 void WxStageCanvas::OnDrawWhole() const
 {
     if (GetWidnowContext().wc2) {
-        rg::RenderMgr::Instance()->BindWndCtx2D(
+        rp::RenderMgr::Instance()->BindWndCtx2D(
             std::const_pointer_cast<pt2::WindowContext>(GetWidnowContext().wc2)
         );
     }
     if (GetWidnowContext().wc3) {
-        rg::RenderMgr::Instance()->BindWndCtx3D(
+        rp::RenderMgr::Instance()->BindWndCtx3D(
             std::const_pointer_cast<pt3::WindowContext>(GetWidnowContext().wc3)
         );
     }
@@ -207,7 +207,7 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	OnDrawWhole();
 	m_dirty = false;
 
-	rg::RenderMgr::Instance()->Flush();
+	rp::RenderMgr::Instance()->Flush();
 
 	glFlush();
 	SwapBuffers();
