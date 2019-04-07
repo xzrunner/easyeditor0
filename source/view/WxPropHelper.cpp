@@ -183,17 +183,17 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
         str = cpputil::StringHelper::GBKToUTF8(str.c_str());
         prop.set_value(obj, str);
 	}
-    else if (type == rttr::type::get<pt0::Color>() && key == info.desc)
+    else if (type == rttr::type::get<pt0::Color>() && (key == "R" || key == "G" || key == "B" || key == "A"))
     {
         auto col = prop.get_value(obj).get_value<pt0::Color>();
 		if (key == "R") {
-            col.r = wxANY_AS(val, uint32_t);
+            col.r = wxANY_AS(val, int);
 		} else if (key == "G") {
-            col.g = wxANY_AS(val, uint32_t);
+            col.g = wxANY_AS(val, int);
 		} else if (key == "B") {
-            col.b = wxANY_AS(val, uint32_t);
+            col.b = wxANY_AS(val, int);
 		} else if (key == "A") {
-            col.a = wxANY_AS(val, uint32_t);
+            col.a = wxANY_AS(val, int);
 		}
 		prop.set_value(obj, col);
     }
