@@ -42,23 +42,29 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 	else if (type == rttr::type::get<sm::vec2>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec2>();
-		pg->Append(new wxFloatProperty("X", wxPG_LABEL, v.x));
-		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, v.y));
+        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
+        pos_prop->SetExpanded(false);
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
 	}
 	else if (type == rttr::type::get<sm::vec3>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec3>();
-		pg->Append(new wxFloatProperty("X", wxPG_LABEL, v.x));
-		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, v.y));
-		pg->Append(new wxFloatProperty("Z", wxPG_LABEL, v.z));
+        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
+        pos_prop->SetExpanded(false);
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Z"), wxPG_LABEL, v.z));
 	}
 	else if (type == rttr::type::get<sm::vec4>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec4>();
-		pg->Append(new wxFloatProperty("X", wxPG_LABEL, v.x));
-		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, v.y));
-		pg->Append(new wxFloatProperty("Z", wxPG_LABEL, v.z));
-		pg->Append(new wxFloatProperty("W", wxPG_LABEL, v.w));
+        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
+        pos_prop->SetExpanded(false);
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Z"), wxPG_LABEL, v.z));
+        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("W"), wxPG_LABEL, v.w));
 	}
 	else if (type == rttr::type::get<const char*>()
 	      || type == rttr::type::get<std::string>())
@@ -102,10 +108,12 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
     else if (type == rttr::type::get<pt0::Color>())
     {
         auto col = prop.get_value(obj).get_value<pt0::Color>();
-        pg->Append(new wxUIntProperty("R", wxPG_LABEL, col.r));
-        pg->Append(new wxUIntProperty("G", wxPG_LABEL, col.g));
-        pg->Append(new wxUIntProperty("B", wxPG_LABEL, col.b));
-        pg->Append(new wxUIntProperty("A", wxPG_LABEL, col.a));
+        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
+        pos_prop->SetExpanded(false);
+        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("R"), wxPG_LABEL, col.r));
+        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("G"), wxPG_LABEL, col.g));
+        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("B"), wxPG_LABEL, col.b));
+        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("A"), wxPG_LABEL, col.a));
     }
 }
 
@@ -135,40 +143,46 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 	{
 		prop.set_value(obj, wxANY_AS(val, float));
 	}
-	else if (type == rttr::type::get<sm::vec2>() && (key == "X" || key == "Y"))
+	else if (type == rttr::type::get<sm::vec2>() && key == info.desc)
 	{
+        std::vector<std::string> tokens;
+        auto str = wxANY_AS(val, wxString).ToStdString();
+        cpputil::StringHelper::Split(str, ";", tokens);
+        assert(tokens.size() == 2);
+
 		auto v = prop.get_value(obj).get_value<sm::vec2>();
-		if (key == "X") {
-			v.x = wxANY_AS(val, float);
-		} else if (key == "Y") {
-			v.y = wxANY_AS(val, float);
-		}
+        v.x = std::stof(tokens[0]);
+        v.y = std::stof(tokens[1]);
+
 		prop.set_value(obj, v);
 	}
-	else if (type == rttr::type::get<sm::vec3>() && (key == "X" || key == "Y" || key == "Z"))
+	else if (type == rttr::type::get<sm::vec3>() && key == info.desc)
 	{
-		auto v = prop.get_value(obj).get_value<sm::vec3>();
-		if (key == "X") {
-			v.x = wxANY_AS(val, float);
-		} else if (key == "Y") {
-			v.y = wxANY_AS(val, float);
-		} else if (key == "Z") {
-			v.z = wxANY_AS(val, float);
-		}
+        std::vector<std::string> tokens;
+        auto str = wxANY_AS(val, wxString).ToStdString();
+        cpputil::StringHelper::Split(str, ";", tokens);
+        assert(tokens.size() == 3);
+
+        auto v = prop.get_value(obj).get_value<sm::vec3>();
+        v.x = std::stof(tokens[0]);
+        v.y = std::stof(tokens[1]);
+        v.z = std::stof(tokens[2]);
+
 		prop.set_value(obj, v);
 	}
-	else if (type == rttr::type::get<sm::vec4>() && (key == "X" || key == "Y" || key == "Z" || key == "W"))
+	else if (type == rttr::type::get<sm::vec4>() && key == info.desc)
 	{
+        std::vector<std::string> tokens;
+        auto str = wxANY_AS(val, wxString).ToStdString();
+        cpputil::StringHelper::Split(str, ";", tokens);
+        assert(tokens.size() == 4);
+
 		auto v = prop.get_value(obj).get_value<sm::vec4>();
-		if (key == "X") {
-			v.x = wxANY_AS(val, float);
-		} else if (key == "Y") {
-			v.y = wxANY_AS(val, float);
-		} else if (key == "Z") {
-			v.z = wxANY_AS(val, float);
-		} else if (key == "W") {
-			v.w = wxANY_AS(val, float);
-		}
+        v.x = std::stof(tokens[0]);
+        v.y = std::stof(tokens[1]);
+        v.z = std::stof(tokens[2]);
+        v.w = std::stof(tokens[3]);
+
 		prop.set_value(obj, v);
 	}
 	else if (type == rttr::type::get<const char*>() && key == info.desc)
@@ -183,18 +197,19 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
         str = cpputil::StringHelper::GBKToUTF8(str.c_str());
         prop.set_value(obj, str);
 	}
-    else if (type == rttr::type::get<pt0::Color>() && (key == "R" || key == "G" || key == "B" || key == "A"))
+    else if (type == rttr::type::get<pt0::Color>() && key == info.desc)
     {
+        std::vector<std::string> tokens;
+        auto str = wxANY_AS(val, wxString).ToStdString();
+        cpputil::StringHelper::Split(str, ";", tokens);
+        assert(tokens.size() == 4);
+
         auto col = prop.get_value(obj).get_value<pt0::Color>();
-		if (key == "R") {
-            col.r = wxANY_AS(val, int);
-		} else if (key == "G") {
-            col.g = wxANY_AS(val, int);
-		} else if (key == "B") {
-            col.b = wxANY_AS(val, int);
-		} else if (key == "A") {
-            col.a = wxANY_AS(val, int);
-		}
+        col.r = std::stoi(tokens[0]);
+        col.g = std::stoi(tokens[1]);
+        col.b = std::stoi(tokens[2]);
+        col.a = std::stoi(tokens[3]);
+
 		prop.set_value(obj, col);
     }
 }
