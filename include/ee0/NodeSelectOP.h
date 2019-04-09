@@ -25,7 +25,7 @@ public:
 	virtual bool OnMouseLeftUp(int x, int y) override;
     virtual bool OnMouseMove(int x, int y) override;
 
-private:
+protected:
 	virtual GameObj QueryByPos(int screen_x, int screen_y) const = 0;
 	virtual void QueryByRect(const sm::ivec2& p0, const sm::ivec2& p1,
 		bool contain, std::vector<GameObj>& result) const = 0;
@@ -35,6 +35,7 @@ private:
     virtual void AfterDeleteSelected(const n0::SceneNodePtr& node) const {}
     virtual void AfterClearSelection() const {}
 
+private:
     void DeleteSelection();
     void CopySelectionToClipboard();
     void PasteSelectionFromClipboard();
