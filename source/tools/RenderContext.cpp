@@ -14,9 +14,9 @@ void RenderContext::Reset2D(bool clear)
 		ur_rc.SetClearColor(0x88888888);
 		ur_rc.Clear();
 	}
-	ur_rc.SetDepthTest(ur::DEPTH_DISABLE);
-//	ur_rc.EnableDepthMask(false);
-	ur_rc.SetCull(ur::CULL_DISABLE);
+	ur_rc.SetZTest(ur::DEPTH_DISABLE);
+//	ur_rc.SetZWrite(false);
+	ur_rc.SetCullMode(ur::CULL_DISABLE);
 }
 
 void RenderContext::Reset3D(bool clear)
@@ -27,10 +27,10 @@ void RenderContext::Reset3D(bool clear)
 		ur_rc.SetClearColor(0x88888888);
 		ur_rc.Clear();
 	}
-	ur_rc.SetDepthTest(ur::DEPTH_LESS_EQUAL);
-	ur_rc.EnableDepthMask(true);
+	ur_rc.SetZTest(ur::DEPTH_LESS_EQUAL);
+	ur_rc.SetZWrite(true);
 	ur_rc.SetFrontFace(true);
-	ur_rc.SetCull(ur::CULL_BACK);
+	ur_rc.SetCullMode(ur::CULL_BACK);
 }
 
 }
