@@ -34,6 +34,11 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
         auto v = prop.get_value(obj).get_value<int>();
         pg->Append(new wxIntProperty(info.desc, wxPG_LABEL, v));
     }
+    else if (type == rttr::type::get<unsigned int>())
+    {
+        auto v = prop.get_value(obj).get_value<unsigned int>();
+        pg->Append(new wxUIntProperty(info.desc, wxPG_LABEL, v));
+    }
 	else if (type == rttr::type::get<float>())
 	{
 		auto v = prop.get_value(obj).get_value<float>();
@@ -138,6 +143,10 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
     else if (type == rttr::type::get<int>() && key == info.desc)
     {
         prop.set_value(obj, wxANY_AS(val, int));
+    }
+    else if (type == rttr::type::get<unsigned int>() && key == info.desc)
+    {
+        prop.set_value(obj, wxANY_AS(val, unsigned int));
     }
 	else if (type == rttr::type::get<float>() && key == info.desc)
 	{
