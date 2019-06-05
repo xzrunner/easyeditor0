@@ -225,7 +225,7 @@ void NodeSelectOP::DeleteSelection()
 void NodeSelectOP::CopySelectionToClipboard()
 {
     auto clipboard = Clipboard::Instance();
-    clipboard->Clear();
+//    clipboard->Clear();
 
     std::vector<n0::SceneNodePtr> nodes;
     nodes.reserve(m_stage.GetSelection().Size());
@@ -234,17 +234,28 @@ void NodeSelectOP::CopySelectionToClipboard()
         nodes.push_back(owp.GetNode());
         return true;
     });
-    clipboard->SetSceneNodes(nodes);
+
+//    clipboard->SetSceneNodes(nodes);
+    clipboard->StoreNodesToCB(nodes);
 }
 
 void NodeSelectOP::PasteSelectionFromClipboard()
 {
     ClearSelection(m_stage.GetSubjectMgr());
 
+    //auto& sub_mgr = m_stage.GetSubjectMgr();
+    //for (auto& n : Clipboard::Instance()->GetSceneNodes()) {
+    //    auto copy = n->Clone();
+    //    MsgHelper::InsertNode(*sub_mgr, copy, true);
+    //}
+
+    auto clipboard = Clipboard::Instance();
+    std::vector<n0::SceneNodePtr> nodes;
+    clipboard->LoadNodesFromCB(nodes);
     auto& sub_mgr = m_stage.GetSubjectMgr();
-    for (auto& n : Clipboard::Instance()->GetSceneNodes()) {
-        auto copy = n->Clone();
-        MsgHelper::InsertNode(*sub_mgr, copy, true);
+    for (auto& n : nodes) {
+//        auto copy = n->Clone();
+        MsgHelper::InsertNode(*sub_mgr, n, true);
     }
 }
 

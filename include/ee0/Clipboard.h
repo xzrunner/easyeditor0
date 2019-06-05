@@ -11,15 +11,16 @@ namespace ee0
 class Clipboard
 {
 public:
-    void Clear();
+//    void Clear();
 
-    void SetSceneNodes(const std::vector<n0::SceneNodePtr>& nodes) {
-        m_nodes = nodes;
-    }
-    auto& GetSceneNodes() const { return m_nodes; }
-    
-private:
-    std::vector<n0::SceneNodePtr> m_nodes;
+    void StoreNodesToCB(const std::vector<n0::SceneNodePtr>& nodes);
+    void LoadNodesFromCB(std::vector<n0::SceneNodePtr>& nodes);
+
+    //void SetValue(const std::string& key, const std::string& val);
+    //std::string GetValue(const std::string& key) const;
+
+    void FromString(const std::string& all);
+    std::string ToString() const;
 
     CU_SINGLETON_DECLARATION(Clipboard);
 
