@@ -146,7 +146,10 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
     }
     else if (type == rttr::type::get<unsigned int>() && key == info.desc)
     {
-        prop.set_value(obj, wxANY_AS(val, unsigned int));
+        //// fixme: wx runtime error
+        //size_t val = wxANY_AS(val, size_t);
+        size_t v = wxANY_AS(val, int);
+        prop.set_value(obj, v);
     }
 	else if (type == rttr::type::get<float>() && key == info.desc)
 	{
