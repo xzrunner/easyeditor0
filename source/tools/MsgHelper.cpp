@@ -48,7 +48,7 @@ bool MsgHelper::DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj)
 	return sub_mgr.NotifyObservers(MSG_SCENE_NODE_DELETE, vars);
 }
 
-bool MsgHelper::SendNodeMsg(SubjectMgr& sub_mgr, const GameObj& obj, MessageID msg)
+bool MsgHelper::SendObjMsg(SubjectMgr& sub_mgr, const GameObj& obj, uint32_t msg)
 {
 	ee0::VariantSet vars;
 	ee0::Variant var;

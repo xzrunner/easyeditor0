@@ -18,7 +18,7 @@ public:
 	static bool InsertNode(SubjectMgr& sub_mgr, const GameObj& obj, bool select_new = false);
 	static bool DeleteNode(SubjectMgr& sub_mgr, const GameObj& obj);
 
-	static bool SendNodeMsg(SubjectMgr& sub_mgr, const GameObj& obj, MessageID msg);
+	static bool SendObjMsg(SubjectMgr& sub_mgr, const GameObj& obj, uint32_t msg);
 
 	static void InsertSelection(SubjectMgr& sub_mgr, const std::vector<GameObjWithPos>& objs);
 
