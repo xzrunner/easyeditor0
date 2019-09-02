@@ -15,16 +15,16 @@ class RightPopupMenu
 public:
 	RightPopupMenu(wxWindow* parent, EditPanelImpl* stage);
 
-	void SetRightPopupMenu(wxMenu& menu, int x, int y);
-	void OnRightPopupMenu(int id);
+	virtual void SetRightPopupMenu(wxMenu& menu, int x, int y);
+    virtual void OnRightPopupMenu(int id);
 
 private:
 	void LoadMenu(wxMenu& parent, const rapidjson::Value& children);
 
 private:
-	wxWindow* m_parent;
+    wxWindow* m_parent;
 
-	EditPanelImpl* m_stage;
+    EditPanelImpl* m_stage;
 
 	std::map<int, std::string> m_id2path;
 

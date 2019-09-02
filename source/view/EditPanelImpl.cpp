@@ -15,7 +15,6 @@ namespace ee0
 
 EditPanelImpl::EditPanelImpl(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
 	: m_sub_mgr(sub_mgr)
-	, m_popup(parent, this)
 {
 }
 

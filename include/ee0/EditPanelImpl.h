@@ -1,6 +1,5 @@
 #pragma once
 
-#include "ee0/RightPopupMenu.h"
 #include "ee0/typedef.h"
 
 #include <wx/wx.h>
@@ -12,6 +11,7 @@ namespace ee0
 
 class EditOP;
 class WxStageCanvas;
+class RightPopupMenu;
 
 class EditPanelImpl
 {
@@ -33,7 +33,8 @@ public:
 	void OnMouseWheelRotation(int x, int y, int direction);
 	void OnRightPopupMenu(wxCommandEvent& event);
 
-	RightPopupMenu& GetPopupMenu() { return m_popup; }
+    void  SetPopupMenu(const std::shared_ptr<RightPopupMenu>& popup) { m_popup = popup; }
+    auto& GetPopupMenu() const { return m_popup; }
 
 	void OnSize(wxSizeEvent& event);
 
@@ -48,7 +49,7 @@ private:
 
 	std::shared_ptr<WxStageCanvas> m_canvas = nullptr;
 
-	RightPopupMenu m_popup;
+	std::shared_ptr<RightPopupMenu> m_popup = nullptr;
 
 	std::function<void(int)> m_on_key_down_func = nullptr;
 
