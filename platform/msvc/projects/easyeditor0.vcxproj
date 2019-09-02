@@ -28,6 +28,7 @@
     <ClInclude Include="..\..\..\include\ee0\EditOpState.h" />
     <ClInclude Include="..\..\..\include\ee0\EditPanelImpl.h" />
     <ClInclude Include="..\..\..\include\ee0\EditRecord.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxNavigationBar.h" />
     <ClInclude Include="..\..\..\include\ee0\NSCompCustomProp.h" />
     <ClInclude Include="..\..\..\include\ee0\GameObj.h" />
     <ClInclude Include="..\..\..\include\ee0\GuiCallback.h" />
@@ -111,6 +112,7 @@
     <ClCompile Include="..\..\..\source\tools\RenderContext.cpp" />
     <ClCompile Include="..\..\..\source\tools\SettingCfg.cpp" />
     <ClCompile Include="..\..\..\source\view\EditPanelImpl.cpp" />
+    <ClCompile Include="..\..\..\source\view\WxNavigationBar.cpp" />
     <ClCompile Include="..\..\..\source\view\RightPopupMenu.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompCustomPropPanel.cpp" />
     <ClCompile Include="..\..\..\source\view\WxCompIdPanel.cpp" />

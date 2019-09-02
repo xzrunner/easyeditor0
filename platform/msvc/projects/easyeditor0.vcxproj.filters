@@ -286,6 +286,9 @@
     <ClInclude Include="..\..\..\include\ee0\AssetsMap.h">
       <Filter>tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\include\ee0\WxNavigationBar.h">
+      <Filter>view\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\source\msg\Subject.cpp">
@@ -431,6 +434,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\source\tools\AssetsMap.cpp">
       <Filter>tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\source\view\WxNavigationBar.cpp">
+      <Filter>view\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
