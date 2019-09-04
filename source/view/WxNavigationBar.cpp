@@ -11,11 +11,15 @@ WxNavigationBar::WxNavigationBar(wxWindow* parent)
 
 void WxNavigationBar::Push(const std::string& path)
 {
-    m_paths.push_back(path);
-
     auto sizer = GetSizer();
     auto btn = new wxButton(this, wxID_ANY, path);
+    Connect(btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+        wxCommandEventHandler(WxNavigationBar::OnSeekPath));
     sizer->Add(btn);
+
+    sizer->Fit(this);
+
+    m_paths.push_back(Path(path, btn));
 }
 
 void WxNavigationBar::Pop()
@@ -24,14 +28,15 @@ void WxNavigationBar::Pop()
         return;
     }
 
+    //auto& back = m_paths.back();
+    //delete back.btn;
+
     m_paths.pop_back();
 
     auto sizer = GetSizer();
     sizer->Remove(2 + m_paths.size());
-}
 
-void WxNavigationBar::MoveTo()
-{
+    sizer->Fit(this);
 }
 
 void WxNavigationBar::InitLayout()
@@ -47,6 +52,8 @@ void WxNavigationBar::InitLayout()
         top_sizer->Add(m_btn_next, 0, wxLEFT | wxRIGHT, 5);
     }
     SetSizer(top_sizer);
+
+    Push("Top");
 }
 
 void WxNavigationBar::OnPrevPress(wxCommandEvent& event)
@@ -57,6 +64,35 @@ void WxNavigationBar::OnPrevPress(wxCommandEvent& event)
 void WxNavigationBar::OnNextPress(wxCommandEvent& event)
 {
 
+}
+
+void WxNavigationBar::OnSeekPath(wxCommandEvent& event)
+{
+    int id = event.GetId();
+    for (int i = 0, n = m_paths.size(); i < n; ++i)
+    {
+        if (m_paths[i].btn->GetId() != id) {
+            continue;
+        }
+
+        if (i == m_paths.size() - 1) {
+            break;
+        }
+
+        m_paths.erase(m_paths.begin() + i + 1, m_paths.end());
+
+        auto sizer = GetSizer();
+        for (int j = i + 1; j < n; ++j) {
+            sizer->Remove(2 + j);
+        }
+        sizer->Fit(this);
+
+        if (m_seek_cb) {
+            m_seek_cb(i);
+        }
+
+        break;
+    }
 }
 
 }
