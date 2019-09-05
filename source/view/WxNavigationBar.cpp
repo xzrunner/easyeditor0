@@ -79,13 +79,14 @@ void WxNavigationBar::OnSeekPath(wxCommandEvent& event)
             break;
         }
 
-        m_paths.erase(m_paths.begin() + i + 1, m_paths.end());
-
         auto sizer = GetSizer();
         for (int j = i + 1; j < n; ++j) {
-            sizer->Remove(2 + j);
+            sizer->Detach(m_paths[j].btn);
+            delete m_paths[j].btn;
         }
         sizer->Fit(this);
+
+        m_paths.erase(m_paths.begin() + i + 1, m_paths.end());
 
         if (m_seek_cb) {
             m_seek_cb(i);
