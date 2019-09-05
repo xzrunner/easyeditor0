@@ -22,23 +22,6 @@ void WxNavigationBar::Push(const std::string& path)
     m_paths.push_back(Path(path, btn));
 }
 
-void WxNavigationBar::Pop()
-{
-    if (m_paths.empty()) {
-        return;
-    }
-
-    //auto& back = m_paths.back();
-    //delete back.btn;
-
-    m_paths.pop_back();
-
-    auto sizer = GetSizer();
-    sizer->Remove(2 + m_paths.size());
-
-    sizer->Fit(this);
-}
-
 void WxNavigationBar::InitLayout()
 {
     wxSizer* top_sizer = new wxBoxSizer(wxHORIZONTAL);

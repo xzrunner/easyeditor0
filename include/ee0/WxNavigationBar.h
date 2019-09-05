@@ -14,7 +14,6 @@ public:
     WxNavigationBar(wxWindow* parent);
 
     void Push(const std::string& path);
-    void Pop();
 
     size_t GetPathDepth() const { return m_paths.size(); }
 
