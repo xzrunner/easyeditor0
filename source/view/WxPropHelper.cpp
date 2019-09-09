@@ -122,9 +122,10 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
     }
 }
 
-void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
+bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
 	                          rttr::instance obj, rttr::property prop)
 {
+    bool dirty = true;
 	auto type = prop.get_type();
 	if (type == rttr::type::get<bool>() && key == info.desc)
 	{
@@ -224,6 +225,11 @@ void WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 
 		prop.set_value(obj, col);
     }
+    else
+    {
+        dirty = false;
+    }
+    return dirty;
 }
 
 }
