@@ -35,8 +35,6 @@ void WxNavigationBar::InitLayout()
         top_sizer->Add(m_btn_next, 0, wxLEFT | wxRIGHT, 5);
     }
     SetSizer(top_sizer);
-
-    Push("Top");
 }
 
 void WxNavigationBar::OnPrevPress(wxCommandEvent& event)
