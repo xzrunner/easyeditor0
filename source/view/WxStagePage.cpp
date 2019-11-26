@@ -29,8 +29,8 @@ const uint32_t MESSAGES[] =
 namespace ee0
 {
 
-WxStagePage::WxStagePage(wxWindow* parent)
-	: WxEditPanel(parent, nullptr)
+WxStagePage::WxStagePage(wxWindow* parent, const SubjectMgrPtr& sub_mgr)
+	: WxEditPanel(parent, sub_mgr)
 	, m_edit_dirty(false)
 	, m_next_obj_id(0)
 {

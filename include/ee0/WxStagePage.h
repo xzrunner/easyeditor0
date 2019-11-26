@@ -21,7 +21,7 @@ public:
 	};
 
 public:
-	WxStagePage(wxWindow* parent);
+	WxStagePage(wxWindow* parent, const SubjectMgrPtr& sub_mgr = nullptr);
 	virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const VariantSet& variants) override;
