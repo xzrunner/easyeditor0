@@ -5,6 +5,7 @@
 class wxPropertyGrid;
 class wxAny;
 class wxString;
+class wxEnumProperty;
 
 namespace ee0
 {
@@ -19,6 +20,9 @@ public:
 
 	static bool UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
 		rttr::instance obj, rttr::property prop);
+
+    static wxEnumProperty* CreateEnumProp(const std::string& label, rttr::type type, int init_val);
+    static rttr::variant QueryEnumPropByLabel(const std::string& label, rttr::type type);
 
 }; // WxPropHelper
 

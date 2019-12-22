@@ -120,6 +120,11 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
         pg->AppendIn(pos_prop, new wxUIntProperty(wxT("B"), wxPG_LABEL, col.b));
         pg->AppendIn(pos_prop, new wxUIntProperty(wxT("A"), wxPG_LABEL, col.a));
     }
+    else if (type.is_enumeration())
+    {
+        auto wx_prop = CreateEnumProp(info.desc, type, prop.get_value(obj).get_value<int>());
+        pg->Append(wx_prop);
+    }
 }
 
 bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
@@ -225,11 +230,69 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 
 		prop.set_value(obj, col);
     }
+    else if (type.is_enumeration() && key == info.desc)
+    {
+        if (val.CheckType<int>())
+        {
+            auto t = val.GetType();
+            auto idx = wxANY_AS(val, int);
+            auto vars = type.get_enumeration().get_values();
+            assert(idx >= 0 && idx < static_cast<int>(vars.size()));
+            bool find = false;
+            for (auto& var : vars)
+            {
+                if (var.to_int() != idx) {
+                    continue;
+                }
+
+                prop.set_value(obj, var);
+                find = true;
+                dirty = true;
+                break;
+            }
+            assert(find);
+        }
+    }
     else
     {
         dirty = false;
     }
     return dirty;
+}
+
+wxEnumProperty* WxPropHelper::CreateEnumProp(const std::string& label, rttr::type type, int init_val)
+{
+    wxArrayString choices;
+
+    auto vars = type.get_enumeration().get_values();
+    choices.resize(vars.size());
+    for (auto& var : vars)
+    {
+        auto idx = var.to_int();
+        auto desc = type.get_enumeration().get_metadata(idx);
+        assert(desc.is_valid());
+        choices[idx] = desc.to_string();
+    }
+
+    auto wx_prop = new wxEnumProperty(label, wxPG_LABEL, choices);
+    wx_prop->SetValue(init_val);
+    return wx_prop;
+}
+
+rttr::variant WxPropHelper::QueryEnumPropByLabel(const std::string& label, rttr::type type)
+{
+    auto vars = type.get_enumeration().get_values();
+    for (auto& var : vars)
+    {
+        auto idx = var.to_int();
+        auto desc = type.get_enumeration().get_metadata(idx);
+        assert(desc.is_valid());
+        if (label == desc.to_string()) {
+            return var;
+        }
+    }
+    assert(0);
+    return rttr::variant();
 }
 
 }
