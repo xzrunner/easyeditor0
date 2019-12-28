@@ -6,6 +6,7 @@ class wxPropertyGrid;
 class wxAny;
 class wxString;
 class wxEnumProperty;
+class wxPGProperty;
 
 namespace ee0
 {
@@ -16,7 +17,7 @@ class WxPropHelper
 {
 public:
 	static void CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::instance obj, rttr::property prop,
-        std::function<void(const std::string& filepath)> open_file_cb = nullptr);
+        std::function<void(const std::string& filepath)> open_file_cb = nullptr, wxPGProperty* parent = nullptr);
 
 	static bool UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
 		rttr::instance obj, rttr::property prop);

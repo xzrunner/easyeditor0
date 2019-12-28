@@ -8,68 +8,137 @@
 
 #include <wx/propgrid/propgrid.h>
 
+#include <cctype>
+
+namespace
+{
+
+std::string UnderscoreToCamelCase(const std::string& str)
+{
+    std::vector<std::string> tokens;
+    cpputil::StringHelper::Split(str, "_", tokens);
+
+    std::string ret;
+    for (auto& sub : tokens)
+    {
+        if (sub.empty()) {
+            continue;
+        }
+        sub[0] = std::toupper(sub[0]);
+        if (!ret.empty()) {
+            ret += " ";
+        }
+        ret += sub;
+    }
+    return ret;
+}
+
+}
+
 namespace ee0
 {
 
 void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::instance obj, rttr::property prop,
-                              std::function<void(const std::string& filepath)> open_file_cb)
+                              std::function<void(const std::string& filepath)> open_file_cb, wxPGProperty* parent)
 {
 	auto type = prop.get_type();
 	if (type == rttr::type::get<bool>())
 	{
 		auto b = prop.get_value(obj).get_value<bool>();
-		pg->Append(new wxBoolProperty(info.desc, wxPG_LABEL, b));
-		pg->SetPropertyAttribute(info.desc.c_str(), wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        auto c_prop = new wxBoolProperty(info.desc, wxPG_LABEL, b);
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
+		pg->SetPropertyAttribute(c_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 	}
 	else if (type == rttr::type::get<sm::bvec2>())
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec2>();
-		pg->Append(new wxFloatProperty("X", wxPG_LABEL, b.x));
-		pg->Append(new wxFloatProperty("Y", wxPG_LABEL, b.y));
-		pg->SetPropertyAttribute("X", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-		pg->SetPropertyAttribute("Y", wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        auto x_prop = new wxFloatProperty("X", wxPG_LABEL, b.x);
+        auto y_prop = new wxFloatProperty("Y", wxPG_LABEL, b.y);
+        if (parent) {
+            pg->AppendIn(parent, x_prop);
+            pg->AppendIn(parent, y_prop);
+        } else {
+            pg->Append(x_prop);
+            pg->Append(y_prop);
+        }
+		pg->SetPropertyAttribute(x_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+		pg->SetPropertyAttribute(y_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 	}
     else if (type == rttr::type::get<int>())
     {
         auto v = prop.get_value(obj).get_value<int>();
-        pg->Append(new wxIntProperty(info.desc, wxPG_LABEL, v));
+        auto c_prop = new wxIntProperty(info.desc, wxPG_LABEL, v);
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
     }
     else if (type == rttr::type::get<unsigned int>())
     {
         auto v = prop.get_value(obj).get_value<unsigned int>();
-        pg->Append(new wxUIntProperty(info.desc, wxPG_LABEL, v));
+        auto c_prop = new wxUIntProperty(info.desc, wxPG_LABEL, v);
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
     }
 	else if (type == rttr::type::get<float>())
 	{
 		auto v = prop.get_value(obj).get_value<float>();
-		pg->Append(new wxFloatProperty(info.desc, wxPG_LABEL, v));
+        auto c_prop = new wxFloatProperty(info.desc, wxPG_LABEL, v);
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
 	}
 	else if (type == rttr::type::get<sm::vec2>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec2>();
-        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
-        pos_prop->SetExpanded(false);
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
+        auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>"));
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
+        c_prop->SetExpanded(false);
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
 	}
 	else if (type == rttr::type::get<sm::vec3>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec3>();
-        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
-        pos_prop->SetExpanded(false);
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Z"), wxPG_LABEL, v.z));
+        auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>"));
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
+        c_prop->SetExpanded(false);
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("Z"), wxPG_LABEL, v.z));
 	}
 	else if (type == rttr::type::get<sm::vec4>())
 	{
 		auto v = prop.get_value(obj).get_value<sm::vec4>();
-        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
-        pos_prop->SetExpanded(false);
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("Z"), wxPG_LABEL, v.z));
-        pg->AppendIn(pos_prop, new wxFloatProperty(wxT("W"), wxPG_LABEL, v.w));
+        auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>"));
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
+        c_prop->SetExpanded(false);
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("X"), wxPG_LABEL, v.x));
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("Y"), wxPG_LABEL, v.y));
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("Z"), wxPG_LABEL, v.z));
+        pg->AppendIn(c_prop, new wxFloatProperty(wxT("W"), wxPG_LABEL, v.w));
 	}
 	else if (type == rttr::type::get<const char*>()
 	      || type == rttr::type::get<std::string>())
@@ -83,10 +152,10 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 		if (open_file_obj.is_valid())
 		{
 			auto open_file = open_file_obj.get_value<PropOpenFile>();
-			auto wx_prop = new WxOpenFileProp(info.desc, wxPG_LABEL, str);
-			wx_prop->SetFilter(open_file.filter);
+			auto c_prop = new WxOpenFileProp(info.desc, wxPG_LABEL, str);
+			c_prop->SetFilter(open_file.filter);
 			std::string prop_name = prop.get_name().to_string();
-			wx_prop->SetCallback([=](const std::string& filepath)
+			c_prop->SetCallback([=](const std::string& filepath)
 			{
 				if (type == rttr::type::get<const char*>()) {
 					prop.set_value(obj, filepath.c_str());
@@ -98,32 +167,80 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
                 }
 			});
 
-			pg->Append(wx_prop);
+            if (parent) {
+                pg->AppendIn(parent, c_prop);
+            } else {
+                pg->Append(c_prop);
+            }
 		}
 		else
 		{
             str = cpputil::StringHelper::UTF8ToGBK(str.c_str());
-            if (prop.get_metadata(PropLongStringTag()).is_valid()) {
-                pg->Append(new wxLongStringProperty(info.desc, wxPG_LABEL, str));
-            } else {
-                pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, str));
+            if (prop.get_metadata(PropLongStringTag()).is_valid())
+            {
+                auto c_prop = new wxLongStringProperty(info.desc, wxPG_LABEL, str);
+                if (parent) {
+                    pg->AppendIn(parent, c_prop);
+                } else {
+                    pg->Append(c_prop);
+                }
+            }
+            else
+            {
+                auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, str);
+                if (parent) {
+                    pg->AppendIn(parent, c_prop);
+                } else {
+                    pg->Append(c_prop);
+                }
             }
 		}
 	}
     else if (type == rttr::type::get<pt0::Color>())
     {
         auto col = prop.get_value(obj).get_value<pt0::Color>();
-        wxPGProperty* pos_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
-        pos_prop->SetExpanded(false);
-        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("R"), wxPG_LABEL, col.r));
-        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("G"), wxPG_LABEL, col.g));
-        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("B"), wxPG_LABEL, col.b));
-        pg->AppendIn(pos_prop, new wxUIntProperty(wxT("A"), wxPG_LABEL, col.a));
+        auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>"));
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
+        c_prop->SetExpanded(false);
+        pg->AppendIn(c_prop, new wxUIntProperty(wxT("R"), wxPG_LABEL, col.r));
+        pg->AppendIn(c_prop, new wxUIntProperty(wxT("G"), wxPG_LABEL, col.g));
+        pg->AppendIn(c_prop, new wxUIntProperty(wxT("B"), wxPG_LABEL, col.b));
+        pg->AppendIn(c_prop, new wxUIntProperty(wxT("A"), wxPG_LABEL, col.a));
     }
     else if (type.is_enumeration())
     {
-        auto wx_prop = CreateEnumProp(info.desc, type, prop.get_value(obj).get_value<int>());
-        pg->Append(wx_prop);
+        auto c_prop = CreateEnumProp(info.desc, type, prop.get_value(obj).get_value<int>());
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
+    }
+    else if (type.is_sequential_container())
+    {
+
+    }
+    else if (type.is_associative_container())
+    {
+    }
+    else // composed
+    {
+        auto props = type.get_properties();
+        if (!props.empty())
+        {
+            auto c_obj = prop.get_value(obj);
+
+            wxPGProperty* p_prop = pg->Append(new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>")));
+            p_prop->SetExpanded(false);
+            for (auto& c_prop : props) {
+                auto desc = UnderscoreToCamelCase(c_prop.get_name().to_string());
+                CreateProp(pg, UIMetaInfo(desc), c_obj, c_prop, open_file_cb, p_prop);
+            }
+        }
     }
 }
 
@@ -252,6 +369,40 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
             }
             assert(find);
         }
+    }
+    else if (key == info.desc)  // composed
+    {
+        auto props = type.get_properties();
+
+        std::vector<std::string> tokens;
+        auto str = wxANY_AS(val, wxString).ToStdString();
+        cpputil::StringHelper::Split(str, ";", tokens);
+        assert(tokens.size() == props.size());
+
+        auto value = prop.get_value(obj);
+        size_t ptr = 0;
+        for (auto& dst : props)
+        {
+            auto& src = tokens[ptr++];
+            auto dst_type = dst.get_type();
+            if (dst_type == rttr::type::get<float>())
+            {
+                dst.set_value(value, std::stof(tokens[0]));
+            }
+            else if (dst_type == rttr::type::get<bool>())
+            {
+                if (src.find("Not") != std::string::npos) {
+                    dst.set_value(value, false);
+                } else {
+                    dst.set_value(value, true);
+                }
+            }
+            else
+            {
+                assert(0);
+            }
+        }
+        prop.set_value(obj, value);
     }
     else
     {
