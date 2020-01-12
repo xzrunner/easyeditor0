@@ -222,7 +222,24 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
     }
     else if (type.is_sequential_container())
     {
+        wxArrayString str_array;
 
+        auto var = prop.get_value(obj);
+
+        auto view = var.create_sequential_view();
+        str_array.reserve(view.get_size());
+        auto num = view.get_size();
+        for (size_t i = 0, n = view.get_size(); i < n; ++i) {
+            str_array.push_back(VarToStr(view.get_value(i),
+                true, view.get_value_type()));
+        }
+
+        auto c_prop = new wxArrayStringProperty(info.desc, wxPG_LABEL, str_array);
+        if (parent) {
+            pg->AppendIn(parent, c_prop);
+        } else {
+            pg->Append(c_prop);
+        }
     }
     else if (type.is_associative_container())
     {
@@ -370,6 +387,22 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
             assert(find);
         }
     }
+    else if (type.is_sequential_container() && key == info.desc)
+    {
+        auto array_str = wxANY_AS(val, wxArrayString);
+
+        auto var = prop.get_value(obj);
+        auto view = var.create_sequential_view();
+        assert(view.is_valid());
+        auto str = view.get_type().get_name().to_string();
+        view.set_size(array_str.size());
+        for (size_t i = 0, n = array_str.size(); i < n; ++i)
+        {
+            auto val = StrToVar(array_str[i].ToStdString(), view.get_value_type());
+            view.set_value(i, val);
+        }
+        prop.set_value(obj, var);
+    }
     else if (key == info.desc)  // composed
     {
         auto props = type.get_properties();
@@ -381,26 +414,8 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 
         auto value = prop.get_value(obj);
         size_t ptr = 0;
-        for (auto& dst : props)
-        {
-            auto& src = tokens[ptr++];
-            auto dst_type = dst.get_type();
-            if (dst_type == rttr::type::get<float>())
-            {
-                dst.set_value(value, std::stof(tokens[0]));
-            }
-            else if (dst_type == rttr::type::get<bool>())
-            {
-                if (src.find("Not") != std::string::npos) {
-                    dst.set_value(value, false);
-                } else {
-                    dst.set_value(value, true);
-                }
-            }
-            else
-            {
-                assert(0);
-            }
+        for (auto& dst : props) {
+            dst.set_value(value, StrToVar(tokens[ptr++], dst.get_type()));
         }
         prop.set_value(obj, value);
     }
@@ -444,6 +459,105 @@ rttr::variant WxPropHelper::QueryEnumPropByLabel(const std::string& label, rttr:
     }
     assert(0);
     return rttr::variant();
+}
+
+rttr::variant WxPropHelper::StrToVar(const std::string& str, rttr::type type)
+{
+    if (type == rttr::type::get<bool>())
+    {
+        if (str == "0" || str.find("Not") != std::string::npos) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    else if (type == rttr::type::get<int>())
+    {
+        return std::stoi(str);
+    }
+    else if (type == rttr::type::get<unsigned int>())
+    {
+        return std::stoul(str);
+    }
+    else if (type == rttr::type::get<float>())
+    {
+        return std::stof(str);
+    }
+    else if (type == rttr::type::get<const char*>()
+          || type == rttr::type::get<std::string>())
+    {
+        return cpputil::StringHelper::GBKToUTF8(str.c_str());
+    }
+    else if (type.is_enumeration())
+    {
+        return type.get_enumeration().name_to_value(str);
+    }
+    else
+    {
+        auto var = type.create();
+
+        auto props = type.get_properties();
+
+        std::vector<std::string> tokens;
+        cpputil::StringHelper::Split(str, ";", tokens);
+        if (tokens.size() != props.size()) {
+            return rttr::variant();
+        }
+
+        size_t ptr = 0;
+        for (auto& dst : props) {
+            dst.set_value(var, StrToVar(tokens[ptr++], dst.get_type()));
+        }
+
+        assert(var.is_valid());
+        return var;
+    }
+}
+
+std::string WxPropHelper::VarToStr(rttr::variant var, bool wrapped, rttr::type type)
+{
+    if (type == rttr::type::get<bool>())
+    {
+        auto val = wrapped ? var.get_wrapped_value<bool>() : var.get_value<bool>();
+        return std::to_string(val);
+    }
+    else if (type == rttr::type::get<int>())
+    {
+        auto val = wrapped ? var.get_wrapped_value<int>() : var.get_value<int>();
+        return std::to_string(val);
+    }
+    else if (type == rttr::type::get<unsigned int>())
+    {
+        auto val = wrapped ? var.get_wrapped_value<unsigned int>() : var.get_value<unsigned int>();
+        return std::to_string(val);
+    }
+    else if (type == rttr::type::get<float>())
+    {
+        auto val = wrapped ? var.get_wrapped_value<float>() : var.get_value<float>();
+        return std::to_string(val);
+    }
+    else if (type == rttr::type::get<const char*>()
+          || type == rttr::type::get<std::string>())
+    {
+		return (type == rttr::type::get<const char*>()) ?
+			var.get_value<const char*>() : var.to_string();
+    }
+    else if (type.is_enumeration())
+    {
+        return type.get_enumeration().value_to_name(var).to_string();
+    }
+    else
+    {
+        std::string ret;
+        for (auto& prop : type.get_properties()) {
+            ret += VarToStr(prop.get_value(var), false, prop.get_type());
+            ret += ";";
+        }
+        if (!ret.empty()) {
+            ret.pop_back();
+        }
+        return ret;
+    }
 }
 
 }

@@ -25,6 +25,10 @@ public:
     static wxEnumProperty* CreateEnumProp(const std::string& label, rttr::type type, int init_val);
     static rttr::variant QueryEnumPropByLabel(const std::string& label, rttr::type type);
 
+private:
+    static rttr::variant StrToVar(const std::string& str, rttr::type type);
+    static std::string VarToStr(rttr::variant var, bool wrapped, rttr::type type);
+
 }; // WxPropHelper
 
 }
