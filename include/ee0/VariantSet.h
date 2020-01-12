@@ -13,7 +13,7 @@ public:
 	VariantSet() {}
 
 	Variant GetVariant(std::string name) const {
-		auto& itr = m_variants.find(name);
+		auto itr = m_variants.find(name);
 		return itr != m_variants.end() ? itr->second : Variant();
 	}
 	void SetVariant(std::string name, Variant& v) {

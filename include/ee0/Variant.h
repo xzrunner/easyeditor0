@@ -11,6 +11,7 @@ class Variant
 {
 public:
 	Variant() : m_type(VT_EMPTY) {}
+    // fixme: delete pc & pv
 
 	VariantType m_type;
 
