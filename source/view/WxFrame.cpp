@@ -101,7 +101,7 @@ wxMenu* WxFrame::InitFileBar()
 	menu->Append(wxID_OPEN, wxT("&Open...\tCtrl+O"), wxT("Open a project"));
 	menu->AppendSeparator();
 	menu->Append(wxID_SAVE, wxT("&Save\tCtrl+S"), wxT("Save the project"));
-	menu->Append(wxID_SAVEAS, wxT("&Save as...\tF11"), wxT("Save to a new file"));
+	menu->Append(wxID_SAVEAS, wxT("&Save as...\tCtrl+Shift+S"), wxT("Save to a new file"));
 	menu->AppendSeparator();
 	menu->Append(wxID_CLEAR, wxT("Clear"), wxT("Clear the project"));
 	menu->AppendSeparator();
