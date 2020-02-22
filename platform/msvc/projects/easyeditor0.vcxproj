@@ -28,6 +28,8 @@
     <ClInclude Include="..\..\..\include\ee0\EditOpState.h" />
     <ClInclude Include="..\..\..\include\ee0\EditPanelImpl.h" />
     <ClInclude Include="..\..\..\include\ee0\EditRecord.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxCodeEditDlg.h" />
+    <ClInclude Include="..\..\..\include\ee0\WxEditCodeProp.h" />
     <ClInclude Include="..\..\..\include\ee0\WxNavigationBar.h" />
     <ClInclude Include="..\..\..\include\ee0\NSCompCustomProp.h" />
     <ClInclude Include="..\..\..\include\ee0\GameObj.h" />
@@ -93,8 +95,10 @@
     <ClCompile Include="..\..\..\source\editop\NodeSelectOP.cpp" />
     <ClCompile Include="..\..\..\source\gui\prefs.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxCodeCtrl.cpp" />
+    <ClCompile Include="..\..\..\source\gui\WxCodeEditDlg.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxColorGradientDlg.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxColorSpinCtrl.cpp" />
+    <ClCompile Include="..\..\..\source\gui\WxEditCodeProp.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxImagePanel.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxListSelectDlg.cpp" />
     <ClCompile Include="..\..\..\source\gui\WxMaterialCtrl.cpp" />

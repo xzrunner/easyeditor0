@@ -1,6 +1,7 @@
 #include "ee0/WxPropHelper.h"
 #include "ee0/ReflectPropTypes.h"
 #include "ee0/WxOpenFileProp.h"
+#include "ee0/WxEditCodeProp.h"
 
 #include <SM_Vector.h>
 #include <cpputil/StringHelper.h>
@@ -39,7 +40,9 @@ namespace ee0
 {
 
 void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::instance obj, rttr::property prop,
-                              std::function<void(const std::string& filepath)> open_file_cb, wxPGProperty* parent)
+                              std::function<void(const std::string& filepath)> open_file_cb,
+                              std::function<void(const std::string& code_str)> edit_code_cb,
+                              wxPGProperty* parent)
 {
 	auto type = prop.get_type();
 	if (type == rttr::type::get<bool>())
@@ -148,6 +151,7 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 			prop.get_value(obj).get_value<const char*>() :
 			prop.get_value(obj).to_string();
 
+        // open file
 		auto open_file_obj = prop.get_metadata(PropOpenFileTag());
 		if (open_file_obj.is_valid())
 		{
@@ -172,29 +176,55 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
             } else {
                 pg->Append(c_prop);
             }
+
+            return;
 		}
-		else
-		{
-            str = cpputil::StringHelper::UTF8ToGBK(str.c_str());
-            if (prop.get_metadata(PropLongStringTag()).is_valid())
+
+        // cdoe edit
+        if (prop.get_metadata(PropEditCodeTag()).is_valid())
+        {
+            auto c_prop = new WxEditCodeProp(info.desc, wxPG_LABEL, str);
+            c_prop->SetCallback([=](const std::string& code_str)
             {
-                auto c_prop = new wxLongStringProperty(info.desc, wxPG_LABEL, str);
-                if (parent) {
-                    pg->AppendIn(parent, c_prop);
+                if (type == rttr::type::get<const char*>()) {
+                    prop.set_value(obj, code_str.c_str());
                 } else {
-                    pg->Append(c_prop);
+                    prop.set_value(obj, code_str);
                 }
-            }
-            else
-            {
-                auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, str);
-                if (parent) {
-                    pg->AppendIn(parent, c_prop);
-                } else {
-                    pg->Append(c_prop);
+                if (edit_code_cb) {
+                    edit_code_cb(code_str);
                 }
+            });
+
+            if (parent) {
+                pg->AppendIn(parent, c_prop);
+            } else {
+                pg->Append(c_prop);
             }
-		}
+
+            return;
+        }
+
+        // string
+        str = cpputil::StringHelper::UTF8ToGBK(str.c_str());
+        if (prop.get_metadata(PropLongStringTag()).is_valid())
+        {
+            auto c_prop = new wxLongStringProperty(info.desc, wxPG_LABEL, str);
+            if (parent) {
+                pg->AppendIn(parent, c_prop);
+            } else {
+                pg->Append(c_prop);
+            }
+        }
+        else
+        {
+            auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, str);
+            if (parent) {
+                pg->AppendIn(parent, c_prop);
+            } else {
+                pg->Append(c_prop);
+            }
+        }
 	}
     else if (type == rttr::type::get<pt0::Color>())
     {
@@ -255,7 +285,7 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
             p_prop->SetExpanded(false);
             for (auto& c_prop : props) {
                 auto desc = UnderscoreToCamelCase(c_prop.get_name().to_string());
-                CreateProp(pg, UIMetaInfo(desc), c_obj, c_prop, open_file_cb, p_prop);
+                CreateProp(pg, UIMetaInfo(desc), c_obj, c_prop, open_file_cb, edit_code_cb, p_prop);
             }
         }
     }

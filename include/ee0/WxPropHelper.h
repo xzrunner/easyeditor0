@@ -17,9 +17,11 @@ class WxPropHelper
 {
 public:
 	static void CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::instance obj, rttr::property prop,
-        std::function<void(const std::string& filepath)> open_file_cb = nullptr, wxPGProperty* parent = nullptr);
+        std::function<void(const std::string& filepath)> open_file_cb = nullptr,
+        std::function<void(const std::string& code_str)> edit_code_cb = nullptr,
+        wxPGProperty* parent = nullptr);
 
-	static bool UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
+	 static bool UpdateProp(const wxString& key, const wxAny& val, const UIMetaInfo& info,
 		rttr::instance obj, rttr::property prop);
 
     static wxEnumProperty* CreateEnumProp(const std::string& label, rttr::type type, int init_val);

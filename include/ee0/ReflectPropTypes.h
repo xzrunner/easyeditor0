@@ -17,6 +17,10 @@ static const char* PropLongStringTag() {
     return "PROP_LONG_STRING";
 }
 
+static const char* PropEditCodeTag() {
+    return "PROP_EDIT_CODE";
+}
+
 struct UIMetaInfo
 {
 	UIMetaInfo(std::string desc)
