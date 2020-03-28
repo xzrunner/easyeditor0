@@ -3,11 +3,11 @@
 #include "ee0/EditPanelImpl.h"
 #include "ee0/typedef.h"
 
-#include <moon/typedef.h>
-
 #include <wx/wx.h>
 
 #include <memory>
+
+namespace moon { class Context; }
 
 namespace ee0
 {
@@ -24,7 +24,8 @@ public:
 
 //	bool GetKeyState(int key) const;
 
-	const moon::ContextPtr& GetMoonCtx() const { return m_moon_ctx; }
+	const std::shared_ptr<moon::Context>&
+        GetMoonCtx() const { return m_moon_ctx; }
 
 private:
 	void OnSize(wxSizeEvent& event);
@@ -35,7 +36,7 @@ protected:
 private:
 	std::unique_ptr<EditPanelImpl> m_impl;
 
-	moon::ContextPtr m_moon_ctx = nullptr;
+    std::shared_ptr<moon::Context> m_moon_ctx = nullptr;
 
 	DECLARE_EVENT_TABLE()
 
