@@ -252,19 +252,49 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
     }
     else if (type.is_sequential_container())
     {
-        wxArrayString str_array;
+        wxPGProperty* c_prop = nullptr;
 
         auto var = prop.get_value(obj);
-
         auto view = var.create_sequential_view();
-        str_array.reserve(view.get_size());
-        auto num = view.get_size();
-        for (size_t i = 0, n = view.get_size(); i < n; ++i) {
-            str_array.push_back(VarToStr(view.get_value(i),
-                true, view.get_value_type()));
+        auto val_type = view.get_value_type();
+        if (val_type.is_enumeration())
+        {
+            wxArrayString labels;
+            wxArrayInt values;
+
+            auto enum_vals = val_type.get_enumeration().get_values();
+            labels.resize(enum_vals.size());
+            values.resize(enum_vals.size());
+            for (auto& v : enum_vals)
+            {
+                auto idx = v.to_int();
+                auto desc = val_type.get_enumeration().get_metadata(idx);
+                assert(desc.is_valid());
+                labels[idx] = desc.to_string();
+                values[idx] = 1 << idx;
+            }
+
+            int value = 0;
+            for (size_t i = 0, n = view.get_size(); i < n; ++i) {
+                value |= (1 << view.get_value(i).to_int());
+            }
+
+            c_prop = new wxFlagsProperty(info.desc, wxPG_LABEL, labels, values, value);
+        }
+        else
+        {
+            wxArrayString str_array;
+
+            const auto num = view.get_size();
+            str_array.reserve(num);
+            for (size_t i = 0, n = num; i < n; ++i) {
+                str_array.push_back(VarToStr(view.get_value(i),
+                    true, view.get_value_type()));
+            }
+
+            c_prop = new wxArrayStringProperty(info.desc, wxPG_LABEL, str_array);
         }
 
-        auto c_prop = new wxArrayStringProperty(info.desc, wxPG_LABEL, str_array);
         if (parent) {
             pg->AppendIn(parent, c_prop);
         } else {
@@ -419,17 +449,33 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
     }
     else if (type.is_sequential_container() && key == info.desc)
     {
-        auto array_str = wxANY_AS(val, wxArrayString);
-
         auto var = prop.get_value(obj);
         auto view = var.create_sequential_view();
         assert(view.is_valid());
-        auto str = view.get_type().get_name().to_string();
-        view.set_size(array_str.size());
-        for (size_t i = 0, n = array_str.size(); i < n; ++i)
+        auto val_type = view.get_value_type();
+        if (val_type.is_enumeration())
         {
-            auto val = StrToVar(array_str[i].ToStdString(), view.get_value_type());
-            view.set_value(i, val);
+            auto bitset = wxANY_AS(val, int);
+
+            view.clear();
+            auto enum_vals = val_type.get_enumeration().get_values();
+            for (auto& v : enum_vals)
+            {
+                auto idx = v.to_int();
+                if (bitset & (1 << idx)) {
+                    view.insert(view.end(), v);
+                }
+            }
+        }
+        else
+        {
+            auto array_str = wxANY_AS(val, wxArrayString);
+            view.set_size(array_str.size());
+            for (size_t i = 0, n = array_str.size(); i < n; ++i)
+            {
+                auto val = StrToVar(array_str[i].ToStdString(), view.get_value_type());
+                view.set_value(i, val);
+            }
         }
         prop.set_value(obj, var);
     }
