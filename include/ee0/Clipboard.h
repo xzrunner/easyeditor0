@@ -5,6 +5,8 @@
 
 #include <vector>
 
+namespace ur2 { class Device; }
+
 namespace ee0
 {
 
@@ -14,7 +16,7 @@ public:
 //    void Clear();
 
     void StoreNodesToCB(const std::vector<n0::SceneNodePtr>& nodes);
-    void LoadNodesFromCB(std::vector<n0::SceneNodePtr>& nodes);
+    void LoadNodesFromCB(const ur2::Device& dev, std::vector<n0::SceneNodePtr>& nodes);
 
     //void SetValue(const std::string& key, const std::string& val);
     //std::string GetValue(const std::string& key) const;

@@ -6,12 +6,18 @@
 #include "ee0/ConfigFile.h"
 
 #include <guard/check.h>
-#include <unirender/RenderContext.h>
+#include <unirender2/Factory.h>
+#include <unirender2/ShaderProgram.h>
+#include <unirender2/ClearState.h>
+#include <painting0/ModelMatUpdater.h>
 #include <painting2/Shader.h>
 #include <painting2/Blackboard.h>
 #include <painting2/RenderContext.h>
 #include <painting2/WindowContext.h>
 #include <painting2/RenderSystem.h>
+#include <painting2/ViewMatUpdater.h>
+#include <painting2/ProjectMatUpdater.h>
+#include <painting2/OrthoCamera.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
 #include <facade/Blackboard.h>
@@ -41,12 +47,14 @@ static const int GL_ATTRIB[20] = {WX_GL_RGBA, WX_GL_MIN_RED, 1, WX_GL_MIN_GREEN,
 
 static const float FPS = 30;
 
-WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
+WxStageCanvas::WxStageCanvas(const ur2::Device& dev,
+                             wxWindow* wnd, EditPanelImpl& stage,
 	                         const pt0::CameraPtr& camera,
 	                         const RenderContext* rc,
 	                         const WindowContext* wc,
 	                         uint32_t flag)
 	: wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB, wxDefaultPosition, wxDefaultSize, wxWANTS_CHARS)
+    , m_dev(dev)
 	, m_camera(camera)
 	, m_flag(flag)
 	, m_stage(stage)
@@ -54,7 +62,7 @@ WxStageCanvas::WxStageCanvas(wxWindow* wnd, EditPanelImpl& stage,
 	, m_last_time(0)
 	, m_dirty(false)
 {
-	InitRender(rc);
+	InitRender(dev, rc);
 
 	SetCurrentCanvas();
 
@@ -87,7 +95,7 @@ WxStageCanvas::~WxStageCanvas()
 
 	facade::Blackboard::Instance()->SetRenderContext(nullptr);
 	if (m_new_rc) {
-		m_rc.facade_rc->Unbind();
+		//m_rc.facade_rc->Unbind();
 	}
 }
 
@@ -101,28 +109,34 @@ void WxStageCanvas::EnableInitiativeUpdate(bool enable)
 }
 
 // fixme: changed shader's mat
-void WxStageCanvas::PrepareDrawGui(float w, float h) const
+void WxStageCanvas::PrepareDrawGui(const ur2::Device& dev, float w, float h) const
 {
 	ee0::RenderContext::Reset2D();
 
 	auto rd = std::static_pointer_cast<rp::SpriteRenderer>(
-		rp::RenderMgr::Instance()->SetRenderer(rp::RenderType::SPRITE)
+		rp::RenderMgr::Instance()->SetRenderer(dev, *m_rc.ur_ctx, rp::RenderType::SPRITE)
 	);
 	auto& palette = rd->GetPalette();
 
 	auto shader = rd->GetAllShaders()[0];
-	shader->Use();
+	shader->Bind();
 
-	auto pt2_shader = std::dynamic_pointer_cast<pt2::Shader>(shader);
-	assert(pt2_shader);
-	pt2_shader->UpdateViewMat(sm::vec2(0, 0), 1.0f);
+    auto model_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt0::ModelMatUpdater>());
+    if (model_updater) {
+        std::static_pointer_cast<pt0::ModelMatUpdater>(model_updater)->Update(sm::mat4());
+    }
+    auto view_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ViewMatUpdater>());
+    if (view_updater) {
+        std::static_pointer_cast<pt2::ViewMatUpdater>(view_updater)->Update(sm::vec2(0, 0), 1.0f);
+    }
+    auto proj_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ProjectMatUpdater>());
+    if (proj_updater) {
+        std::static_pointer_cast<pt2::ProjectMatUpdater>(proj_updater)->Update(w, h);
+    }
 
-	pt2_shader->UpdateProjMat(w, h);
-
-	shader->UpdateModelMat(sm::mat4());
-
-	auto tex_id = facade::DTex::Instance()->GetSymCacheTexID();
-	m_rc.facade_rc->GetUrRc().BindTexture(tex_id, 0);
+ //   // todo
+	//auto tex_id = facade::DTex::Instance()->GetSymCacheTexID();
+	//m_rc.facade_rc->GetUrRc().BindTexture(tex_id, 0);
 }
 
 wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
@@ -130,42 +144,77 @@ wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
 	return new wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB);
 }
 
-void WxStageCanvas::CreateRenderContext(RenderContext& rc, wxGLCanvas* canvas)
+void WxStageCanvas::CreateRenderContext(/*const ur2::Device& dev, */RenderContext& rc, wxGLCanvas* canvas)
 {
 	rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
 	canvas->SetCurrent(*rc.gl_ctx);
 
-	rc.facade_rc = std::make_shared<facade::RenderContext>();
+//    rc.ur_ctx = ur2::CreateContextGL(dev);
+
+	//rc.facade_rc = std::make_shared<facade::RenderContext>();
 }
 
 void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3d)
 {
-	if (has2d)
-	{
-		wc.wc2 = std::make_shared<pt2::WindowContext>();
-		wc.wc2->Bind();
-		pt2::Blackboard::Instance()->SetWindowContext(wc.wc2);
-	}
-	if (has3d)
-	{
-		wc.wc3 = std::make_shared<pt3::WindowContext>();
-		wc.wc3->Bind();
-		pt3::Blackboard::Instance()->SetWindowContext(wc.wc3);
-	}
+	//if (has2d)
+	//{
+	//	wc.wc2 = std::make_shared<pt2::WindowContext>();
+	//	wc.wc2->Bind();
+	//	pt2::Blackboard::Instance()->SetWindowContext(wc.wc2);
+	//}
+	//if (has3d)
+	//{
+	//	wc.wc3 = std::make_shared<pt3::WindowContext>();
+	//	wc.wc3->Bind();
+	//	pt3::Blackboard::Instance()->SetWindowContext(wc.wc3);
+	//}
 }
 
 void WxStageCanvas::OnDrawWhole() const
 {
-    if (GetWidnowContext().wc2) {
-        rp::RenderMgr::Instance()->BindWndCtx2D(
-            std::const_pointer_cast<pt2::WindowContext>(GetWidnowContext().wc2)
-        );
+    //if (GetWidnowContext().wc2) {
+    //    rp::RenderMgr::Instance()->BindWndCtx2D(
+    //        std::const_pointer_cast<pt2::WindowContext>(GetWidnowContext().wc2)
+    //    );
+    //}
+    //if (GetWidnowContext().wc3) {
+    //    rp::RenderMgr::Instance()->BindWndCtx3D(
+    //        std::const_pointer_cast<pt3::WindowContext>(GetWidnowContext().wc3)
+    //    );
+    //}
+
+    auto spr_rd = rp::RenderMgr::Instance()->GetRenderer(rp::RenderType::SPRITE);
+    if (spr_rd)
+    {
+        auto& shaders = spr_rd->GetAllShaders();
+        assert(shaders.size() == 1);
+        auto& shader = shaders[0];
+
+        auto model_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt0::ModelMatUpdater>());
+        if (model_updater) {
+            std::static_pointer_cast<pt0::ModelMatUpdater>(model_updater)->Update(sm::mat4());
+        }
+        auto view_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ViewMatUpdater>());
+        if (view_updater) {
+            sm::vec2 offset(0, 0);
+            float scale = 1.0f;
+            if (m_camera->TypeID() == pt0::GetCamTypeID<pt2::OrthoCamera>()) {
+                auto o_cam = std::static_pointer_cast<pt2::OrthoCamera>(m_camera);
+                offset = -o_cam->GetPosition();
+                scale = 1.0f / o_cam->GetScale();
+            }
+            std::static_pointer_cast<pt2::ViewMatUpdater>(view_updater)->Update(offset, scale);
+        }
+        auto proj_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ProjectMatUpdater>());
+        if (proj_updater) {
+            std::static_pointer_cast<pt2::ProjectMatUpdater>(proj_updater)->Update(m_screen_sz.x, m_screen_sz.y);
+        }
     }
-    if (GetWidnowContext().wc3) {
-        rp::RenderMgr::Instance()->BindWndCtx3D(
-            std::const_pointer_cast<pt3::WindowContext>(GetWidnowContext().wc3)
-        );
-    }
+
+    ur2::ClearState clear;
+    clear.buffers = ur2::ClearBuffers::ColorBuffer;
+    clear.color.FromRGBA(m_bg_color);
+    GetRenderContext().ur_ctx->Clear(clear);
 
 	OnDrawSprites();
 	OnDrawGUI();
@@ -190,9 +239,9 @@ void WxStageCanvas::OnSize(wxSizeEvent& event)
 	int h = size.GetHeight();
 	if (w != 0 && h != 0)
 	{
-		SetCurrentCanvas();
-		OnSize(w, h);
-//		m_rc.facade_rc->OnSize(w, h);
+        m_rc.ur_ctx->SetViewport(0, 0, w, h);
+        m_camera->OnSize(w, h);
+        m_screen_sz.Set(w, h);
 	}
 }
 
@@ -207,7 +256,7 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	OnDrawWhole();
 	m_dirty = false;
 
-	rp::RenderMgr::Instance()->Flush();
+	rp::RenderMgr::Instance()->Flush(m_dev, *m_rc.ur_ctx);
 
 	glFlush();
 	SwapBuffers();
@@ -308,23 +357,23 @@ void WxStageCanvas::SetCurrentCanvas()
 {
 	BindRenderContext();
 
-	if ((m_flag & HAS_2D) && m_wc.wc2) {
-		m_wc.wc2->Bind();
-		pt2::Blackboard::Instance()->SetWindowContext(m_wc.wc2);
-	}
-	if ((m_flag & HAS_3D) && m_wc.wc3) {
-		m_wc.wc3->Bind();
-		pt3::Blackboard::Instance()->SetWindowContext(m_wc.wc3);
-	}
+	//if ((m_flag & HAS_2D) && m_wc.wc2) {
+	//	m_wc.wc2->Bind();
+	//	pt2::Blackboard::Instance()->SetWindowContext(m_wc.wc2);
+	//}
+	//if ((m_flag & HAS_3D) && m_wc.wc3) {
+	//	m_wc.wc3->Bind();
+	//	pt3::Blackboard::Instance()->SetWindowContext(m_wc.wc3);
+	//}
 }
 
-void WxStageCanvas::InitRender(const RenderContext* rc)
+void WxStageCanvas::InitRender(const ur2::Device& dev, const RenderContext* rc)
 {
 	if (rc) {
 		m_rc = *rc;
 		m_new_rc = false;
 	} else {
-		CreateRenderContext(m_rc, this);
+		CreateRenderContext(/*dev, */m_rc, this);
 		SetCurrentCanvas();
 		m_new_rc = true;
 	}
@@ -343,8 +392,8 @@ void WxStageCanvas::BindRenderContext()
 {
 	SetCurrent(*m_rc.gl_ctx);
 
-	facade::Blackboard::Instance()->SetRenderContext(m_rc.facade_rc);
-	m_rc.facade_rc->Bind();
+	//facade::Blackboard::Instance()->SetRenderContext(m_rc.facade_rc);
+	//m_rc.facade_rc->Bind();
 }
 
 }

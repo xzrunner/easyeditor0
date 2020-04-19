@@ -46,7 +46,7 @@ void Clipboard::StoreNodesToCB(const std::vector<n0::SceneNodePtr>& nodes)
     FromString(js::RapidJsonHelper::ValueToString(nodes_val));
 }
 
-void Clipboard::LoadNodesFromCB(std::vector<n0::SceneNodePtr>& nodes)
+void Clipboard::LoadNodesFromCB(const ur2::Device& dev, std::vector<n0::SceneNodePtr>& nodes)
 {
     nodes.clear();
 
@@ -61,7 +61,7 @@ void Clipboard::LoadNodesFromCB(std::vector<n0::SceneNodePtr>& nodes)
     for (auto itr = doc.Begin(); itr != doc.End(); ++itr)
     {
         auto node = std::make_shared<n0::SceneNode>();
-        ns::NodeSerializer::LoadFromJson(node, "", *itr);
+        ns::NodeSerializer::LoadFromJson(dev, node, "", *itr);
 
         auto aabb = n2::AABBSystem::Instance()->GetBounding(*node);
         node->AddUniqueComp<n2::CompBoundingBox>(aabb);

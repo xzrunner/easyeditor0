@@ -46,11 +46,7 @@ void WxMaterialCtrl::RefreshView()
             static_cast<wxTextCtrl*>(m_ctrls[i][0])
                 ->SetValue(std::to_string(val.f));
             break;
-        case pt0::RenderVarType::SAMPLER1D:
-            break;
-        case pt0::RenderVarType::SAMPLER2D:
-            break;
-        case pt0::RenderVarType::SAMPLER3D:
+        case pt0::RenderVarType::SAMPLER:
             break;
         case pt0::RenderVarType::SAMPLERCUBE:
             break;
@@ -129,11 +125,7 @@ void WxMaterialCtrl::InitLayout()
             sizer->Add(ctrl);
         }
             break;
-        case pt0::RenderVarType::SAMPLER1D:
-            break;
-        case pt0::RenderVarType::SAMPLER2D:
-            break;
-        case pt0::RenderVarType::SAMPLER3D:
+        case pt0::RenderVarType::SAMPLER:
             break;
         case pt0::RenderVarType::SAMPLERCUBE:
             break;
@@ -217,11 +209,7 @@ void WxMaterialCtrl::EnterTextValue(wxCommandEvent& event)
                     assert(m == 1);
                     m_mat.SetVar(name, pt0::RenderVariant(static_cast<float>(v)));
                     break;
-                case pt0::RenderVarType::SAMPLER1D:
-                    break;
-                case pt0::RenderVarType::SAMPLER2D:
-                    break;
-                case pt0::RenderVarType::SAMPLER3D:
+                case pt0::RenderVarType::SAMPLER:
                     break;
                 case pt0::RenderVarType::SAMPLERCUBE:
                     break;

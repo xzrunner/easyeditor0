@@ -17,8 +17,7 @@ class VariantSet;
 class NodeSelectOP : public EditOP
 {
 public:
-	NodeSelectOP(const std::shared_ptr<pt0::Camera>& cam,
-		WxStagePage& stage);
+	NodeSelectOP(const std::shared_ptr<pt0::Camera>& cam, WxStagePage& stage);
 
 	virtual bool OnKeyDown(int key_code) override;
 	virtual bool OnMouseLeftDown(int x, int y) override;

@@ -46,7 +46,7 @@ void EditPanelImpl::OnMouse(wxMouseEvent& event)
 	// calc gui coordinates
 	float gui_x = 0, gui_y = 0;
 	if (m_canvas) {
-		auto& screen_sz = CameraHelper::GetScreenSize(*GetCanvas()->GetCamera());
+		auto& screen_sz = GetCanvas()->GetScreenSize();
 		gui_x = x - screen_sz.x * 0.5f;
 		gui_y = screen_sz.y * 0.5f - y;
 	}

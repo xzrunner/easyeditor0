@@ -4,6 +4,7 @@
 #include "ee0/MsgHelper.h"
 #include "ee0/SubjectMgr.h"
 #include "ee0/Clipboard.h"
+#include "ee0/WxStageCanvas.h"
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -249,9 +250,12 @@ void NodeSelectOP::PasteSelectionFromClipboard()
     //    MsgHelper::InsertNode(*sub_mgr, copy, true);
     //}
 
+    auto canvas = m_stage.GetImpl().GetCanvas();
+    auto& dev = canvas->GetRenderDevice();
+
     auto clipboard = Clipboard::Instance();
     std::vector<n0::SceneNodePtr> nodes;
-    clipboard->LoadNodesFromCB(nodes);
+    clipboard->LoadNodesFromCB(dev, nodes);
     auto& sub_mgr = m_stage.GetSubjectMgr();
     for (auto& n : nodes) {
 //        auto copy = n->Clone();

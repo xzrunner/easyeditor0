@@ -98,9 +98,9 @@ bool EditOpState::OnActive(bool active)
 	}
 }
 
-bool EditOpState::OnDraw() const
+bool EditOpState::OnDraw(const ur2::Device& dev, ur2::Context& ctx) const
 {
-	if (m_prev_st && m_prev_st->OnDraw()) {
+	if (m_prev_st && m_prev_st->OnDraw(dev, ctx)) {
 		return true;
 	} else {
 		return false;

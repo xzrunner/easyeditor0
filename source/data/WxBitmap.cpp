@@ -145,42 +145,45 @@ void WxBitmap::LoadFromImage(const wxImage& image, bool need_scale)
 
 bool WxBitmap::LoadFromJsonFile(const std::string& filepath)
 {
-	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
-	if (!casset) {
-		return false;
-	}
+    // todo
+    return false;
 
-	auto bounding = pt2::Callback::GetBounding(*casset);
-	if (!bounding.IsValid()) {
-		return false;
-	}
+	//auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
+	//if (!casset) {
+	//	return false;
+	//}
 
-	float w = std::max(1.0f, bounding.Size().x),
-		  h = std::max(1.0f, bounding.Size().y);
-	float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE;
-	w *= scale;
-	h *= scale;
-	w = std::max(1.0f, w);
-	h = std::max(1.0f, h);
+	//auto bounding = pt2::Callback::GetBounding(*casset);
+	//if (!bounding.IsValid()) {
+	//	return false;
+	//}
 
-	pt2::DrawRT rt;
-	rt.Draw<n0::CompAsset>(*casset, [](const n0::CompAsset& casset, const sm::Matrix2D& mt) {
-		n2::RenderSystem::Instance()->Draw(casset, mt);
-	}, true, scale);
- 	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
- 	if (!rgba) {
- 		return false;
- 	}
+	//float w = std::max(1.0f, bounding.Size().x),
+	//	  h = std::max(1.0f, bounding.Size().y);
+	//float scale = w > (MAX_WIDTH / SCALE) ? (MAX_WIDTH / w) : SCALE;
+	//w *= scale;
+	//h *= scale;
+	//w = std::max(1.0f, w);
+	//h = std::max(1.0f, h);
 
- 	uint8_t* rgb = gimg_rgba8_to_rgb8(rgba, w, h);
+	//pt2::DrawRT rt;
+	//rt.Draw<n0::CompAsset>(*casset, [](const n0::CompAsset& casset, const sm::Matrix2D& mt) {
+	//	n2::RenderSystem::Instance()->Draw(casset, mt);
+	//}, true, scale);
+ //	unsigned char* rgba = rt.StoreToMemory(w, h, 4);
+ //	if (!rgba) {
+ //		return false;
+ //	}
 
- 	wxImage image(w, h, rgb, true);
-	LoadFromImage(image, false);
+ //	uint8_t* rgb = gimg_rgba8_to_rgb8(rgba, w, h);
 
- 	free(rgb);
- 	delete[] rgba;
+ //	wxImage image(w, h, rgb, true);
+	//LoadFromImage(image, false);
 
-	return true;
+ //	free(rgb);
+ //	delete[] rgba;
+
+	//return true;
 }
 
 bool WxBitmap::CanLoadFromWX(const std::string& filepath)
