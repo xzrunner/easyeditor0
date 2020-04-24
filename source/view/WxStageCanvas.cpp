@@ -260,6 +260,8 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 	// context context current
 	SetCurrentCanvas();
 
+    m_rc.ur_ctx->SetViewport(0, 0, m_screen_sz.x, m_screen_sz.y);
+
 	m_camera->Bind();
 
 	OnDrawWhole();
