@@ -49,7 +49,8 @@ public:
     auto& GetScreenSize() const { return m_screen_sz; }
 
 	static wxGLCanvas* CreateWxGLCanvas(wxWindow* wnd);
-	static void CreateRenderContext(/*const ur2::Device& dev, */RenderContext& rc, wxGLCanvas* canvas);
+	static std::shared_ptr<ur2::Device>
+        CreateRenderContext(const ur2::Device* dev, RenderContext& rc, wxGLCanvas* canvas);
 	static void CreateWindowContext(WindowContext& wc, bool has2d, bool has3d);
 
 protected:

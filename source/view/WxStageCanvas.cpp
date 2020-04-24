@@ -144,14 +144,23 @@ wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
 	return new wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB);
 }
 
-void WxStageCanvas::CreateRenderContext(/*const ur2::Device& dev, */RenderContext& rc, wxGLCanvas* canvas)
+std::shared_ptr<ur2::Device>
+WxStageCanvas::CreateRenderContext(const ur2::Device* dev, RenderContext& rc, wxGLCanvas* canvas)
 {
-	rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
-	canvas->SetCurrent(*rc.gl_ctx);
+    rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
+    canvas->SetCurrent(*rc.gl_ctx);
 
-//    rc.ur_ctx = ur2::CreateContextGL(dev);
+    std::shared_ptr<ur2::Device> ret = nullptr;
+    if (!dev) {
+        ret = ur2::CreateDeviceGL();
+        dev = ret.get();
+    }
 
-	//rc.facade_rc = std::make_shared<facade::RenderContext>();
+    rc.ur_ctx = ur2::CreateContextGL(*dev);
+
+    //rc.facade_rc = std::make_shared<facade::RenderContext>();
+
+    return ret;
 }
 
 void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3d)
@@ -373,7 +382,7 @@ void WxStageCanvas::InitRender(const ur2::Device& dev, const RenderContext* rc)
 		m_rc = *rc;
 		m_new_rc = false;
 	} else {
-		CreateRenderContext(/*dev, */m_rc, this);
+		CreateRenderContext(&dev, m_rc, this);
 		SetCurrentCanvas();
 		m_new_rc = true;
 	}
