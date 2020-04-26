@@ -119,7 +119,7 @@ void WxStageCanvas::PrepareDrawGui(const ur2::Device& dev, float w, float h) con
 	auto& palette = rd->GetPalette();
 
 	auto shader = rd->GetAllShaders()[0];
-	shader->Bind();
+//	shader->Bind();
 
     auto model_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt0::ModelMatUpdater>());
     if (model_updater) {
