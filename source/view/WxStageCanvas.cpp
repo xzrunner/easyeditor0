@@ -337,7 +337,7 @@ void WxStageCanvas::OnTimer(wxTimerEvent& event)
 
 	auto facade = facade::Facade::Instance();
 	facade->Update(dt);
-	facade->Flush(*GetRenderContext().ur_ctx, true);
+	facade->Flush(*GetRenderContext().ur_ctx);
 
 	if (auto& op = m_stage.GetEditOP()) {
 		op->Update(dt);
@@ -361,7 +361,8 @@ void WxStageCanvas::OnKillFocus(wxFocusEvent& event)
 
 void WxStageCanvas::DebugDraw() const
 {
-	facade::DTex::Instance()->DebugDraw();
+    auto& ctx = *GetRenderContext().ur_ctx;
+	facade::DTex::Instance()->DebugDraw(ctx);
 }
 
 void WxStageCanvas::SetCurrentCanvas()
