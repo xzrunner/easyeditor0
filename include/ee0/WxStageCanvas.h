@@ -11,7 +11,7 @@
 #include <memory>
 #include <functional>
 
-namespace ur2 { class Device; }
+namespace ur { class Device; }
 
 namespace ee0
 {
@@ -25,7 +25,7 @@ public:
 	static const uint32_t HAS_3D            = 0x00000002;
 
 public:
-	WxStageCanvas(const ur2::Device& dev, wxWindow* wnd, EditPanelImpl& stage,
+	WxStageCanvas(const ur::Device& dev, wxWindow* wnd, EditPanelImpl& stage,
         const pt0::CameraPtr& camera, const RenderContext* rc = nullptr, const WindowContext* wc = nullptr, uint32_t flag = HAS_2D);
 	virtual ~WxStageCanvas();
 
@@ -44,13 +44,13 @@ public:
 
 	void EnableInitiativeUpdate(bool enable);
 
-	void PrepareDrawGui(const ur2::Device& dev, float w, float h) const;
+	void PrepareDrawGui(const ur::Device& dev, float w, float h) const;
 
     auto& GetScreenSize() const { return m_screen_sz; }
 
 	static wxGLCanvas* CreateWxGLCanvas(wxWindow* wnd);
-	static std::shared_ptr<ur2::Device>
-        CreateRenderContext(const ur2::Device* dev, RenderContext& rc, wxGLCanvas* canvas);
+	static std::shared_ptr<ur::Device>
+        CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas);
 	static void CreateWindowContext(WindowContext& wc, bool has2d, bool has3d);
 
 protected:
@@ -86,13 +86,13 @@ protected:
 	void SetCurrentCanvas();
 
 private:
-	void InitRender(const ur2::Device& dev, const RenderContext* rc);
+	void InitRender(const ur::Device& dev, const RenderContext* rc);
 	void InitWindow(const WindowContext* wc);
 
 	void BindRenderContext();
 
 protected:
-    const ur2::Device& m_dev;
+    const ur::Device& m_dev;
 
 	pt0::CameraPtr m_camera = nullptr;
 

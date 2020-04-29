@@ -87,7 +87,7 @@ void NSCompCustomProp::StoreToBin(const std::string& dir, bs::ExportStream& es) 
 	}
 }
 
-void NSCompCustomProp::LoadFromBin(const ur2::Device& dev, const std::string& dir, bs::ImportStream& is)
+void NSCompCustomProp::LoadFromBin(const ur::Device& dev, const std::string& dir, bs::ImportStream& is)
 {
 	size_t num = is.UInt8();
 	m_props.resize(num);
@@ -211,7 +211,7 @@ void NSCompCustomProp::StoreToJson(const std::string& dir, rapidjson::Value& val
 	val.AddMember("props", props_val, alloc);
 }
 
-void NSCompCustomProp::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
+void NSCompCustomProp::LoadFromJson(const ur::Device& dev, mm::LinearAllocator& alloc, const std::string& dir, const rapidjson::Value& val)
 {
 	for (auto& prop_val : val["props"].GetArray())
 	{
@@ -278,7 +278,7 @@ void NSCompCustomProp::LoadFromJson(const ur2::Device& dev, mm::LinearAllocator&
 	}
 }
 
-void NSCompCustomProp::StoreToMem(const ur2::Device& dev, ee0::CompCustomProp& comp) const
+void NSCompCustomProp::StoreToMem(const ur::Device& dev, ee0::CompCustomProp& comp) const
 {
 	for (auto& prop : m_props) {
 		comp.Add(prop);

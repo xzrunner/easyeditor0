@@ -4,7 +4,7 @@
 
 #include <memory>
 
-namespace ur2 { class Device; class Context; }
+namespace ur { class Device; class Context; }
 
 namespace ee0
 {
@@ -38,7 +38,7 @@ public:
 	virtual bool OnPopMenuSelected(int type);
 
 	virtual bool OnActive();
-	virtual bool OnDraw(const ur2::Device& dev, ur2::Context& ctx) const;
+	virtual bool OnDraw(const ur::Device& dev, ur::Context& ctx) const;
 	virtual bool Update(float dt);
 	virtual bool Clear();
 

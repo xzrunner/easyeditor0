@@ -6,9 +6,9 @@
 #include "ee0/ConfigFile.h"
 
 #include <guard/check.h>
-#include <unirender2/Factory.h>
-#include <unirender2/ShaderProgram.h>
-#include <unirender2/ClearState.h>
+#include <unirender/Factory.h>
+#include <unirender/ShaderProgram.h>
+#include <unirender/ClearState.h>
 #include <painting0/ModelMatUpdater.h>
 #include <painting2/Shader.h>
 #include <painting2/Blackboard.h>
@@ -47,7 +47,7 @@ static const int GL_ATTRIB[20] = {WX_GL_RGBA, WX_GL_MIN_RED, 1, WX_GL_MIN_GREEN,
 
 static const float FPS = 30;
 
-WxStageCanvas::WxStageCanvas(const ur2::Device& dev,
+WxStageCanvas::WxStageCanvas(const ur::Device& dev,
                              wxWindow* wnd, EditPanelImpl& stage,
 	                         const pt0::CameraPtr& camera,
 	                         const RenderContext* rc,
@@ -109,7 +109,7 @@ void WxStageCanvas::EnableInitiativeUpdate(bool enable)
 }
 
 // fixme: changed shader's mat
-void WxStageCanvas::PrepareDrawGui(const ur2::Device& dev, float w, float h) const
+void WxStageCanvas::PrepareDrawGui(const ur::Device& dev, float w, float h) const
 {
 	ee0::RenderContext::Reset2D();
 
@@ -121,15 +121,15 @@ void WxStageCanvas::PrepareDrawGui(const ur2::Device& dev, float w, float h) con
 	auto shader = rd->GetAllShaders()[0];
 //	shader->Bind();
 
-    auto model_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt0::ModelMatUpdater>());
+    auto model_updater = shader->QueryUniformUpdater(ur::GetUpdaterTypeID<pt0::ModelMatUpdater>());
     if (model_updater) {
         std::static_pointer_cast<pt0::ModelMatUpdater>(model_updater)->Update(sm::mat4());
     }
-    auto view_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ViewMatUpdater>());
+    auto view_updater = shader->QueryUniformUpdater(ur::GetUpdaterTypeID<pt2::ViewMatUpdater>());
     if (view_updater) {
         std::static_pointer_cast<pt2::ViewMatUpdater>(view_updater)->Update(sm::vec2(0, 0), 1.0f);
     }
-    auto proj_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ProjectMatUpdater>());
+    auto proj_updater = shader->QueryUniformUpdater(ur::GetUpdaterTypeID<pt2::ProjectMatUpdater>());
     if (proj_updater) {
         std::static_pointer_cast<pt2::ProjectMatUpdater>(proj_updater)->Update(w, h);
     }
@@ -144,19 +144,19 @@ wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
 	return new wxGLCanvas(wnd, wxID_ANY, GL_ATTRIB);
 }
 
-std::shared_ptr<ur2::Device>
-WxStageCanvas::CreateRenderContext(const ur2::Device* dev, RenderContext& rc, wxGLCanvas* canvas)
+std::shared_ptr<ur::Device>
+WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas)
 {
     rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
     canvas->SetCurrent(*rc.gl_ctx);
 
-    std::shared_ptr<ur2::Device> ret = nullptr;
+    std::shared_ptr<ur::Device> ret = nullptr;
     if (!dev) {
-        ret = ur2::CreateDeviceGL();
+        ret = ur::CreateDeviceGL();
         dev = ret.get();
     }
 
-    rc.ur_ctx = ur2::CreateContextGL(*dev);
+    rc.ur_ctx = ur::CreateContextGL(*dev);
 
     //rc.facade_rc = std::make_shared<facade::RenderContext>();
 
@@ -199,11 +199,11 @@ void WxStageCanvas::OnDrawWhole() const
         assert(shaders.size() == 1);
         auto& shader = shaders[0];
 
-        auto model_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt0::ModelMatUpdater>());
+        auto model_updater = shader->QueryUniformUpdater(ur::GetUpdaterTypeID<pt0::ModelMatUpdater>());
         if (model_updater) {
             std::static_pointer_cast<pt0::ModelMatUpdater>(model_updater)->Update(sm::mat4());
         }
-        auto view_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ViewMatUpdater>());
+        auto view_updater = shader->QueryUniformUpdater(ur::GetUpdaterTypeID<pt2::ViewMatUpdater>());
         if (view_updater) {
             sm::vec2 offset(0, 0);
             float scale = 1.0f;
@@ -214,14 +214,14 @@ void WxStageCanvas::OnDrawWhole() const
             }
             std::static_pointer_cast<pt2::ViewMatUpdater>(view_updater)->Update(offset, scale);
         }
-        auto proj_updater = shader->QueryUniformUpdater(ur2::GetUpdaterTypeID<pt2::ProjectMatUpdater>());
+        auto proj_updater = shader->QueryUniformUpdater(ur::GetUpdaterTypeID<pt2::ProjectMatUpdater>());
         if (proj_updater) {
             std::static_pointer_cast<pt2::ProjectMatUpdater>(proj_updater)->Update(m_screen_sz.x, m_screen_sz.y);
         }
     }
 
-    ur2::ClearState clear;
-    clear.buffers = ur2::ClearBuffers::ColorBuffer;
+    ur::ClearState clear;
+    clear.buffers = ur::ClearBuffers::ColorBuffer;
     clear.color.FromRGBA(m_bg_color);
     GetRenderContext().ur_ctx->Clear(clear);
 
@@ -379,7 +379,7 @@ void WxStageCanvas::SetCurrentCanvas()
 	//}
 }
 
-void WxStageCanvas::InitRender(const ur2::Device& dev, const RenderContext* rc)
+void WxStageCanvas::InitRender(const ur::Device& dev, const RenderContext* rc)
 {
 	if (rc) {
 		m_rc = *rc;

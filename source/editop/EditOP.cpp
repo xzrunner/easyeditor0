@@ -138,7 +138,7 @@ bool EditOP::OnActive()
 	}
 }
 
-bool EditOP::OnDraw(const ur2::Device& dev, ur2::Context& ctx) const
+bool EditOP::OnDraw(const ur::Device& dev, ur::Context& ctx) const
 {
 	if (m_prev_op && m_prev_op->OnDraw(dev, ctx)) {
 		return true;

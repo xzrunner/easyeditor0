@@ -46,7 +46,7 @@ void Clipboard::StoreNodesToCB(const std::vector<n0::SceneNodePtr>& nodes)
     FromString(js::RapidJsonHelper::ValueToString(nodes_val));
 }
 
-void Clipboard::LoadNodesFromCB(const ur2::Device& dev, std::vector<n0::SceneNodePtr>& nodes)
+void Clipboard::LoadNodesFromCB(const ur::Device& dev, std::vector<n0::SceneNodePtr>& nodes)
 {
     nodes.clear();
 
