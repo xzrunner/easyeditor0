@@ -54,6 +54,7 @@ public:
 	static void CreateWindowContext(WindowContext& wc, bool has2d, bool has3d);
 
 protected:
+    virtual void OnSize(int w, int h) {}
 	virtual void OnDrawWhole() const;
 	virtual void OnDrawSprites() const = 0;
 	virtual void OnDrawGUI() const {}

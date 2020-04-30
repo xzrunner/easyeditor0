@@ -251,6 +251,8 @@ void WxStageCanvas::OnSize(wxSizeEvent& event)
         m_rc.ur_ctx->SetViewport(0, 0, w, h);
         m_camera->OnSize(w, h);
         m_screen_sz.Set(w, h);
+
+        OnSize(w, h);
 	}
 }
 
