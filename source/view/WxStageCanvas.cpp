@@ -165,18 +165,12 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
 
 void WxStageCanvas::CreateWindowContext(WindowContext& wc, bool has2d, bool has3d)
 {
-	//if (has2d)
-	//{
-	//	wc.wc2 = std::make_shared<pt2::WindowContext>();
-	//	wc.wc2->Bind();
-	//	pt2::Blackboard::Instance()->SetWindowContext(wc.wc2);
-	//}
-	//if (has3d)
-	//{
-	//	wc.wc3 = std::make_shared<pt3::WindowContext>();
-	//	wc.wc3->Bind();
-	//	pt3::Blackboard::Instance()->SetWindowContext(wc.wc3);
-	//}
+	if (has2d) {
+		wc.wc2 = std::make_shared<pt2::WindowContext>();
+	}
+	if (has3d) {
+		wc.wc3 = std::make_shared<pt3::WindowContext>();
+	}
 }
 
 void WxStageCanvas::OnDrawWhole() const
