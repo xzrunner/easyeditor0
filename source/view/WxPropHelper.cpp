@@ -59,8 +59,8 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 	else if (type == rttr::type::get<sm::bvec2>())
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec2>();
-        auto x_prop = new wxFloatProperty("X", wxPG_LABEL, b.x);
-        auto y_prop = new wxFloatProperty("Y", wxPG_LABEL, b.y);
+        auto x_prop = new wxBoolProperty("X", wxPG_LABEL, b.x);
+        auto y_prop = new wxBoolProperty("Y", wxPG_LABEL, b.y);
         if (parent) {
             pg->AppendIn(parent, x_prop);
             pg->AppendIn(parent, y_prop);
@@ -71,6 +71,48 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 		pg->SetPropertyAttribute(x_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 		pg->SetPropertyAttribute(y_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
 	}
+    else if (type == rttr::type::get<sm::bvec3>())
+    {
+        auto b = prop.get_value(obj).get_value<sm::bvec3>();
+        auto x_prop = new wxBoolProperty("X", wxPG_LABEL, b.x);
+        auto y_prop = new wxBoolProperty("Y", wxPG_LABEL, b.y);
+        auto z_prop = new wxBoolProperty("Z", wxPG_LABEL, b.z);
+        if (parent) {
+            pg->AppendIn(parent, x_prop);
+            pg->AppendIn(parent, y_prop);
+            pg->AppendIn(parent, z_prop);
+        } else {
+            pg->Append(x_prop);
+            pg->Append(y_prop);
+            pg->Append(z_prop);
+        }
+        pg->SetPropertyAttribute(x_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        pg->SetPropertyAttribute(y_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        pg->SetPropertyAttribute(z_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+    }
+    else if (type == rttr::type::get<sm::bvec4>())
+    {
+        auto b = prop.get_value(obj).get_value<sm::bvec4>();
+        auto x_prop = new wxBoolProperty("X", wxPG_LABEL, b.x);
+        auto y_prop = new wxBoolProperty("Y", wxPG_LABEL, b.y);
+        auto z_prop = new wxBoolProperty("Z", wxPG_LABEL, b.z);
+        auto w_prop = new wxBoolProperty("W", wxPG_LABEL, b.z);
+        if (parent) {
+            pg->AppendIn(parent, x_prop);
+            pg->AppendIn(parent, y_prop);
+            pg->AppendIn(parent, z_prop);
+            pg->AppendIn(parent, w_prop);
+        } else {
+            pg->Append(x_prop);
+            pg->Append(y_prop);
+            pg->Append(z_prop);
+            pg->Append(w_prop);
+        }
+        pg->SetPropertyAttribute(x_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        pg->SetPropertyAttribute(y_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        pg->SetPropertyAttribute(z_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        pg->SetPropertyAttribute(w_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+    }
     else if (type == rttr::type::get<int>())
     {
         auto v = prop.get_value(obj).get_value<int>();
@@ -337,6 +379,32 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 			b.x = wxANY_AS(val, bool);
 		} else if (key == "Y") {
 			b.y = wxANY_AS(val, bool);
+		}
+		prop.set_value(obj, b);
+	}
+	else if (type == rttr::type::get<sm::bvec3>() && (key == "X" || key == "Y" || key == "Z"))
+	{
+		auto b = prop.get_value(obj).get_value<sm::bvec3>();
+		if (key == "X") {
+			b.x = wxANY_AS(val, bool);
+		} else if (key == "Y") {
+			b.y = wxANY_AS(val, bool);
+		} else if (key == "Z") {
+			b.z = wxANY_AS(val, bool);
+		}
+		prop.set_value(obj, b);
+	}
+	else if (type == rttr::type::get<sm::bvec4>() && (key == "X" || key == "Y" || key == "Z" || key == "W"))
+	{
+		auto b = prop.get_value(obj).get_value<sm::bvec4>();
+		if (key == "X") {
+			b.x = wxANY_AS(val, bool);
+		} else if (key == "Y") {
+			b.y = wxANY_AS(val, bool);
+		} else if (key == "Z") {
+			b.z = wxANY_AS(val, bool);
+		} else if (key == "W") {
+			b.w = wxANY_AS(val, bool);
 		}
 		prop.set_value(obj, b);
 	}
