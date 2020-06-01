@@ -194,12 +194,10 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 			prop.get_value(obj).to_string();
 
         // open file
-		auto open_file_obj = prop.get_metadata(PropOpenFileTag());
-		if (open_file_obj.is_valid())
-		{
-			auto open_file = open_file_obj.get_value<PropOpenFile>();
-			auto c_prop = new WxOpenFileProp(info.desc, wxPG_LABEL, str);
-			c_prop->SetFilter(open_file.filter);
+        auto build_open_file_prop = [&](const std::string& label, const std::string& filter)
+        {
+			auto c_prop = new WxOpenFileProp(label, wxPG_LABEL, str);
+			c_prop->SetFilter(filter);
 			std::string prop_name = prop.get_name().to_string();
 			c_prop->SetCallback([=](const std::string& filepath)
 			{
@@ -218,7 +216,22 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
             } else {
                 pg->Append(c_prop);
             }
-
+        };
+        auto ui_info_obj = prop.get_metadata(ee0::UIMetaInfoTag());
+        if (ui_info_obj.is_valid())
+        {
+            auto ui_info = ui_info_obj.get_value<ee0::UIMetaInfo>();
+            if (ui_info.desc == "Filepath")
+            {
+                build_open_file_prop(info.desc, "");
+                return;
+            }
+        }
+		auto open_file_obj = prop.get_metadata(PropOpenFileTag());
+		if (open_file_obj.is_valid())
+		{
+			auto open_file = open_file_obj.get_value<PropOpenFile>();
+            build_open_file_prop(info.desc, open_file.filter);
             return;
 		}
 
