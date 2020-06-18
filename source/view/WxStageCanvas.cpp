@@ -152,7 +152,7 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
 
     std::shared_ptr<ur::Device> ret = nullptr;
     if (!dev) {
-        ret = ur::CreateDeviceGL();
+        ret = ur::CreateDeviceGL(canvas->GetHWND());
         dev = ret.get();
     }
 
