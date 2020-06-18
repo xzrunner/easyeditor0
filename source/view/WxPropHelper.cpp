@@ -14,6 +14,13 @@
 namespace
 {
 
+const std::string FILEPATH_DESC = "Filepath";
+
+}
+
+namespace
+{
+
 std::string UnderscoreToCamelCase(const std::string& str)
 {
     std::vector<std::string> tokens;
@@ -221,7 +228,7 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
         if (ui_info_obj.is_valid())
         {
             auto ui_info = ui_info_obj.get_value<ee0::UIMetaInfo>();
-            if (ui_info.desc == "Filepath")
+            if (ui_info.desc == FILEPATH_DESC)
             {
                 build_open_file_prop(info.desc, "");
                 return;
