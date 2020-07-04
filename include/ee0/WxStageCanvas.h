@@ -29,6 +29,8 @@ public:
         const pt0::CameraPtr& camera, const RenderContext* rc = nullptr, const WindowContext* wc = nullptr, uint32_t flag = HAS_2D);
 	virtual ~WxStageCanvas();
 
+	virtual void ResetCamera() {}
+
     auto& GetRenderDevice() const { return m_dev; }
 
 	const RenderContext& GetRenderContext() const { return m_rc; }
