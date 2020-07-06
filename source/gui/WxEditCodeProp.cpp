@@ -1,8 +1,6 @@
 #include "ee0/WxEditCodeProp.h"
 #include "ee0/WxCodeEditDlg.h"
 
-#include <cpputil/StringHelper.h>
-
 namespace ee0
 {
 
@@ -12,8 +10,6 @@ WxEditCodeProp::WxEditCodeProp(const wxString& label, const wxString& name, cons
 	: wxLongStringProperty(label, name, value.ToStdString())
 	, m_code_str(value)
 {
-    cpputil::StringHelper::ReplaceAll(m_code_str, "\\n", "\n");
-    cpputil::StringHelper::ReplaceAll(m_code_str, "\\t", "\t");
 }
 
 bool WxEditCodeProp::OnButtonClick(wxPropertyGrid* propgrid, wxString& value)
