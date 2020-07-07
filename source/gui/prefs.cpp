@@ -116,6 +116,25 @@ const char* JavaWordlist1 =
 "class finally long strictfp volatile"
 "const float native super while";
 
+// GLSL
+const char* GLSLWordlist1 =
+"attribute const uniform varying "
+"centroid "
+"break continue do for while "
+"if else "
+"in out inout "
+"float int void bool true false "
+"invariant "
+"discard return "
+"mat2 mat3 mat4 "
+"mat2x2 mat2x3 mat2x4 "
+"mat3x2 mat3x3 mat3x4 "
+"mat4x2 mat4x3 mat4x4 "
+"vec2 vec3 vec4 ivec2 ivec3 ivec4 bvec2 bvec3 bvec4 "
+"sampler1D sampler2D sampler3D samplerCube "
+"sampler1DShadow sampler2DShadow "
+"struct ";
+
 //----------------------------------------------------------------------------
 //! languages
 const LanguageInfo g_LanguagePrefs [] = {
@@ -240,6 +259,43 @@ const LanguageInfo g_LanguagePrefs [] = {
 	{mySTC_TYPE_COMMENT_DOC, NULL},
 	{mySTC_TYPE_NUMBER, NULL},
 	{mySTC_TYPE_WORD1, JavaWordlist1}, // KEYWORDS
+	{mySTC_TYPE_STRING, NULL},
+	{mySTC_TYPE_CHARACTER, NULL},
+	{mySTC_TYPE_UUID, NULL},
+	{mySTC_TYPE_PREPROCESSOR, NULL},
+	{mySTC_TYPE_OPERATOR, NULL},
+	{mySTC_TYPE_IDENTIFIER, NULL},
+	{mySTC_TYPE_STRING_EOL, NULL},
+	{mySTC_TYPE_DEFAULT, NULL}, // VERBATIM
+	{mySTC_TYPE_REGEX, NULL},
+	{mySTC_TYPE_COMMENT_SPECIAL, NULL}, // DOXY
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL},
+	{-1, NULL}},
+	mySTC_FOLD_COMMENT | mySTC_FOLD_COMPACT | mySTC_FOLD_PREPROC},
+	// GLSL
+	{"GLSL",
+	"*.vert;*.frag",
+	wxSTC_LEX_CPP,
+	{{mySTC_TYPE_DEFAULT, NULL},
+	{mySTC_TYPE_COMMENT, NULL},
+	{mySTC_TYPE_COMMENT_LINE, NULL},
+	{mySTC_TYPE_COMMENT_DOC, NULL},
+	{mySTC_TYPE_NUMBER, NULL},
+	{mySTC_TYPE_WORD1, GLSLWordlist1}, // KEYWORDS
 	{mySTC_TYPE_STRING, NULL},
 	{mySTC_TYPE_CHARACTER, NULL},
 	{mySTC_TYPE_UUID, NULL},
