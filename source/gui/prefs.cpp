@@ -98,23 +98,23 @@ const char* PythonWordlist2 =
 
 // Lua
 const char* LuaWordlist1 =
-"and break do else elseif"
-"end false for function if"
-"in local nil not or"
-"repeat return then true until while";
+"and break do else elseif "
+"end false for function if "
+"in local nil not or "
+"repeat return then true until while ";
 
 // Java
 const char* JavaWordlist1 =
-"abstract continue for new switch"
-"assert	default	goto package synchronized"
-"boolean do if private this"
-"break double implements protected throw"
-"byte else import public throws"
-"case enum instanceof return transient"
-"catch extends int short try"
-"char final interface static void"
-"class finally long strictfp volatile"
-"const float native super while";
+"abstract continue for new switch "
+"assert	default	goto package synchronized "
+"boolean do if private this "
+"break double implements protected throw "
+"byte else import public throws "
+"case enum instanceof return transient "
+"catch extends int short try "
+"char final interface static void "
+"class finally long strictfp volatile "
+"const float native super while ";
 
 // GLSL
 const char* GLSLWordlist1 =
@@ -249,7 +249,7 @@ const LanguageInfo g_LanguagePrefs [] = {
 	{-1, NULL},
 	{-1, NULL}},
 	mySTC_FOLD_COMMENT | mySTC_FOLD_COMPACT | mySTC_FOLD_PREPROC},
-	// Lua
+	// Java
 	{"Java",
 	"*.java",
 	wxSTC_LEX_LUA,
