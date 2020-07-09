@@ -152,11 +152,11 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
 
     std::shared_ptr<ur::Device> ret = nullptr;
     if (!dev) {
-        ret = ur::CreateDeviceGL(canvas->GetHWND());
+        ret = ur::CreateDevice(ur::APIType::OpenGL, canvas->GetHWND());
         dev = ret.get();
     }
 
-    rc.ur_ctx = ur::CreateContextGL(*dev);
+    rc.ur_ctx = ur::CreateContext(ur::APIType::OpenGL, *dev);
 
     //rc.facade_rc = std::make_shared<facade::RenderContext>();
 
