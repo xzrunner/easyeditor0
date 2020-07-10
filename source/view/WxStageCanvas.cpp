@@ -265,7 +265,7 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 
 	rp::RenderMgr::Instance()->Flush(m_dev, *m_rc.ur_ctx);
 
-	glFlush();
+	//glFlush();
 	SwapBuffers();
 
 	//gum::ShaderLab::Instance()->Update(1 / 30.0f);

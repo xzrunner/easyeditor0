@@ -24,12 +24,12 @@ void WxSimpleCanvas::OnPaint(wxPaintEvent& event)
 {
 	SetCurrent(*m_context);
 
-	glClearColor(0, 0, 0, 0);
-	glClear(GL_COLOR_BUFFER_BIT);
+	//glClearColor(0, 0, 0, 0);
+	//glClear(GL_COLOR_BUFFER_BIT);
 
 	OnDraw();
 
-	glFlush();
+	//glFlush();
 	SwapBuffers();
 }
 
