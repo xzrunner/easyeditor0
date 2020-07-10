@@ -254,6 +254,7 @@ void WxStageCanvas::OnSize(wxSizeEvent& event)
 	int h = size.GetHeight();
 	if (w != 0 && h != 0)
 	{
+		m_rc.ur_ctx->Resize(w, h);
         m_rc.ur_ctx->SetViewport(0, 0, w, h);
         m_camera->OnSize(w, h);
         m_screen_sz.Set(w, h);
