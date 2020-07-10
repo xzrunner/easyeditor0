@@ -28,6 +28,8 @@
 #include <renderpipeline/RenderMgr.h>
 #include <renderpipeline/SpriteRenderer.h>
 
+#define USE_VULKAN
+
 namespace ee0
 {
 
@@ -62,7 +64,11 @@ WxStageCanvas::WxStageCanvas(const ur::Device& dev,
 	, m_last_time(0)
 	, m_dirty(false)
 {
+#ifdef USE_VULKAN
+	InitRender(dev, nullptr);
+#else
 	InitRender(dev, rc);
+#endif // USE_VULKAN
 
 	SetCurrentCanvas();
 
@@ -147,16 +153,22 @@ wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
 std::shared_ptr<ur::Device>
 WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas)
 {
+#ifdef USE_VULKAN
+	ur::APIType type = ur::APIType::Vulkan;
+#else
+	ur::APIType type = ur::APIType::OpenGL;
+#endif // USE_VULKAN
+
     rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
     canvas->SetCurrent(*rc.gl_ctx);
 
     std::shared_ptr<ur::Device> ret = nullptr;
     if (!dev) {
-        ret = ur::CreateDevice(ur::APIType::OpenGL, canvas->GetHWND());
+        ret = ur::CreateDevice(ur::APIType::Vulkan);
         dev = ret.get();
     }
 
-    rc.ur_ctx = ur::CreateContext(ur::APIType::OpenGL, *dev);
+    rc.ur_ctx = ur::CreateContext(ur::APIType::Vulkan, *dev, canvas->GetHWND());
 
     //rc.facade_rc = std::make_shared<facade::RenderContext>();
 
