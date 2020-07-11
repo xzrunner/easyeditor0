@@ -168,7 +168,8 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
         dev = ret.get();
     }
 
-    rc.ur_ctx = ur::CreateContext(ur::APIType::Vulkan, *dev, canvas->GetHWND());
+	auto size = canvas->GetSize();
+    rc.ur_ctx = ur::CreateContext(ur::APIType::Vulkan, *dev, canvas->GetHWND(), size.x, size.y);
 
     //rc.facade_rc = std::make_shared<facade::RenderContext>();
 
