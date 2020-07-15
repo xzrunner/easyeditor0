@@ -28,7 +28,8 @@
 #include <renderpipeline/RenderMgr.h>
 #include <renderpipeline/SpriteRenderer.h>
 
-#define USE_VULKAN
+#define USE_OPENGL
+//#define USE_VULKAN
 
 namespace ee0
 {
@@ -155,21 +156,21 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
 {
 #ifdef USE_VULKAN
 	ur::APIType type = ur::APIType::Vulkan;
-#else
+#elif defined USE_OPENGL
 	ur::APIType type = ur::APIType::OpenGL;
-#endif // USE_VULKAN
+#endif
 
     rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
     canvas->SetCurrent(*rc.gl_ctx);
 
     std::shared_ptr<ur::Device> ret = nullptr;
     if (!dev) {
-        ret = ur::CreateDevice(ur::APIType::Vulkan);
+        ret = ur::CreateDevice(type);
         dev = ret.get();
     }
 
 	auto size = canvas->GetSize();
-    rc.ur_ctx = ur::CreateContext(ur::APIType::Vulkan, *dev, canvas->GetHWND(), size.x, size.y);
+    rc.ur_ctx = ur::CreateContext(type, *dev, canvas->GetHWND(), size.x, size.y);
 
     //rc.facade_rc = std::make_shared<facade::RenderContext>();
 
@@ -279,8 +280,9 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 
 	rp::RenderMgr::Instance()->Flush(m_dev, *m_rc.ur_ctx);
 
-	//glFlush();
+#ifdef USE_OPENGL
 	SwapBuffers();
+#endif // USE_OPENGL
 
 	//gum::ShaderLab::Instance()->Update(1 / 30.0f);
 
