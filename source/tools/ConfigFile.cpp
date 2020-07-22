@@ -17,6 +17,7 @@ static const char* FILENAME = "assets/config.json";
 ConfigFile::ConfigFile()
 	: m_debug_draw(false)
 	, m_draw_stat(false)
+//	, m_use_opengl(false)
 {
 	auto curr_path = boost::filesystem::current_path().string();
 	auto cfg_path = boost::filesystem::absolute(FILENAME, curr_path);

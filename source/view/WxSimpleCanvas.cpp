@@ -1,4 +1,5 @@
 #include "ee0/WxSimpleCanvas.h"
+#include "ee0/ConfigFile.h"
 
 namespace ee0
 {
@@ -22,7 +23,9 @@ void WxSimpleCanvas::OnSize(wxSizeEvent& event)
 
 void WxSimpleCanvas::OnPaint(wxPaintEvent& event)
 {
-	SetCurrent(*m_context);
+	if (ConfigFile::Instance()->UseOpenGL()) {
+		SetCurrent(*m_context);
+	}
 
 	//glClearColor(0, 0, 0, 0);
 	//glClear(GL_COLOR_BUFFER_BIT);
@@ -30,7 +33,9 @@ void WxSimpleCanvas::OnPaint(wxPaintEvent& event)
 	OnDraw();
 
 	//glFlush();
-	SwapBuffers();
+	if (ConfigFile::Instance()->UseOpenGL()) {
+		SwapBuffers();
+	}
 }
 
 }

@@ -18,6 +18,8 @@ public:
 
 	bool GetDebugDraw() const { return m_debug_draw; }
 
+	bool UseOpenGL() const { return m_use_opengl; }
+
 private:
 	void LoadFromFile(const std::string& filepath);
 
@@ -30,6 +32,8 @@ private:
 	bool m_debug_draw;
 
 	bool m_draw_stat;
+
+	bool m_use_opengl = true;
 
 private:
 	CU_SINGLETON_DECLARATION(ConfigFile)

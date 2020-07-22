@@ -28,9 +28,6 @@
 #include <renderpipeline/RenderMgr.h>
 #include <renderpipeline/SpriteRenderer.h>
 
-#define USE_OPENGL
-//#define USE_VULKAN
-
 namespace ee0
 {
 
@@ -65,11 +62,11 @@ WxStageCanvas::WxStageCanvas(const ur::Device& dev,
 	, m_last_time(0)
 	, m_dirty(false)
 {
-#ifdef USE_VULKAN
-	InitRender(dev, nullptr);
-#else
-	InitRender(dev, rc);
-#endif // USE_VULKAN
+	if (ConfigFile::Instance()->UseOpenGL()) {
+		InitRender(dev, rc);
+	} else {
+		InitRender(dev, nullptr);
+	}
 
 	SetCurrentCanvas();
 
@@ -154,14 +151,15 @@ wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
 std::shared_ptr<ur::Device>
 WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas)
 {
-#ifdef USE_VULKAN
-	ur::APIType type = ur::APIType::Vulkan;
-#elif defined USE_OPENGL
-	ur::APIType type = ur::APIType::OpenGL;
-#endif
+	ur::APIType type;
+	if (ConfigFile::Instance()->UseOpenGL()) {
+		type = ur::APIType::OpenGL;
 
-    rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
-    canvas->SetCurrent(*rc.gl_ctx);
+		rc.gl_ctx = std::make_shared<wxGLContext>(canvas);
+		canvas->SetCurrent(*rc.gl_ctx);
+	} else {
+		type = ur::APIType::Vulkan;
+	}
 
     std::shared_ptr<ur::Device> ret = nullptr;
     if (!dev) {
@@ -280,9 +278,9 @@ void WxStageCanvas::OnPaint(wxPaintEvent& event)
 
 	rp::RenderMgr::Instance()->Flush(m_dev, *m_rc.ur_ctx);
 
-#ifdef USE_OPENGL
-	SwapBuffers();
-#endif // USE_OPENGL
+	if (ConfigFile::Instance()->UseOpenGL()) {
+		SwapBuffers();
+	}
 
 	//gum::ShaderLab::Instance()->Update(1 / 30.0f);
 
@@ -414,7 +412,9 @@ void WxStageCanvas::InitWindow(const WindowContext* wc)
 
 void WxStageCanvas::BindRenderContext()
 {
-	SetCurrent(*m_rc.gl_ctx);
+	if (ConfigFile::Instance()->UseOpenGL()) {
+		SetCurrent(*m_rc.gl_ctx);
+	}
 
 	//facade::Blackboard::Instance()->SetRenderContext(m_rc.facade_rc);
 	//m_rc.facade_rc->Bind();
