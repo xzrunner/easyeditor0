@@ -170,6 +170,10 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
 	auto size = canvas->GetSize();
     rc.ur_ctx = ur::CreateContext(type, *dev, canvas->GetHWND(), size.x, size.y);
 
+	if (ret) {
+		ret->Init();
+	}
+
     //rc.facade_rc = std::make_shared<facade::RenderContext>();
 
     return ret;
