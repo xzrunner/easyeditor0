@@ -176,6 +176,11 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
 
     //rc.facade_rc = std::make_shared<facade::RenderContext>();
 
+	// need logic device, should after context init
+	if (ret) {
+		ret->Init();
+	}
+
     return ret;
 }
 
