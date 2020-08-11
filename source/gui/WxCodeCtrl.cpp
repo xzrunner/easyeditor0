@@ -4,7 +4,7 @@ namespace ee0
 {
 
 WxCodeCtrl::WxCodeCtrl(wxWindow* parent, const std::string& name)
-	: wxStyledTextCtrl(parent), m_name(name)
+	: wxStyledTextCtrl(parent, -1, wxDefaultPosition, wxDefaultSize, 0, name)
 {
 	m_LineNrID  = 0;
 	m_DividerID = 1;
@@ -42,11 +42,6 @@ WxCodeCtrl::WxCodeCtrl(wxWindow* parent, const std::string& name)
 	m_FoldingMargin = 16;
 	CmdKeyClear (wxSTC_KEY_TAB, 0); // this is done by the menu accelerator key
 	SetLayoutCache (wxSTC_CACHE_PAGE);
-}
-
-const std::string& WxCodeCtrl::getName() const
-{
-	return m_name;
 }
 
 bool WxCodeCtrl::InitializePrefs (const std::string &name)

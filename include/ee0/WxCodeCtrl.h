@@ -13,8 +13,6 @@ public:
 	WxCodeCtrl(wxWindow* parent, const std::string& name);
 	virtual ~WxCodeCtrl() {}
 
-	const std::string& getName() const;
-
 	bool InitializePrefs(const std::string& filename);
 
 protected:
@@ -22,8 +20,6 @@ protected:
 	wxString DeterminePrefs (const wxString& filename);
 
 private:
-	std::string m_name;
-
 	// lanugage properties
 	const LanguageInfo* m_language;
 
