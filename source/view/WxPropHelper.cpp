@@ -242,7 +242,7 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
             return;
 		}
 
-        // cdoe edit
+        // code edit
         if (prop.get_metadata(PropEditCodeTag()).is_valid())
         {
             auto c_prop = new WxEditCodeProp(info.desc, wxPG_LABEL, str);
@@ -392,38 +392,38 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 	{
 		prop.set_value(obj, wxANY_AS(val, bool));
 	}
-	else if (type == rttr::type::get<sm::bvec2>() && (key == "X" || key == "Y"))
+	else if (type == rttr::type::get<sm::bvec2>())
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec2>();
-		if (key == "X") {
+		if (key == "X" || key.EndsWith(".X")) {
 			b.x = wxANY_AS(val, bool);
-		} else if (key == "Y") {
+		} else if (key == "Y" || key.EndsWith(".Y")) {
 			b.y = wxANY_AS(val, bool);
 		}
 		prop.set_value(obj, b);
 	}
-	else if (type == rttr::type::get<sm::bvec3>() && (key == "X" || key == "Y" || key == "Z"))
+	else if (type == rttr::type::get<sm::bvec3>())
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec3>();
-		if (key == "X") {
+		if (key == "X" || key.EndsWith(".X")) {
 			b.x = wxANY_AS(val, bool);
-		} else if (key == "Y") {
+		} else if (key == "Y" || key.EndsWith(".Y")) {
 			b.y = wxANY_AS(val, bool);
-		} else if (key == "Z") {
+		} else if (key == "Z" || key.EndsWith(".Z")) {
 			b.z = wxANY_AS(val, bool);
 		}
 		prop.set_value(obj, b);
 	}
-	else if (type == rttr::type::get<sm::bvec4>() && (key == "X" || key == "Y" || key == "Z" || key == "W"))
+	else if (type == rttr::type::get<sm::bvec4>())
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec4>();
-		if (key == "X") {
+		if (key == "X" || key.EndsWith(".X")) {
 			b.x = wxANY_AS(val, bool);
-		} else if (key == "Y") {
+		} else if (key == "Y" || key.EndsWith(".Y")) {
 			b.y = wxANY_AS(val, bool);
-		} else if (key == "Z") {
+		} else if (key == "Z" || key.EndsWith(".Z")) {
 			b.z = wxANY_AS(val, bool);
-		} else if (key == "W") {
+		} else if (key == "W" || key.EndsWith(".W")) {
 			b.w = wxANY_AS(val, bool);
 		}
 		prop.set_value(obj, b);
