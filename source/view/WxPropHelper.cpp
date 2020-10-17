@@ -66,59 +66,59 @@ void WxPropHelper::CreateProp(wxPropertyGrid* pg, const UIMetaInfo& info, rttr::
 	else if (type == rttr::type::get<sm::bvec2>())
 	{
 		auto b = prop.get_value(obj).get_value<sm::bvec2>();
-        auto x_prop = new wxBoolProperty("X", wxPG_LABEL, b.x);
-        auto y_prop = new wxBoolProperty("Y", wxPG_LABEL, b.y);
+        auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>"));
         if (parent) {
-            pg->AppendIn(parent, x_prop);
-            pg->AppendIn(parent, y_prop);
+            pg->AppendIn(parent, c_prop);
         } else {
-            pg->Append(x_prop);
-            pg->Append(y_prop);
+            pg->Append(c_prop);
         }
-		pg->SetPropertyAttribute(x_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-		pg->SetPropertyAttribute(y_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        c_prop->SetExpanded(false);
+        wxBoolProperty* props[2];
+        props[0] = new wxBoolProperty("X", wxPG_LABEL, b.x);
+        props[1] = new wxBoolProperty("Y", wxPG_LABEL, b.y);
+        for (auto& prop : props) {
+            pg->SetPropertyAttribute(prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+            pg->AppendIn(c_prop, prop);
+        }
 	}
     else if (type == rttr::type::get<sm::bvec3>())
     {
-        auto b = prop.get_value(obj).get_value<sm::bvec3>();
-        auto x_prop = new wxBoolProperty("X", wxPG_LABEL, b.x);
-        auto y_prop = new wxBoolProperty("Y", wxPG_LABEL, b.y);
-        auto z_prop = new wxBoolProperty("Z", wxPG_LABEL, b.z);
+		auto b = prop.get_value(obj).get_value<sm::bvec3>();
+        auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>"));
         if (parent) {
-            pg->AppendIn(parent, x_prop);
-            pg->AppendIn(parent, y_prop);
-            pg->AppendIn(parent, z_prop);
+            pg->AppendIn(parent, c_prop);
         } else {
-            pg->Append(x_prop);
-            pg->Append(y_prop);
-            pg->Append(z_prop);
+            pg->Append(c_prop);
         }
-        pg->SetPropertyAttribute(x_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-        pg->SetPropertyAttribute(y_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-        pg->SetPropertyAttribute(z_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        c_prop->SetExpanded(false);
+        wxBoolProperty* props[3];
+        props[0] = new wxBoolProperty("X", wxPG_LABEL, b.x);
+        props[1] = new wxBoolProperty("Y", wxPG_LABEL, b.y);
+        props[2] = new wxBoolProperty("Z", wxPG_LABEL, b.z);
+        for (auto& prop : props) {
+            pg->SetPropertyAttribute(prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+            pg->AppendIn(c_prop, prop);
+        }
     }
     else if (type == rttr::type::get<sm::bvec4>())
     {
-        auto b = prop.get_value(obj).get_value<sm::bvec4>();
-        auto x_prop = new wxBoolProperty("X", wxPG_LABEL, b.x);
-        auto y_prop = new wxBoolProperty("Y", wxPG_LABEL, b.y);
-        auto z_prop = new wxBoolProperty("Z", wxPG_LABEL, b.z);
-        auto w_prop = new wxBoolProperty("W", wxPG_LABEL, b.z);
+		auto b = prop.get_value(obj).get_value<sm::bvec4>();
+        auto c_prop = new wxStringProperty(info.desc, wxPG_LABEL, wxT("<composed>"));
         if (parent) {
-            pg->AppendIn(parent, x_prop);
-            pg->AppendIn(parent, y_prop);
-            pg->AppendIn(parent, z_prop);
-            pg->AppendIn(parent, w_prop);
+            pg->AppendIn(parent, c_prop);
         } else {
-            pg->Append(x_prop);
-            pg->Append(y_prop);
-            pg->Append(z_prop);
-            pg->Append(w_prop);
+            pg->Append(c_prop);
         }
-        pg->SetPropertyAttribute(x_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-        pg->SetPropertyAttribute(y_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-        pg->SetPropertyAttribute(z_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
-        pg->SetPropertyAttribute(w_prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+        c_prop->SetExpanded(false);
+        wxBoolProperty* props[4];
+        props[0] = new wxBoolProperty("X", wxPG_LABEL, b.x);
+        props[1] = new wxBoolProperty("Y", wxPG_LABEL, b.y);
+        props[2] = new wxBoolProperty("Z", wxPG_LABEL, b.z);
+        props[3] = new wxBoolProperty("W", wxPG_LABEL, b.z);
+        for (auto& prop : props) {
+            pg->SetPropertyAttribute(prop, wxPG_BOOL_USE_CHECKBOX, true, wxPG_RECURSE);
+            pg->AppendIn(c_prop, prop);
+        }
     }
     else if (type == rttr::type::get<int>())
     {
