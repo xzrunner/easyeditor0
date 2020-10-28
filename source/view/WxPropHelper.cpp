@@ -562,7 +562,8 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
             for (size_t i = 0, n = array_str.size(); i < n; ++i)
             {
                 auto val = StrToVar(array_str[i].ToStdString(), view.get_value_type());
-                view.set_value(i, val);
+                auto succ = view.set_value(i, val);
+                assert(succ);
             }
         }
         prop.set_value(obj, var);
