@@ -101,6 +101,8 @@ protected:
 
     sm::ivec2 m_screen_sz;
 
+	uint32_t m_bg_color = 0x88888888;
+
 private:
 	uint32_t m_flag;
 
@@ -117,8 +119,6 @@ private:
 	mutable bool m_dirty;
 
 	std::vector<std::function<void()>> m_tasks;
-
-    uint32_t m_bg_color = 0x88888888;
 
 	DECLARE_EVENT_TABLE()
 
