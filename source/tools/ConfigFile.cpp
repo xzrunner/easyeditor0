@@ -12,7 +12,7 @@ namespace ee0
 
 CU_SINGLETON_DEFINITION(ConfigFile)
 
-static const char* FILENAME = "assets/config.json";
+static const char* FILENAME = "config.json";
 
 ConfigFile::ConfigFile()
 	: m_debug_draw(false)
