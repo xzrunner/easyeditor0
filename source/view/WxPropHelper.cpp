@@ -581,9 +581,30 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
         size_t ptr = 0;
         for (auto& dst : props) 
         {
-            auto str = tokens[ptr++];
-            bool succ = dst.set_value(value, StrToVar(str, dst.get_type()));
-            //assert(succ);
+            auto str = cpputil::StringHelper::Trim(tokens[ptr++]);
+            if (dst.is_enumeration())
+            {
+                auto _enum = dst.get_type().get_enumeration();
+                auto vals = _enum.get_values();
+                int idx = 0;
+                for (auto& val : vals)
+                {
+                    auto desc = _enum.get_metadata(idx);
+                    assert(desc.is_valid());
+                    if (desc.to_string() == str)
+                    {
+                        bool succ = dst.set_value(value, val);
+                        assert(succ);
+                        break;
+                    }
+                    ++idx;
+                }
+            }
+            else
+            {
+                bool succ = dst.set_value(value, StrToVar(str, dst.get_type()));
+                assert(succ);
+            }
         }
         prop.set_value(obj, value);
     }
