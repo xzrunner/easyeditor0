@@ -579,8 +579,11 @@ bool WxPropHelper::UpdateProp(const wxString& key, const wxAny& val, const UIMet
 
         auto value = prop.get_value(obj);
         size_t ptr = 0;
-        for (auto& dst : props) {
-            dst.set_value(value, StrToVar(tokens[ptr++], dst.get_type()));
+        for (auto& dst : props) 
+        {
+            auto str = tokens[ptr++];
+            bool succ = dst.set_value(value, StrToVar(str, dst.get_type()));
+            //assert(succ);
         }
         prop.set_value(obj, value);
     }
@@ -638,15 +641,15 @@ rttr::variant WxPropHelper::StrToVar(const std::string& str, rttr::type type)
     }
     else if (type == rttr::type::get<int>())
     {
-        return std::stoi(str);
+        return static_cast<int>(std::stoi(str));
     }
     else if (type == rttr::type::get<unsigned int>())
     {
-        return std::stoul(str);
+        return static_cast<unsigned int>(std::stoul(str));
     }
     else if (type == rttr::type::get<float>())
     {
-        return std::stof(str);
+        return static_cast<float>(std::stof(str));
     }
     else if (type == rttr::type::get<const char*>()
           || type == rttr::type::get<std::string>())
