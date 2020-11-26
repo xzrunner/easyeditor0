@@ -149,7 +149,7 @@ wxGLCanvas* WxStageCanvas::CreateWxGLCanvas(wxWindow* wnd)
 }
 
 std::shared_ptr<ur::Device>
-WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas)
+WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas, std::ostream& logger)
 {
 	ur::APIType type;
 	if (ConfigFile::Instance()->UseOpenGL()) {
@@ -163,7 +163,7 @@ WxStageCanvas::CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxG
 
     std::shared_ptr<ur::Device> ret = nullptr;
     if (!dev) {
-        ret = ur::CreateDevice(type);
+        ret = ur::CreateDevice(type, logger);
         dev = ret.get();
     }
 

@@ -10,6 +10,7 @@
 
 #include <memory>
 #include <functional>
+#include <iostream>
 
 namespace ur { class Device; }
 
@@ -52,7 +53,7 @@ public:
 
 	static wxGLCanvas* CreateWxGLCanvas(wxWindow* wnd);
 	static std::shared_ptr<ur::Device>
-        CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas);
+        CreateRenderContext(const ur::Device* dev, RenderContext& rc, wxGLCanvas* canvas, std::ostream& logger = std::cerr);
 	static void CreateWindowContext(WindowContext& wc, bool has2d, bool has3d);
 
 protected:
